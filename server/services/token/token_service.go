@@ -2,26 +2,15 @@ package token
 
 import (
 	"fmt"
-	"main/server/db"
 	"main/server/model"
-	"main/server/response"
-	"main/server/utils"
 	"os"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 )
 
-type Claims struct {
-	UserId string `json:"userId"`
-	Phone  string `json:"phone"`
-	Role   string `json:"role"`
-	jwt.RegisteredClaims
-}
-
 // Generate JWT Token
-func GenerateToken(claims Claims, ctx *gin.Context) *string {
+func GenerateToken(claims model.Claims) (*string, error) {
 	//create user claims
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -29,15 +18,14 @@ func GenerateToken(claims Claims, ctx *gin.Context) *string {
 	tokenString, err := token.SignedString([]byte(os.Getenv("JWTKEY")))
 
 	if err != nil {
-		response.ShowResponse("Error signing token", utils.HTTP_UNAUTHORIZED, "Failure", nil, ctx)
-		return nil
+		return nil, err
 	}
-	return &tokenString
+	return &tokenString, nil
 }
 
 // Decode Token function
-func DecodeToken(tokenString string) (Claims, error) {
-	claims := &Claims{}
+func DecodeToken(tokenString string) (*model.Claims, error) {
+	claims := &model.Claims{}
 
 	parsedToken, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -47,28 +35,33 @@ func DecodeToken(tokenString string) (Claims, error) {
 	})
 
 	if err != nil || !parsedToken.Valid {
-		if claims.ExpiresAt != nil && (*claims.ExpiresAt).Before(time.Now()) {
-			var userToBeLoggedOut model.User
-			err := db.FindById(&userToBeLoggedOut, claims.UserId, "user_id")
-			if err != nil {
-				return *claims, fmt.Errorf("error finding user in db")
-			}
-			query := "UPDATE users SET is_active = false WHERE user_id = '" + claims.UserId + "'"
-			db.QueryExecutor(query, &userToBeLoggedOut)
-			fmt.Println("user to be logged out ", userToBeLoggedOut)
 
-			var userSessionToBeDeleted model.Session
-			err = db.FindById(&userSessionToBeDeleted, claims.UserId, "user_id")
-			if err != nil {
-				return *claims, fmt.Errorf("error finding user in db")
-			}
-
-			db.DeleteRecord(&userSessionToBeDeleted, claims.UserId, "user_id")
-
-			return *claims, fmt.Errorf("token has expired , please proceed to login")
-		}
-		return *claims, fmt.Errorf("invalid token")
+		return nil, fmt.Errorf("invalid token")
 	}
+	//if expired time left is 2 min then checck for refresh token and
+	return claims, nil
+}
 
-	return *claims, nil
+func CheckExpiration(tokenString string) (*string, error) {
+
+	claims := &model.Claims{}
+	parsedToken, _ := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("error")
+		}
+		return []byte(os.Getenv("JWTKEY")), nil
+	})
+	fmt.Println("pasersed token is", parsedToken)
+	accessTokenexpirationTime := time.Now().Add(2 * time.Minute)
+	if !claims.VerifyExpiresAt(time.Now(), true) {
+		claims.RegisteredClaims.ExpiresAt = jwt.NewNumericDate(accessTokenexpirationTime)
+		newTokenString, err := GenerateToken(*claims)
+		if err != nil {
+			return nil, err
+		}
+
+		return newTokenString, nil
+
+	}
+	return &tokenString, nil
 }
