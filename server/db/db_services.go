@@ -28,6 +28,15 @@ func FindById(data interface{}, id interface{}, columName string) error {
 	return nil
 }
 
+func FindAll(data interface{}, key interface{}, columnName string) error {
+	column := columnName + "=?"
+	err := db.Where(column, key).Find(data).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func UpdateRecord(data interface{}, id interface{}, columName string) *gorm.DB {
 	column := columName + "=?"
 	result := db.Where(column, id).Updates(data)

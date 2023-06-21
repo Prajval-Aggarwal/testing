@@ -25,7 +25,7 @@ func StripePayment(OrderPrice int64, cardNumber string, expMonth string, expYear
 		},
 	})
 	if err != nil {
-		response.ShowResponse("Error creating card details", utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse("Error creating card details", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -38,7 +38,7 @@ func StripePayment(OrderPrice int64, cardNumber string, expMonth string, expYear
 	}
 	pi, err = paymentintent.New(params)
 	if err != nil {
-		response.ShowResponse("Error processing payment", utils.HTTP_SERVICE_UNAVAILABLE, "Failure", nil, ctx)
+		response.ShowResponse("Error processing payment", utils.HTTP_SERVICE_UNAVAILABLE, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -49,7 +49,7 @@ func StripePayment(OrderPrice int64, cardNumber string, expMonth string, expYear
 
 	pi1, err = paymentintent.Confirm(pi.ID, params1)
 	if err != nil {
-		response.ShowResponse("Error confirming payment", utils.HTTP_SERVICE_UNAVAILABLE, "Failure", nil, ctx)
+		response.ShowResponse("Error confirming payment", utils.HTTP_SERVICE_UNAVAILABLE, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -58,7 +58,7 @@ func StripePayment(OrderPrice int64, cardNumber string, expMonth string, expYear
 		response.ShowResponse("Success", utils.HTTP_OK, "Payment processed Successfully", "", ctx)
 		return
 	case "requires_payment_method":
-		response.ShowResponse("Requires Payment Method", utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse("Requires Payment Method", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	case "requires_action":
 
@@ -76,7 +76,7 @@ func StripePayment(OrderPrice int64, cardNumber string, expMonth string, expYear
 			}
 		}
 	default:
-		response.ShowResponse("Payment requires more actions", utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse("Payment requires more actions", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 

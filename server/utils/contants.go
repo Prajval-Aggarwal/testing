@@ -43,3 +43,13 @@ const (
 	HTTP_OK                              int64 = 200
 	HTTP_NO_CONTENT                      int64 = 204
 )
+
+const (
+	FAILURE       string = "Failure"
+	SUCCESS       string = "Success"
+	LOGIN_SUCCESS string = "Login Successfull"
+	LOGIN_FAILED  string = "Login Failed"
+	ACCESS_DENIED string = "Access Denied"
+	INVALID_TOKEN string = "Invalid token"
+	NOT_FOUND     string = "Record not found"
+)
