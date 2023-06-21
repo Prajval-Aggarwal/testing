@@ -2,11 +2,11 @@ package request
 
 import validation "github.com/go-ozzo/ozzo-validation"
 
-type BuyCarRequest struct {
+type CarRequest struct {
 	CarId string `json:"carId"`
 }
 
-func (a BuyCarRequest) Validate() error {
+func (a CarRequest) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.CarId, validation.Required),
 	)

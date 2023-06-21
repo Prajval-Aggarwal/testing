@@ -10,7 +10,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func BuyCarService(ctx *gin.Context, carRequest request.BuyCarRequest, playerId string) {
+func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId string) {
+
+	query := "Update player_cars SET selected=false WHERE player_id=? AND selected=true"
+	err := db.RawExecutor(query, playerId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	query = "UPDATE player_cars SET selected=true WHERE player_id=? AND car_id=?"
+	err = db.RawExecutor(query, playerId, equipRequest.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	response.ShowResponse("Current car selectde successfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+
+}
+func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId string) {
 
 	var carDetails model.Car
 	var playerDetails model.Player
@@ -32,9 +50,18 @@ func BuyCarService(ctx *gin.Context, carRequest request.BuyCarRequest, playerId 
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
-
+	var amount int64
+	var currType string
 	//check for the coins and level required to unlock the car
-	if playerDetails.Coins < int64(carDetails.CurrAmount) {
+	if carDetails.CurrType == "coins" {
+		currType = "coins"
+		amount = playerDetails.Coins
+	} else {
+		currType = "cash"
+		amount = playerDetails.Cash
+	}
+
+	if amount < int64(carDetails.CurrAmount) && currType == carDetails.CurrType {
 		if playerDetails.Level != int(carDetails.Level) {
 			response.ShowResponse("Upgrade your level to unlock the car", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
@@ -63,4 +90,51 @@ func BuyCarService(ctx *gin.Context, carRequest request.BuyCarRequest, playerId 
 		return
 	}
 	response.ShowResponse("Car added to player successfully", utils.HTTP_OK, utils.SUCCESS, playerCar, ctx)
+}
+
+func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerId string) {
+
+	if !db.RecordExist("player_cars", sellCarRequest.CarId, "car_id") {
+		response.ShowResponse("Car not found", utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	var playerDetails model.Player
+	var carDetails model.Car
+	err := db.FindById(&playerDetails, playerId, "player_id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = db.FindById(&carDetails, sellCarRequest.CarId, "car_id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	//give some reward to user on selling his car
+
+	//if buying cuurency of car is coins then give 30% of original buying amount else give 60% of original buying amount
+	if carDetails.CurrType == "coins" {
+		playerDetails.Coins += int64(0.3 * float64(carDetails.CurrAmount))
+	} else {
+		playerDetails.Coins += int64(0.6 * float64(carDetails.CurrAmount))
+	}
+
+	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	//delete the car from players collection
+	query := "DELETE FROM player_cars WHERE car_id =? AND player_id =?"
+	err = db.RawExecutor(query, sellCarRequest.CarId, playerId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	response.ShowResponse("Car sold sucessfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+
 }
