@@ -25,16 +25,20 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 	if guestLoginReuqest.Token == "" {
 		accessTokenexpirationTime := time.Now().Add(2 * time.Minute) //5 minute expiration time for access token
 
-		var playerRecord model.Player
 		fmt.Println("accessTokenExpiration time is", accessTokenexpirationTime)
 		playeruuid := uuid.New()
 		fmt.Println("unique player id is", playeruuid)
 
-		playerRecord.PlayerName = "Race" + guestLoginReuqest.DeviceId
-		playerRecord.PlayerId = playeruuid
-		playerRecord.Role = "player"
-		playerRecord.OS = int64(guestLoginReuqest.OS)
-		playerRecord.DeviceId = guestLoginReuqest.DeviceId
+		playerRecord := model.Player{
+			PlayerId:   playeruuid,
+			PlayerName: guestLoginReuqest.PlayerName,
+			Role:       "player",
+			OS:         int64(guestLoginReuqest.OS),
+			Coins:      100,
+			Cash:       10,
+			DeviceId:   guestLoginReuqest.DeviceId,
+		}
+
 		accessTokenClaims := model.Claims{
 			Id:   playeruuid,
 			Role: "player",

@@ -14,6 +14,8 @@ func CreateRecord(data interface{}) error {
 
 	err := db.Create(data).Error
 	if err != nil {
+		// fmt.Println("gorm error is", gorm.ErrDuplicatedKey.Error())
+		// fmt.Println("error is", err.Error())
 		return err
 	}
 	return nil
