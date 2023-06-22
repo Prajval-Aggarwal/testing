@@ -62,11 +62,11 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 	}
 
 	if amount < int64(carDetails.CurrAmount) && currType == carDetails.CurrType {
-		if playerDetails.Level != int(carDetails.Level) {
-			response.ShowResponse("Upgrade your level to unlock the car", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		if playerDetails.Level <= int(carDetails.Level) {
+			response.ShowResponse(utils.UPGRADE_LEVEL, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
 		}
-		response.ShowResponse("Not enough coins to unlock it", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.NOT_ENOUGH_COINS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 
 		return
 	}

@@ -1,12 +1,13 @@
 package model
 
 type Garage struct {
-	GarageId   string `json:"garageId"`
-	GarageName string `json:"garageName"`
-	Latitude   string `json:"latitude"`
-	Longituted string `json:"longitute"`
-	Level      string `json:"level"` //level reuired to unlock the garage
-
+	GarageId      string `json:"garageId"  gorm:"default:uuid_generate_v4();primaryKey"`
+	GarageName    string `json:"garageName"`
+	Latitude      string `json:"latitude"`
+	Longituted    string `json:"longitute"`
+	Level         int64  `json:"level"`         //level reuired to unlock the garage
+	CoinsRequired int    `json:"coinsRequired"` //coins required to unlock the garage
+	Locked        bool   `json:"locked"`
 }
 
 type GarageUpgrades struct {
