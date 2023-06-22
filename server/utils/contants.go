@@ -53,3 +53,9 @@ const (
 	INVALID_TOKEN string = "Invalid token"
 	NOT_FOUND     string = "Record not found"
 )
+const (
+	DATA_FETCH_SUCCESS   string = "Data Fetch Successfully"
+	UPGRADE_LEVEL        string = "Upgrade your level to unlock the car"
+	NOT_ENOUGH_COINS     string = "Not enough coins to unlock it"
+	GARAGE_BOUGHT_SUCESS string = "Garage bought successfully"
+)

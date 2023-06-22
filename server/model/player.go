@@ -19,3 +19,9 @@ type PlayerCars struct {
 	CarId    string `json:"carId"`
 	Selected bool   `json:"selected"`
 }
+
+type PlayerGarage struct {
+	PlayerId    string `json:"playerId"`
+	GarageId    string `json:"garageId"`
+	GarageLevel int    `json:"garageLevel"`
+}

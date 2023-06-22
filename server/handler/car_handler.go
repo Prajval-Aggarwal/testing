@@ -74,3 +74,24 @@ func SellCarHandler(ctx *gin.Context) {
 	car.SellCarService(ctx, sellCarRequest, playerId.(string))
 
 }
+
+func RepairCarHandler(ctx *gin.Context) {
+	var sellCarRequest request.CarRequest
+	playerId, exists := ctx.Get("playerId")
+	if !exists {
+		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+	err := utils.RequestDecoding(ctx, &sellCarRequest)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	err = sellCarRequest.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	car.SellCarService(ctx, sellCarRequest, playerId.(string))
+}

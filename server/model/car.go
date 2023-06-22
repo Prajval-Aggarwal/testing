@@ -5,7 +5,8 @@ import "github.com/google/uuid"
 type Car struct {
 	CarId      uuid.UUID `json:"carId"`
 	CarName    string    `json:"carName"`
-	Level      int64     `json:"level"`
+	CurrLevel  int       `json:"currLevel"` //current level of the car
+	Level      int64     `json:"level"`     // level required to unlock the car
 	CurrType   string    `json:"currType"`
 	CurrAmount float64   `json:"currAmount"`
 	MaxLevel   int64     `json:"maxLevel"`
@@ -21,4 +22,5 @@ type CarStats struct {
 	Weight     int64     `json:"weight"`
 	OR         float64   `json:"or"` //overall rating of the car
 	Durability int64     `json:"Durability"`
+	RepairCost int64     `json:"RepairCost"`
 }
