@@ -11,13 +11,13 @@ import (
 
 func ConfigureRoutes(server *Server) {
 
+	//CORS allow
+	server.engine.Use(gateway.CORSMiddleware())
+
 	//Player routes
 	server.engine.POST("/buy-car", gateway.UserAuthorization, handler.BuyCarHandler)
 	server.engine.PUT("/equip-car", gateway.UserAuthorization, handler.EquipCarHandler)
 	server.engine.DELETE("/sell-car", gateway.UserAuthorization, handler.SellCarHandler)
-
-	//CORS allow
-	server.engine.Use(gateway.CORSMiddleware())
 
 	//Auth routes
 	server.engine.POST("/guest-login", handler.GuestLoginHandler)

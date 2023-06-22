@@ -39,6 +39,35 @@ func UserAuthorization(ctx *gin.Context) {
 
 }
 
+func AdminAuthorization(ctx *gin.Context) {
+
+	fmt.Println("inside middleware")
+	tokenString := ctx.Request.Header.Get("Authorization")
+
+	claims, err := token.DecodeToken(tokenString)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		ctx.Abort()
+		return
+	}
+	err = claims.Valid()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		ctx.Abort()
+		return
+	}
+	if claims.Role == "admin" {
+		ctx.Next()
+	} else {
+		response.ShowResponse(utils.ACCESS_DENIED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		ctx.Abort()
+		return
+	}
+	//set the token details into context for further processing in handler function
+	ctx.Next()
+
+}
+
 func CORSMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "*")
