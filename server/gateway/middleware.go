@@ -1,22 +1,16 @@
 package gateway
-package gateway
 
 import (
-	// "fmt"
 	"main/server/response"
 	"main/server/services/token"
 	"main/server/utils"
 
 	"fmt"
 
-
-
 	"github.com/gin-gonic/gin"
 )
 
 func UserAuthorization(ctx *gin.Context) {
-func AdminAuthorization(ctx *gin.Context) {
-
 
 	fmt.Println("inside middleware")
 	tokenString := ctx.Request.Header.Get("Authorization")
@@ -40,18 +34,6 @@ func AdminAuthorization(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-
-	ctx.Set("playerId", claims.Id)
-	if claims.Role == "admin" {
-		ctx.Next()
-	} else {
-		// response.ErrorResponse(ctx, 403, "Access Denied")
-		response.ShowResponse("Access Denied", int64(utils.HTTP_FORBIDDEN), "Forbidden", "", ctx)
-
-		ctx.Abort()
-		return
-
-	}
 	//set the token details into context for further processing in handler function
 	ctx.Next()
 
@@ -72,4 +54,3 @@ func CORSMiddleware() gin.HandlerFunc {
 		ctx.Next()
 	}
 }
-
