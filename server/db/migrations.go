@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"main/server/model"
 
+	"fmt"
+	"main/server/model"
+
 	"gorm.io/gorm"
 )
 
@@ -16,7 +19,7 @@ func AutoMigrateDatabase(db *gorm.DB) {
 	}
 	fmt.Println("db version is:", dbVersion.Version)
 	if dbVersion.Version < 1 {
-		err := db.AutoMigrate(&model.Car{}, &model.CarStats{})
+		err := db.AutoMigrate(&model.Player{}, model.PlayerCars{})
 		if err != nil {
 			panic(err)
 		}

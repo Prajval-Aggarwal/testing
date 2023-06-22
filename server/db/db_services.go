@@ -14,6 +14,8 @@ func CreateRecord(data interface{}) error {
 
 	err := db.Create(data).Error
 	if err != nil {
+		// fmt.Println("gorm error is", gorm.ErrDuplicatedKey.Error())
+		// fmt.Println("error is", err.Error())
 		return err
 	}
 	return nil
@@ -69,8 +71,8 @@ func RecordExist(tableName string, value string, columnName string) bool {
 	return exists
 }
 
-func RawExecutor(querry string, args ...interface{}) error {
-	err := db.Exec(querry, args...).Error
+func RawExecutor(query string, args ...interface{}) error {
+	err := db.Exec(query, args...).Error
 	if err != nil {
 		return err
 	}
