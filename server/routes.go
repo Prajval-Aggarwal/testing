@@ -21,9 +21,9 @@ func ConfigureRoutes(server *Server) {
 
 	//Player garage routes
 	server.engine.GET("/get-all-garages", gateway.UserAuthorization, handler.GetAllGarageListHandler)
-	server.engine.GET("/buy-garage", gateway.UserAuthorization, handler.BuyCarHandler)
-	server.engine.GET("/add-car-garage", gateway.UserAuthorization, handler.AddCarToGarageHandler)
-	server.engine.GET("/upgrage-garage", gateway.UserAuthorization, handler.UpgradeGarageHandler)
+	server.engine.POST("/buy-garage", gateway.UserAuthorization, handler.BuyCarHandler)
+	server.engine.POST("/add-car-garage", gateway.UserAuthorization, handler.AddCarToGarageHandler)
+	server.engine.PUT("/upgrage-garage", gateway.UserAuthorization, handler.UpgradeGarageHandler)
 	server.engine.GET("/get-garage", gateway.UserAuthorization, handler.GetPlayerGarageListHandler)
 
 	//Auth routes

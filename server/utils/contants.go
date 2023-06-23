@@ -45,17 +45,21 @@ const (
 )
 
 const (
-	FAILURE       string = "Failure"
-	SUCCESS       string = "Success"
-	LOGIN_SUCCESS string = "Login Successfull"
-	LOGIN_FAILED  string = "Login Failed"
-	ACCESS_DENIED string = "Access Denied"
-	INVALID_TOKEN string = "Invalid token"
-	NOT_FOUND     string = "Record not found"
+	FAILURE string = "Failure"
+	SUCCESS string = "Success"
 )
 const (
-	DATA_FETCH_SUCCESS   string = "Data Fetch Successfully"
-	UPGRADE_LEVEL        string = "Upgrade your level to unlock the car"
-	NOT_ENOUGH_COINS     string = "Not enough coins to unlock it"
-	GARAGE_BOUGHT_SUCESS string = "Garage bought successfully"
+	LOGIN_SUCCESS            string = "Login Successfull"
+	LOGIN_FAILED             string = "Login Failed"
+	ACCESS_DENIED            string = "Access Denied"
+	INVALID_TOKEN            string = "Invalid token"
+	NOT_FOUND                string = "Record not found"
+	DATA_FETCH_SUCCESS       string = "Data Fetch Successfully"
+	UPGRADE_LEVEL            string = "Upgrade your level to unlock the car"
+	NOT_ENOUGH_COINS         string = "Not enough coins"
+	GARAGE_BOUGHT_SUCESS     string = "Garage bought successfully"
+	GARAGE_LIST_FETCHED      string = "Garage list fetched successfully"
+	FAILED_TO_UPDATE         string = "Failed to update in database"
+	GARAGE_UPGRADED          string = "Garage upgrade successfully"
+	ADD_CAR_TO_GARAGE_FAILED string = "Unable to add car to garage"
 )

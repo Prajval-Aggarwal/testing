@@ -14,14 +14,15 @@ type Player struct {
 	OS         int64     `json:"os"` // o for android 1 for ios
 }
 
-type PlayerCars struct {
+type OwnedCars struct {
 	PlayerId string `json:"playerId"`
 	CarId    string `json:"carId"`
 	Selected bool   `json:"selected"`
 }
 
-type PlayerGarage struct {
+type OwnedGarage struct {
 	PlayerId    string `json:"playerId"`
 	GarageId    string `json:"garageId"`
 	GarageLevel int    `json:"garageLevel"`
+	CarLimit    int    `json:"carLimit"`
 }

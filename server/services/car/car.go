@@ -72,7 +72,7 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 	}
 
 	//Add the car to players account and make it as players current selected car
-	playerCar := model.PlayerCars{
+	playerCar := model.OwnedCars{
 		PlayerId: playerId,
 		CarId:    carRequest.CarId,
 		Selected: true,

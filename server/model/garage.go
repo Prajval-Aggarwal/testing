@@ -17,6 +17,7 @@ type GarageUpgrades struct {
 	CarLimit      int    `json:"carLimit"`      //limit of cars a player can store in that garage
 }
 type GarageCarList struct {
+	PlayerId string `json:"playerId"`
 	GarageId string `json:"garageId"`
 	CarId    string `json:"carId"`
 }
