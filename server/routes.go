@@ -31,6 +31,15 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/login", handler.LoginHandler)
 	server.engine.PUT("/update-email", handler.UpdateEmailHandler)
 
+	//Car upgrade routes
+	server.engine.PUT("/upgrade-engine", handler.UpgradeEngineHandler)
+	server.engine.PUT("/upgrade-turbo", handler.UpgradeTurboHandler)
+	server.engine.PUT("/upgrade-intake", handler.UpgradeIntakeHandler)
+	server.engine.PUT("/upgrade-nitrous", handler.UpgradeNitrousHandler)
+	server.engine.PUT("/upgrade-body", handler.UpgradeBodyHandler)
+	server.engine.PUT("/upgrade-tires", handler.UpgradeTiresHandler)
+	server.engine.PUT("/upgrade-transmission", handler.UpgradeTransmissionHandler)
+
 	//swagger routes
 	server.engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

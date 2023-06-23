@@ -62,4 +62,8 @@ const (
 	FAILED_TO_UPDATE         string = "Failed to update in database"
 	GARAGE_UPGRADED          string = "Garage upgrade successfully"
 	ADD_CAR_TO_GARAGE_FAILED string = "Unable to add car to garage"
+	PARTS_CANNOT_BE_UPGRADED string = "Part cannot be upgarded more"
+	CASH_LIMIT_EXCEEDED      string = "Cash limit exceeded"
+	COINS_LIMIT_EXCEEDED     string = "Coins limit exceeded"
+	STATS_ERROR              string = "Stats error"
 )

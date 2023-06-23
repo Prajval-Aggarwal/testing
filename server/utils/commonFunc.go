@@ -57,3 +57,13 @@ func HashPassword(password string) (*string, error) {
 	hashedPassword := string(bs)
 	return &hashedPassword, nil
 }
+
+func AlreadyAtMax(val int) bool {
+	return val == 5
+
+}
+
+func UpgradeCarLevel(playerId string, car_id string) {
+
+	//checks the sum of
+}

@@ -15,12 +15,12 @@ type Car struct {
 }
 
 type CarStats struct {
-	CarId      uuid.UUID `json:"carId"`
-	Power      int64     `json:"power"`
-	Grip       int64     `json:"grip"`
-	ShiftTime  float64   `json:"shiftTime"`
-	Weight     int64     `json:"weight"`
-	OR         float64   `json:"or"` //overall rating of the car
-	Durability int64     `json:"Durability"`
-	RepairCost int64     `json:"RepairCost"`
+	CarId       uuid.UUID `json:"carId"`
+	Power       int64     `json:"power"`
+	Grip        int64     `json:"grip"`
+	Weight      int64     `json:"weight"`
+	ShiftTime   float64   `json:"shiftTime"`
+	OR          float64   `json:"or"` //overall rating of the car
+	Durability  int64     `json:"Durability"`
+	NitrousTime int       `json:"nitrousTime"` //increased when nitrous is upgraded
 }
