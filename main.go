@@ -10,10 +10,10 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// @title Gin Demo App
-// @version 1.0
-// @description This is a demo version of Gin app.
-// @BasePath /
+// @title Drag Racing
+// @version 2.0
+// @description This is the doumentation for drag racing game
+// @BasePath localhost:3000
 func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")

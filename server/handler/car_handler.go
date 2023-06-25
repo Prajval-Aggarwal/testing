@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"main/server/request"
 	"main/server/response"
 	"main/server/services/car"
@@ -9,6 +10,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// EquipCarService equips a car for a player.
+//
+// @Summary Equip Car
+// @Description Equip a car for a player
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param equipRequest body  request.CarRequest true "Equip Car Request"
+// @Success 200 {object} response.Success "Car equipped successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Router /equip-car [put]
 func EquipCarHandler(ctx *gin.Context) {
 	var equipRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
@@ -31,6 +45,20 @@ func EquipCarHandler(ctx *gin.Context) {
 
 }
 
+// @Summary Buy Car
+// @Description Buy a car for a player
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param carRequest body  request.CarRequest true "Buy Car Request"
+// @Security ApiKeyAuth
+// @Success 200 {object} response.Success "Car added to player successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure 404 {object} response.Success "Car not found"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /buy-car [post]
 func BuyCarHandler(ctx *gin.Context) {
 	var carRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
@@ -52,6 +80,22 @@ func BuyCarHandler(ctx *gin.Context) {
 	car.BuyCarService(ctx, carRequest, playerId.(string))
 }
 
+// SellCarService sells a car for a player.
+//
+// @Summary Sell Car
+// @Description Sell a car for a player
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param sellCarRequest body request.CarRequest true "Sell Car Request"
+// @Security ApiKeyAuth
+// @Success 200 {object} response.Success "Car sold successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 404 {object} response.Success "Car not found"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /sell-car [post]
 func SellCarHandler(ctx *gin.Context) {
 	var sellCarRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
@@ -78,6 +122,7 @@ func SellCarHandler(ctx *gin.Context) {
 func RepairCarHandler(ctx *gin.Context) {
 	var sellCarRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
+	fmt.Println("player is from token is:", playerId)
 	if !exists {
 		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
@@ -93,5 +138,5 @@ func RepairCarHandler(ctx *gin.Context) {
 		return
 	}
 
-	car.SellCarService(ctx, sellCarRequest, playerId.(string))
+	//car.RepairCarService(ctx, sellCarRequest, playerId.(string))
 }

@@ -23,7 +23,7 @@ func BuyGarageService(ctx *gin.Context, buyRequest request.GarageRequest, player
 	//get garage details
 	var garageDetails model.Garage
 	//check if the garage exists of not
-	if !db.RecordExist("garage", buyRequest.GarageId, "garage_id") {
+	if !db.RecordExist("garages", buyRequest.GarageId, "garage_id") {
 		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
@@ -131,7 +131,7 @@ func UpgradeGarageService(ctx *gin.Context, upgradeRequest request.GarageRequest
 func GetAllGarageListService(ctx *gin.Context) {
 	var garageList []model.Garage
 
-	query := "SELECT * FROM garage"
+	query := "SELECT * FROM garages"
 	err := db.QueryExecutor(query, &garageList)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
@@ -151,7 +151,7 @@ func GetPlayerGarageListService(ctx *gin.Context, playerId string) {
 		GarageLevel string  `json:"garageLevel"`
 	}
 
-	query := "SELECT pg.garage_id, g.garage_name, g.longitude, g.latitude, pg.garage_level FROM PlayerGarage pg JOIN Garage g ON pg.garage_id = g.garage_id WHERE pg.player_id = ?"
+	query := "SELECT pg.garage_id, g.garage_name, g.longitude, g.latitude, pg.garage_level FROM owned_garages pg JOIN garages g ON pg.garage_id = g.garage_id WHERE pg.player_id = ?"
 
 	err := db.QueryExecutor(query, &garageList, playerId)
 	if err != nil {
@@ -185,13 +185,13 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 	if !exists {
-		response.ShowResponse("Record not fond", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
 	//check the car limit of that garage
 	var ownedGarageDetails model.OwnedGarage
-	query = "SELECT * FROM owned_garage WHERE player_id=? ADN garage_id=?"
+	query = "SELECT * FROM owned_garages WHERE player_id=? ADN garage_id=?"
 	err = db.QueryExecutor(query, &ownedGarageDetails, playerId, addCarRequest.GarageId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
@@ -200,7 +200,7 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 
 	//get the count of cars in that garage and then compare
 	var count int64
-	query = "SELECT count(*) FROM  garage_car_list WHERE player_id=? AND garage_id=?"
+	query = "SELECT count(*) FROM  garage_car_lists WHERE player_id=? AND garage_id=?"
 	err = db.QueryExecutor(query, &count, playerId, addCarRequest.GarageId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)

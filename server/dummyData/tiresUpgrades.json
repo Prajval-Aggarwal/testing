@@ -1,0 +1,142 @@
+[
+    {
+        "carClass": "Class X",
+        "level": 1,
+        "grip": 80,
+        "cashPrice": 5000,
+        "coinPrice": 200
+    },
+    {
+        "carClass": "Class X",
+        "level": 2,
+        "grip": 85,
+        "cashPrice": 8000,
+        "coinPrice": 300
+    },
+    {
+        "carClass": "Class X",
+        "level": 3,
+        "grip": 90,
+        "cashPrice": 12000,
+        "coinPrice": 400
+    },
+    {
+        "carClass": "Class X",
+        "level": 4,
+        "grip": 95,
+        "cashPrice": 16000,
+        "coinPrice": 500
+    },
+    {
+        "carClass": "Class X",
+        "level": 5,
+        "grip": 100,
+        "cashPrice": 20000,
+        "coinPrice": 600
+    },
+    {
+        "carClass": "Class Y",
+        "level": 1,
+        "grip": 70,
+        "cashPrice": 5000,
+        "coinPrice": 200
+    },
+    {
+        "carClass": "Class Y",
+        "level": 2,
+        "grip": 75,
+        "cashPrice": 8000,
+        "coinPrice": 300
+    },
+    {
+        "carClass": "Class Y",
+        "level": 3,
+        "grip": 80,
+        "cashPrice": 12000,
+        "coinPrice": 400
+    },
+    {
+        "carClass": "Class Y",
+        "level": 4,
+        "grip": 85,
+        "cashPrice": 16000,
+        "coinPrice": 500
+    },
+    {
+        "carClass": "Class Y",
+        "level": 5,
+        "grip": 90,
+        "cashPrice": 20000,
+        "coinPrice": 600
+    },
+    {
+        "carClass": "Class Z",
+        "level": 1,
+        "grip": 65,
+        "cashPrice": 5000,
+        "coinPrice": 200
+    },
+    {
+        "carClass": "Class Z",
+        "level": 2,
+        "grip": 70,
+        "cashPrice": 8000,
+        "coinPrice": 300
+    },
+    {
+        "carClass": "Class Z",
+        "level": 3,
+        "grip": 75,
+        "cashPrice": 12000,
+        "coinPrice": 400
+    },
+    {
+        "carClass": "Class Z",
+        "level": 4,
+        "grip": 80,
+        "cashPrice": 16000,
+        "coinPrice": 500
+    },
+    {
+        "carClass": "Class Z",
+        "level": 5,
+        "grip": 85,
+        "cashPrice": 20000,
+        "coinPrice": 600
+    },
+    {
+        "carClass": "Class W",
+        "level": 1,
+        "grip": 100,
+        "cashPrice": 5000,
+        "coinPrice": 200
+    },
+    {
+        "carClass": "Class W",
+        "level": 2,
+        "grip": 110,
+        "cashPrice": 8000,
+        "coinPrice": 300
+    },
+    {
+        "carClass": "Class W",
+        "level": 3,
+        "grip": 120,
+        "cashPrice": 12000,
+        "coinPrice": 400
+    },
+    {
+        "carClass": "Class W",
+        "level": 4,
+        "grip": 130,
+        "cashPrice": 16000,
+        "coinPrice": 500
+    },
+    {
+        "carClass": "Class W",
+        "level": 5,
+        "grip": 140,
+        "cashPrice": 20000,
+        "coinPrice": 600
+    }
+]

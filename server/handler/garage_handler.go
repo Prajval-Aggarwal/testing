@@ -10,6 +10,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// BuyGarageService buys a garage for a player.
+//
+// @Summary Buy Garage
+// @Description Buy a garage for a player
+// @Tags Garage
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param buyRequest body request.GarageRequest true "Buy Garage Request"
+// @Security ApiKeyAuth
+// @Success 200 {object} response.Success "Garage bought successfully"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure 404 {object} response.Success "Garage not found"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /buy-garage [post]
 func BuyGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
@@ -34,10 +50,34 @@ func BuyGarageHandler(ctx *gin.Context) {
 
 }
 
+// GetAllGarageListService retrieves the list of all garages.
+//
+// @Summary Get All Garage List
+// @Description Retrieve the list of all garages
+// @Tags Garage
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.Success "Garage list fetched successfully"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /get-all-garages [get]
 func GetAllGarageListHandler(ctx *gin.Context) {
 	garage.GetAllGarageListService(ctx)
 }
 
+// UpgradeGarageService upgrades a player's garage.
+//
+// @Summary Upgrade Garage
+// @Description Upgrade a player's garage to the next level
+// @Tags Garage
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.GarageRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "Garage upgraded successfully"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrage-garage [put]
 func UpgradeGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
@@ -61,6 +101,20 @@ func UpgradeGarageHandler(ctx *gin.Context) {
 	garage.UpgradeGarageService(ctx, upgradeRequest, playerId.(string))
 }
 
+// AddCarToGarageService adds a car to a player's garage.
+//
+// @Summary Add Car to Garage
+// @Description Add a car to a player's garage
+// @Tags Garage
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param addCarRequest body request.AddCarRequest true "Add Car Request"
+// @Success 200 {object} response.Success "Car added to garage successfully"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /add-car-garage [post]
 func AddCarToGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
@@ -85,7 +139,18 @@ func AddCarToGarageHandler(ctx *gin.Context) {
 	garage.AddCarToGarageService(ctx, addCarRequest, playerId.(string))
 }
 
-// gives the list of garages owned by users
+// GetPlayerGarageListService retrieves the list of garages owned by a player.
+//
+// @Summary Get Player Garage List
+// @Description Retrieve the list of garages owned by a player
+// @Tags Garage
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Success 200 {object} response.Success "Data fetched successfully"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /get-garage [get]
 func GetPlayerGarageListHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)

@@ -1,0 +1,164 @@
+[
+  {
+    "garageId": "1",
+    "upgradeLevel": 2,
+    "upgradeAmount": 1000,
+    "carLimit": 5
+  },
+  {
+    "garageId": "1",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 7
+  },
+  {
+    "garageId": "1",
+    "upgradeLevel": 4,
+    "upgradeAmount": 4000,
+    "carLimit": 9
+  },
+  {
+    "garageId": "2",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "2",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "2",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "3",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "3",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "3",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "4",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "4",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "4",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "5",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "5",
+    "upgradeLevel": 3,
+    "upgradeAmount": 5000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "5",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "6",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "6",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "6",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "7",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "7",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "7",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "8",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "8",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "8",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  },
+  {
+    "garageId": "9",
+    "upgradeLevel": 2,
+    "upgradeAmount": 2000,
+    "carLimit": 8
+  },
+  {
+    "garageId": "9",
+    "upgradeLevel": 3,
+    "upgradeAmount": 2000,
+    "carLimit": 10
+  },
+  {
+    "garageId": "9",
+    "upgradeLevel": 4,
+    "upgradeAmount": 2000,
+    "carLimit": 13
+  }
+]

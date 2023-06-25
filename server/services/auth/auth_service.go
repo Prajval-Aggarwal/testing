@@ -23,7 +23,7 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 	//Generate access and refresh token
 
 	if guestLoginReuqest.Token == "" {
-		accessTokenexpirationTime := time.Now().Add(2 * time.Minute) //5 minute expiration time for access token
+		accessTokenexpirationTime := time.Now().Add(5 * time.Hour) //5 minute expiration time for access token
 
 		fmt.Println("accessTokenExpiration time is", accessTokenexpirationTime)
 		playeruuid := uuid.New()
@@ -34,8 +34,8 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 			PlayerName: guestLoginReuqest.PlayerName,
 			Role:       "player",
 			OS:         int64(guestLoginReuqest.OS),
-			Coins:      100,
-			Cash:       10,
+			Coins:      10000000,
+			Cash:       10000000,
 			DeviceId:   guestLoginReuqest.DeviceId,
 		}
 
@@ -49,28 +49,28 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 		}
 		accessToken, err := token.GenerateToken(accessTokenClaims)
 		if err != nil {
-			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
 		}
 
 		//create a record in database
 		err = db.CreateRecord(&playerRecord)
 		if err != nil {
-			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
 		}
 
 		fmt.Println("access token generated:", *accessToken)
 
-		response.ShowResponse("Guest login successfull", utils.HTTP_OK, "success", *accessToken, ctx)
+		response.ShowResponse(utils.LOGIN_SUCCESS, utils.HTTP_OK, utils.SUCCESS, *accessToken, ctx)
 	} else {
 		fmt.Println("token form request is", guestLoginReuqest.Token)
 		newToken, err := token.CheckExpiration(guestLoginReuqest.Token)
 		if err != nil {
-			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
 		}
-		response.ShowResponse("Guest login successfull", utils.HTTP_OK, "success", *newToken, ctx)
+		response.ShowResponse(utils.LOGIN_SUCCESS, utils.HTTP_OK, utils.SUCCESS, *newToken, ctx)
 
 	}
 
@@ -82,12 +82,12 @@ func LoginService(ctx *gin.Context, loginDetails request.LoginRequest) {
 	//first check if the player with that email exists or not
 	err := db.FindById(&playerLogin, loginDetails.Email, "email")
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 
 		return
 	}
 
-	accessTokenexpirationTime := time.Now().Add(5 * time.Minute) //5 minute expiration time for access token
+	accessTokenexpirationTime := time.Now().Add(5 * time.Hour) //5 minute expiration time for access token
 
 	accessTokenClaims := model.Claims{
 		Id:   playerLogin.PlayerId,
@@ -101,52 +101,45 @@ func LoginService(ctx *gin.Context, loginDetails request.LoginRequest) {
 	//Generate access and refresh token
 	accessToken, err := token.GenerateToken(accessTokenClaims)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	response.ShowResponse("Login successfull", utils.HTTP_OK, "success", *accessToken, ctx)
+	response.ShowResponse(utils.LOGIN_SUCCESS, utils.HTTP_OK, utils.SUCCESS, *accessToken, ctx)
 
 }
 
-func UpdateEmailService(ctx *gin.Context, email request.UpdateEmailRequest, tokenString string) {
+func UpdateEmailService(ctx *gin.Context, email request.UpdateEmailRequest, playerId string) {
 
 	var playerDetails model.Player
 	//check if the password is valid or not
 
 	//token Decoding
-	tokenClaims, err := token.DecodeToken(tokenString)
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, "failure", nil, ctx)
-		return
-	}
-
-	fmt.Println("token claims after decoding is", tokenClaims)
 
 	if db.RecordExist("players", email.Email, "email") {
-		response.ShowResponse("Email is already attached to another player", utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+		response.ShowResponse("Email is already attached to another player", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	if !db.RecordExist("players", tokenClaims.Id.String(), "player_id") {
-		response.ShowResponse("Player not found", utils.HTTP_NOT_FOUND, "failure", nil, ctx)
+	if !db.RecordExist("players", playerId, "player_id") {
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
-	err = db.FindById(&playerDetails, tokenClaims.Id, "player_id")
+	err := db.FindById(&playerDetails, playerId, "player_id")
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 
 	}
 	//check if the record exists of not
 
 	query := "UPDATE players SET email=? WHERE player_id=?"
-	err = db.RawExecutor(query, email.Email, tokenClaims.Id)
+	err = db.RawExecutor(query, email.Email, playerId)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 
 	}
 
-	response.ShowResponse("Email updated successfully", utils.HTTP_OK, "success", nil, ctx)
+	response.ShowResponse(utils.EMAIL_UPDATED_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }

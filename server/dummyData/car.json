@@ -1,0 +1,101 @@
+[
+  {
+    "carId": "1",
+    "carName": "Car 1",
+    "currLevel": 2,
+    "level": 5,
+    "currType": "cash",
+    "currAmount": 100,
+    "maxLevel": 10,
+    "class": "Class X",
+    "locked": false
+  },
+  {
+    "carId": "2",
+    "carName": "Car 2",
+    "currLevel": 3,
+    "level": 6,
+    "currType": "coins",
+    "currAmount": 200,
+    "maxLevel": 12,
+    "class": "Class Y",
+    "locked": true
+  },
+  {
+    "carId": "3",
+    "carName": "Car 3",
+    "currLevel": 1,
+    "level": 3,
+    "currType": "coins",
+    "currAmount": 50,
+    "maxLevel": 8,
+    "class": "Class Z",
+    "locked": false
+  },
+  {
+    "carId": "4",
+    "carName": "Car 4",
+    "currLevel": 4,
+    "level": 7,
+    "currType": "coins",
+    "currAmount": 150,
+    "maxLevel": 9,
+    "class": "Class W",
+    "locked": true
+  },
+  {
+    "carId": "5",
+    "carName": "Car 5",
+    "currLevel": 2,
+    "level": 5,
+    "currType": "cash",
+    "currAmount": 80,
+    "maxLevel": 12,
+    "class": "Class Y",
+    "locked": true
+  },
+  {
+    "carId": "6",
+    "carName": "Car 6",
+    "currLevel": 3,
+    "level": 6,
+    "currType": "coins",
+    "currAmount": 120,
+    "maxLevel": 10,
+    "class": "Class Z",
+    "locked": false
+  },
+  {
+    "carId": "7",
+    "carName": "Car 7",
+    "currLevel": 5,
+    "level": 8,
+    "currType": "coins",
+    "currAmount": 200,
+    "maxLevel": 11,
+    "class": "Class X",
+    "locked": true
+  },
+  {
+    "carId": "8",
+    "carName": "cash",
+    "currLevel": 1,
+    "level": 4,
+    "currType": "Type H",
+    "currAmount": 50,
+    "maxLevel": 7,
+    "class": "Class W",
+    "locked": true
+  },
+  {
+    "carId": "9",
+    "carName": "Car 9",
+    "currLevel": 3,
+    "level": 6,
+    "currType": "coins" ,
+    "currAmount": 150,
+    "maxLevel": 9,
+    "class": "Class Z",
+    "locked": true
+  }
+]

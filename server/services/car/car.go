@@ -12,20 +12,20 @@ import (
 
 func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId string) {
 
-	query := "Update player_cars SET selected=false WHERE player_id=? AND selected=true"
+	query := "Update owned_cars SET selected=false WHERE player_id=? AND selected=true"
 	err := db.RawExecutor(query, playerId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
-	query = "UPDATE player_cars SET selected=true WHERE player_id=? AND car_id=?"
+	query = "UPDATE owned_cars SET selected=true WHERE player_id=? AND car_id=?"
 	err = db.RawExecutor(query, playerId, equipRequest.CarId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	response.ShowResponse("Current car selectde successfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+	response.ShowResponse("Current car selected successfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }
 func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId string) {
@@ -34,7 +34,7 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 	var playerDetails model.Player
 
 	//check if the car exists or not
-	if !db.RecordExist("car", carRequest.CarId, "car_id") {
+	if !db.RecordExist("cars", carRequest.CarId, "car_id") {
 		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
@@ -43,7 +43,10 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
-
+	if !carDetails.Locked {
+		response.ShowResponse("Car already bought", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	// get the details of the player from the database
 	err = db.FindById(&playerDetails, playerId, "player_id")
 	if err != nil {
@@ -89,13 +92,13 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
-	response.ShowResponse("Car added to player successfully", utils.HTTP_OK, utils.SUCCESS, playerCar, ctx)
+	response.ShowResponse(utils.CAR_BOUGHT_SUCESS, utils.HTTP_OK, utils.SUCCESS, playerCar, ctx)
 }
 
 func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerId string) {
 
-	if !db.RecordExist("player_cars", sellCarRequest.CarId, "car_id") {
-		response.ShowResponse("Car not found", utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
+	if !db.RecordExist("owned_cars", sellCarRequest.CarId, "car_id") {
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -128,13 +131,13 @@ func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerI
 		return
 	}
 	//delete the car from players collection
-	query := "DELETE FROM player_cars WHERE car_id =? AND player_id =?"
+	query := "DELETE FROM owned_cars WHERE car_id =? AND player_id =?"
 	err = db.RawExecutor(query, sellCarRequest.CarId, playerId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	response.ShowResponse("Car sold sucessfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+	response.ShowResponse(utils.CAR_SOLD_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }

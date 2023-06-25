@@ -66,4 +66,7 @@ const (
 	CASH_LIMIT_EXCEEDED      string = "Cash limit exceeded"
 	COINS_LIMIT_EXCEEDED     string = "Coins limit exceeded"
 	STATS_ERROR              string = "Stats error"
+	EMAIL_UPDATED_SUCCESS    string = "Email updated successfully"
+	CAR_SOLD_SUCCESS         string = "Car sold sucessfully"
+	CAR_BOUGHT_SUCESS        string = "Car bought successfully"
 )

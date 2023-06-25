@@ -1,0 +1,92 @@
+[
+    {
+        "carId": "1",
+        "power": 250,
+        "grip": 80,
+        "weight": 1200,
+        "shiftTime": 3.5,
+        "or": 4.2,
+        "Durability": 90,
+        "nitrousTime": 5
+    },
+    {
+        "carId": "2",
+        "power": 300,
+        "grip": 85,
+        "weight": 1250,
+        "shiftTime": 3.2,
+        "or": 4.5,
+        "Durability": 95,
+        "nitrousTime": 5
+    },
+    {
+        "carId": "3",
+        "power": 200,
+        "grip": 75,
+        "weight": 1100,
+        "shiftTime": 3.8,
+        "or": 4.0,
+        "Durability": 85,
+        "nitrousTime": 4
+    },
+    {
+        "carId": "4",
+        "power": 280,
+        "grip": 82,
+        "weight": 1220,
+        "shiftTime": 3.4,
+        "or": 4.3,
+        "Durability": 92,
+        "nitrousTime": 5
+    },
+    {
+        "carId": "5",
+        "power": 320,
+        "grip": 88,
+        "weight": 1300,
+        "shiftTime": 3.0,
+        "or": 4.7,
+        "Durability": 97,
+        "nitrousTime": 5
+    },
+    {
+        "carId": "6",
+        "power": 230,
+        "grip": 78,
+        "weight": 1150,
+        "shiftTime": 3.6,
+        "or": 4.1,
+        "Durability": 88,
+        "nitrousTime": 4
+    },
+    {
+        "carId": "7",
+        "power": 300,
+        "grip": 85,
+        "weight": 1280,
+        "shiftTime": 3.2,
+        "or": 4.5,
+        "Durability": 95,
+        "nitrousTime": 5
+    },
+    {
+        "carId": "8",
+        "power": 240,
+        "grip": 80,
+        "weight": 1150,
+        "shiftTime": 3.6,
+        "or": 4.1,
+        "Durability": 88,
+        "nitrousTime": 4
+    },
+    {
+        "carId": "9",
+        "power": 280,
+        "grip": 82,
+        "weight": 1220,
+        "shiftTime": 3.4,
+        "or": 4.3,
+        "Durability": 92,
+        "nitrousTime": 5
+    }
+]

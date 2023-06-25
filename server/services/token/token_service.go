@@ -31,11 +31,13 @@ func DecodeToken(tokenString string) (*model.Claims, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("error")
 		}
+
 		return []byte(os.Getenv("JWTKEY")), nil
 	})
+	fmt.Println("claims is", claims)
 
 	if err != nil || !parsedToken.Valid {
-		return claims, fmt.Errorf("invalid token")
+		return nil, fmt.Errorf("invalid token")
 	}
 	return claims, nil
 }

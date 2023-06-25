@@ -10,6 +10,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UpgradeEngineService upgrades the engine of a player's car.
+//
+// @Summary Upgrade Engine
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "Engine upgraded successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-engine [put]
 func UpgradeEngineHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)

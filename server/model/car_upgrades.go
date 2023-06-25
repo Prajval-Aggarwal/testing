@@ -4,57 +4,51 @@ type Engine struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
 	Power     int64  `json:"power"`
-	CashPrice int    `json:"cashPrice"`
-	CoinPrice int    `json:"coinPrice"`
+	CashPrice int64  `json:"cashPrice"`
+	CoinPrice int64  `json:"coinPrice"`
 }
 type Turbo struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
-	Price     int    `json:"price"`
 	Power     int64  `json:"power"`
-	CashPrice int    `json:"cashPrice"`
-	CoinPrice int    `json:"coinPrice"`
+	CashPrice int64  `json:"cashPrice"`
+	CoinPrice int64  `json:"coinPrice"`
 }
 type Intake struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
-	Price     int    `json:"price"`
 	Power     int64  `json:"power"`
-	CashPrice int    `json:"cashPrice"`
-	CoinPrice int    `json:"coinPrice"`
+	CashPrice int64  `json:"cashPrice"`
+	CoinPrice int64  `json:"coinPrice"`
 }
 type Nitrous struct {
 	CarClass    string `json:"carClass"`
 	Level       int    `json:"level"`
-	Price       int    `json:"price"`
-	NitrousTime int    `json:"nitrousTime"` //increased when nitrous is upgraded
-	CashPrice   int    `json:"cashPrice"`
-	CoinPrice   int    `json:"coinPrice"`
-}
-type Body struct {
-	CarClass  string `json:"carClass"`
-	Level     int    `json:"level"`
-	Price     int    `json:"price"`
-	Grip      int64  `json:"grip"`
-	Weight    int64  `json:"weight"`
-	CashPrice int    `json:"cashPrice"`
-	CoinPrice int    `json:"coinPrice"`
+	NitrousTime int64  `json:"nitrousTime"` //increased when nitrous is upgraded
+	CashPrice   int64  `json:"cashPrice"`
+	CoinPrice   int64  `json:"coinPrice"`
 }
 type Tires struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
-	Price     int    `json:"price"`
 	Grip      int64  `json:"grip"`
-	CashPrice int    `json:"cashPrice"`
-	CoinPrice int    `json:"coinPrice"`
+	CashPrice int64  `json:"cashPrice"`
+	CoinPrice int64  `json:"coinPrice"`
+}
+type Body struct {
+	CarClass  string `json:"carClass"`
+	Level     int    `json:"level"`
+	Grip      int64  `json:"grip"`
+	Weight    int64  `json:"weight"`
+	CashPrice int64  `json:"cashPrice"`
+	CoinPrice int64  `json:"coinPrice"`
 }
 type Transmission struct {
 	CarClass  string  `json:"carClass"`
 	Level     int     `json:"level"`
-	Price     int     `json:"price"`
 	ShiftTime float64 `json:"shiftTime"`
-	CashPrice int     `json:"cashPrice"`
-	CoinPrice int     `json:"coinPrice"`
+	CashPrice int64   `json:"cashPrice"`
+	CoinPrice int64   `json:"coinPrice"`
 }
 
 /*○ Engine

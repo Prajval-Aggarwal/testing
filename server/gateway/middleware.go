@@ -14,9 +14,11 @@ func UserAuthorization(ctx *gin.Context) {
 
 	fmt.Println("inside middleware")
 	tokenString := ctx.Request.Header.Get("Authorization")
-
+	fmt.Println("token string is", tokenString)
 	claims, err := token.DecodeToken(tokenString)
+	fmt.Println("claims from middleware is:", claims)
 	if err != nil {
+		fmt.Println("sndnfnskdfnk")
 		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		ctx.Abort()
 		return
@@ -27,16 +29,17 @@ func UserAuthorization(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	if claims.Role == "player" {
-		ctx.Next()
-	} else {
+	if claims.Role != "player" {
 		response.ShowResponse(utils.ACCESS_DENIED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		ctx.Abort()
 		return
 	}
-	//set the token details into context for further processing in handler function
-	ctx.Next()
 
+	fmt.Println("player is is", claims.Id.String())
+	ctx.Set("playerId", claims.Id.String())
+	//set the token details into context for further processing in handler function
+
+	ctx.Next()
 }
 
 func AdminAuthorization(ctx *gin.Context) {
