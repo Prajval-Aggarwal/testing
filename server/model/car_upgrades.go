@@ -4,6 +4,7 @@ type Engine struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
 	Power     int64  `json:"power"`
+	OR        int64  `json:"overallRating"`
 	CashPrice int64  `json:"cashPrice"`
 	CoinPrice int64  `json:"coinPrice"`
 }
@@ -11,6 +12,7 @@ type Turbo struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
 	Power     int64  `json:"power"`
+	OR        int64  `json:"overallRating"`
 	CashPrice int64  `json:"cashPrice"`
 	CoinPrice int64  `json:"coinPrice"`
 }
@@ -18,6 +20,7 @@ type Intake struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
 	Power     int64  `json:"power"`
+	OR        int64  `json:"overallRating"`
 	CashPrice int64  `json:"cashPrice"`
 	CoinPrice int64  `json:"coinPrice"`
 }
@@ -32,6 +35,7 @@ type Tires struct {
 	CarClass  string `json:"carClass"`
 	Level     int    `json:"level"`
 	Grip      int64  `json:"grip"`
+	OR        int64  `json:"overallRating"`
 	CashPrice int64  `json:"cashPrice"`
 	CoinPrice int64  `json:"coinPrice"`
 }
@@ -40,6 +44,7 @@ type Body struct {
 	Level     int    `json:"level"`
 	Grip      int64  `json:"grip"`
 	Weight    int64  `json:"weight"`
+	OR        int64  `json:"overallRating"`
 	CashPrice int64  `json:"cashPrice"`
 	CoinPrice int64  `json:"coinPrice"`
 }
@@ -47,6 +52,7 @@ type Transmission struct {
 	CarClass  string  `json:"carClass"`
 	Level     int     `json:"level"`
 	ShiftTime float64 `json:"shiftTime"`
+	OR        int64   `json:"overallRating"`
 	CashPrice int64   `json:"cashPrice"`
 	CoinPrice int64   `json:"coinPrice"`
 }

@@ -3,6 +3,7 @@
         "carClass": "Class X",
         "level": 1,
         "power": 100,
+        "or":3,
         "cashPrice": 5000,
         "coinPrice": 200
     },
