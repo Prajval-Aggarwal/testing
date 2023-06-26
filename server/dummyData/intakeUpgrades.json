@@ -3,6 +3,7 @@
         "carClass": "Class X",
         "level": 1,
         "power": 100,
+        "or":2,
         "cashPrice": 5000,
         "coinPrice": 200
     },
@@ -10,6 +11,7 @@
         "carClass": "Class X",
         "level": 2,
         "power": 150,
+        "or":2,
         "cashPrice": 8000,
         "coinPrice": 300
     },
@@ -17,6 +19,7 @@
         "carClass": "Class X",
         "level": 3,
         "power": 200,
+        "or":2,
         "cashPrice": 12000,
         "coinPrice": 400
     },
@@ -24,6 +27,7 @@
         "carClass": "Class X",
         "level": 4,
         "power": 250,
+        "or":2,
         "cashPrice": 16000,
         "coinPrice": 500
     },
@@ -31,6 +35,7 @@
         "carClass": "Class X",
         "level": 5,
         "power": 300,
+        "or":2,
         "cashPrice": 20000,
         "coinPrice": 600
     },
@@ -38,6 +43,7 @@
         "carClass": "Class Y",
         "level": 1,
         "power": 120,
+        "or":2,
         "cashPrice": 6000,
         "coinPrice": 250
     },
@@ -45,6 +51,7 @@
         "carClass": "Class Y",
         "level": 2,
         "power": 160,
+        "or":2,
         "cashPrice": 9000,
         "coinPrice": 350
     },
@@ -52,6 +59,7 @@
         "carClass": "Class Y",
         "level": 3,
         "power": 200,
+        "or":2,
         "cashPrice": 12000,
         "coinPrice": 450
     },
@@ -59,6 +67,7 @@
         "carClass": "Class Y",
         "level": 4,
         "power": 240,
+        "or":2,
         "cashPrice": 15000,
         "coinPrice": 550
     },
@@ -66,6 +75,7 @@
         "carClass": "Class Y",
         "level": 5,
         "power": 280,
+        "or":2,
         "cashPrice": 18000,
         "coinPrice": 650
     },
@@ -73,6 +83,7 @@
         "carClass": "Class Z",
         "level": 1,
         "power": 200,
+        "or":2,
         "cashPrice": 10000,
         "coinPrice": 500
     },
@@ -80,6 +91,7 @@
         "carClass": "Class Z",
         "level": 2,
         "power": 250,
+        "or":2,
         "cashPrice": 15000,
         "coinPrice": 600
     },
@@ -87,6 +99,7 @@
         "carClass": "Class Z",
         "level": 3,
         "power": 300,
+        "or":2,
         "cashPrice": 20000,
         "coinPrice": 700
     },
@@ -94,6 +107,7 @@
         "carClass": "Class Z",
         "level": 4,
         "power": 350,
+        "or":2,
         "cashPrice": 25000,
         "coinPrice": 800
     },
@@ -101,6 +115,7 @@
         "carClass": "Class Z",
         "level": 5,
         "power": 400,
+        "or":2,
         "cashPrice": 30000,
         "coinPrice": 900
     },
@@ -108,6 +123,7 @@
         "carClass": "Class Z",
         "level": 1,
         "power": 200,
+        "or":2,
         "cashPrice": 10000,
         "coinPrice": 500
     },
@@ -115,6 +131,7 @@
         "carClass": "Class Z",
         "level": 2,
         "power": 250,
+        "or":2,
         "cashPrice": 15000,
         "coinPrice": 600
     },
@@ -122,6 +139,7 @@
         "carClass": "Class Z",
         "level": 3,
         "power": 300,
+        "or":2,
         "cashPrice": 20000,
         "coinPrice": 700
     },
@@ -129,6 +147,7 @@
         "carClass": "Class Z",
         "level": 4,
         "power": 350,
+        "or":2,
         "cashPrice": 25000,
         "coinPrice": 800
     },
@@ -136,6 +155,7 @@
         "carClass": "Class Z",
         "level": 5,
         "power": 400,
+        "or":2,
         "cashPrice": 30000,
         "coinPrice": 900
     },
@@ -143,6 +163,7 @@
         "carClass": "Class W",
         "level": 1,
         "power": 120,
+        "or":2,
         "cashPrice": 5000,
         "coinPrice": 200
     },
@@ -150,6 +171,7 @@
         "carClass": "Class W",
         "level": 2,
         "power": 160,
+        "or":2,
         "cashPrice": 8000,
         "coinPrice": 300
     },
@@ -157,6 +179,7 @@
         "carClass": "Class W",
         "level": 3,
         "power": 200,
+        "or":2,
         "cashPrice": 12000,
         "coinPrice": 400
     },
@@ -164,6 +187,7 @@
         "carClass": "Class W",
         "level": 4,
         "power": 240,
+        "or":2,
         "cashPrice": 16000,
         "coinPrice": 500
     },
@@ -171,6 +195,7 @@
         "carClass": "Class W",
         "level": 5,
         "power": 280,
+        "or":2,
         "cashPrice": 20000,
         "coinPrice": 600
     }

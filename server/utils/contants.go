@@ -69,4 +69,5 @@ const (
 	EMAIL_UPDATED_SUCCESS    string = "Email updated successfully"
 	CAR_SOLD_SUCCESS         string = "Car sold sucessfully"
 	CAR_BOUGHT_SUCESS        string = "Car bought successfully"
+	UPGRADE_SUCCESS          string = "Part upgraged successfully"
 )

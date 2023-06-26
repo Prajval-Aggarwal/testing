@@ -2,7 +2,12 @@ package utils
 
 import (
 	"errors"
+	"fmt"
+	"main/server/db"
+	"main/server/model"
+	"main/server/response"
 
+	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -63,7 +68,124 @@ func AlreadyAtMax(val int) bool {
 
 }
 
-func UpgradeCarLevel(playerId string, car_id string) {
+// func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
 
-	//checks the sum of
+// 	//list of points where car level upgrades automatically
+// 	var car model.OwnedCars
+// 	query := "select * from owned_cars where player_id=? and car_id=?;"
+
+// 	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
+
+// 	upgradePoints := [...]float64{20, 40, 60, 80, 100} //car will get upgraded to higher level whenever Or reaches these points
+
+// 	for i := 0; i < len(upgradePoints); i++ {
+
+// 		if playerCarStats.OR == upgradePoints[i] {
+
+// 			// upgrade the car level
+// 			car.Level++
+// 			err := db.UpdateRecord(&car, car.Level, "level").Error
+// 			if err != nil {
+// 				fmt.Println("error in updation")
+// 				// response.ShowResponse(STATS_ERROR, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+// 				response.ShowResponse("server error", HTTP_INTERNAL_SERVER_ERROR, err.Error(), "", ctx)
+// 			}
+// 			fmt.Println("car level is Upgraded successfully!!")
+
+// 			break
+// 		}
+// 	}
+// }
+
+func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
+
+	//list of points where car level upgrades automatically
+	var car model.OwnedCars
+	query := "select * from owned_cars where player_id=? and car_id=?;"
+
+	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
+
+	if playerCarStats.OVR >= 20 && playerCarStats.OVR < 40 {
+
+		if car.Level == 1 {
+			//upgrade the level
+			car.Level = 2
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+			if err != nil {
+				fmt.Println("error in level upgrade")
+			}
+			fmt.Println("CAR LEVEL UPGRADED!!")
+
+		}
+	} else if playerCarStats.OVR >= 40 && playerCarStats.OVR < 60 {
+
+		if car.Level == 2 {
+			//upgrade the level
+			car.Level = 3
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+
+			if err != nil {
+				fmt.Println("error in level upgrade")
+			}
+			fmt.Println("CAR LEVEL UPGRADED!!")
+
+		}
+	} else if playerCarStats.OVR >= 60 && playerCarStats.OVR < 80 {
+
+		if car.Level == 3 {
+			//upgrade the level
+			car.Level = 4
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+
+			if err != nil {
+				fmt.Println("error in level upgrade")
+			}
+			fmt.Println("CAR LEVEL UPGRADED!!")
+
+		}
+	} else if playerCarStats.OVR >= 80 && playerCarStats.OVR <= 100 {
+
+		if car.Level == 4 {
+			//upgrade the level
+			car.Level = 5
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+
+			if err != nil {
+				fmt.Println("error in level upgrade")
+			}
+			fmt.Println("CAR LEVEL UPGRADED!!")
+		}
+	}
+
+}
+
+func SetPlayerCarUpgrades(playerId string, carId string, ctx *gin.Context) error {
+	fmt.Println("jsdfjka;jkdbfljsdalfjbsaljbflsab;jkf")
+	playerCarUpgrades := model.PlayerCarUpgrades{
+		PlayerId:     playerId,
+		CarId:        carId,
+		Engine:       1,
+		Turbo:        1,
+		Intake:       1,
+		Nitrous:      1,
+		Body:         1,
+		Tires:        1,
+		Transmission: 1,
+	}
+	err := db.CreateRecord(playerCarUpgrades)
+	if err != nil {
+		//	response.ShowResponse(err.Error(), HTTP_INTERNAL_SERVER_ERROR, FAILURE, nil, ctx)
+		return err
+	}
+	return nil
+}
+
+func DeleteCarDetails(tableName string, playerId string, carId string, ctx *gin.Context) error {
+	query := "DELETE FROM " + tableName + "car_id =? AND player_id =?"
+	err := db.RawExecutor(query, carId, playerId)
+	if err != nil {
+		response.ShowResponse(err.Error(), HTTP_BAD_REQUEST, FAILURE, nil, ctx)
+		return err
+	}
+	return nil
 }

@@ -18,7 +18,7 @@ type CarStats struct {
 	Grip        int64   `json:"grip"`
 	Weight      int64   `json:"weight"`
 	ShiftTime   float64 `json:"shiftTime"`
-	OR          float64 `json:"or"` //overall rating of the car
+	OVR          float64 `json:"or"` //overall rating of the car
 	Durability  int64   `json:"Durability"`
 	NitrousTime int     `json:"nitrousTime"` //increased when nitrous is upgraded
 }

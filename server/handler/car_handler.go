@@ -77,6 +77,7 @@ func BuyCarHandler(ctx *gin.Context) {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
+	fmt.Println("car request is", carRequest)
 	car.BuyCarService(ctx, carRequest, playerId.(string))
 }
 
@@ -95,7 +96,7 @@ func BuyCarHandler(ctx *gin.Context) {
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 404 {object} response.Success "Car not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /sell-car [post]
+// @Router /sell-car [delete]
 func SellCarHandler(ctx *gin.Context) {
 	var sellCarRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")

@@ -13,7 +13,7 @@ import (
 // @title Drag Racing
 // @version 2.0
 // @description This is the doumentation for drag racing game
-// @BasePath localhost:3000
+// @BasePath /
 func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatal("Error loading .env file")

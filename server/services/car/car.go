@@ -1,6 +1,7 @@
 package car
 
 import (
+	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/request"
@@ -28,25 +29,41 @@ func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId
 	response.ShowResponse("Current car selected successfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }
+
 func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId string) {
 
 	var carDetails model.Car
 	var playerDetails model.Player
+
+	fmt.Println("car details is", carRequest.CarId)
+	//if player laready has that car
+	var exists bool
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id =?)"
+	err := db.QueryExecutor(query, &exists, playerId, carRequest.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	if exists {
+		response.ShowResponse("Car already bought", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+
+		return
+	}
 
 	//check if the car exists or not
 	if !db.RecordExist("cars", carRequest.CarId, "car_id") {
 		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
-	err := db.FindById(&carDetails, carRequest.CarId, "car_id")
+	err = db.FindById(&carDetails, carRequest.CarId, "car_id")
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
-	if !carDetails.Locked {
-		response.ShowResponse("Car already bought", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
+	// if !carDetails.Locked {
+	// 	response.ShowResponse("Car already bought", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+	// 	return
+	// }
 	// get the details of the player from the database
 	err = db.FindById(&playerDetails, playerId, "player_id")
 	if err != nil {
@@ -74,25 +91,62 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		return
 	}
 
+	//deduct player money
+	if carDetails.CurrType == "coins" {
+		playerDetails.Coins -= int64(carDetails.CurrAmount)
+	} else {
+		playerDetails.Cash -= int64(carDetails.CurrAmount)
+	}
+
+	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	var currentCarStat model.CarStats
+	err = db.FindById(&currentCarStat, carRequest.CarId, "car_id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	//Add the car to players account and make it as players current selected car
 	playerCar := model.OwnedCars{
 		PlayerId: playerId,
 		CarId:    carRequest.CarId,
 		Selected: true,
+		Level:    1,
 	}
 
-	query := "UPDATE cars SET locked=false WHERE car_id=?"
-	err = db.RawExecutor(query, carRequest.CarId)
+	playerCarStats := model.PlayerCarsStats{
+		PlayerId:    playerId,
+		CarId:       carRequest.CarId,
+		Power:       currentCarStat.Power,
+		Grip:        currentCarStat.Grip,
+		ShiftTime:   currentCarStat.ShiftTime,
+		Weight:      currentCarStat.Weight,
+		OVR:         currentCarStat.OVR,
+		Durability:  currentCarStat.Durability,
+		NitrousTime: float64(currentCarStat.NitrousTime),
+	}
+
+	//set initial car parts level
+	err = utils.SetPlayerCarUpgrades(playerId, carRequest.CarId, ctx)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
 	err = db.CreateRecord(&playerCar)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
-	response.ShowResponse(utils.CAR_BOUGHT_SUCESS, utils.HTTP_OK, utils.SUCCESS, playerCar, ctx)
+	err = db.CreateRecord(&playerCarStats)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	response.ShowResponse(utils.CAR_BOUGHT_SUCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
 
 func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerId string) {
@@ -122,7 +176,7 @@ func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerI
 	if carDetails.CurrType == "coins" {
 		playerDetails.Coins += int64(0.3 * float64(carDetails.CurrAmount))
 	} else {
-		playerDetails.Coins += int64(0.6 * float64(carDetails.CurrAmount))
+		playerDetails.Cash += int64(0.6 * float64(carDetails.CurrAmount))
 	}
 
 	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
@@ -131,13 +185,24 @@ func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerI
 		return
 	}
 	//delete the car from players collection
-	query := "DELETE FROM owned_cars WHERE car_id =? AND player_id =?"
-	err = db.RawExecutor(query, sellCarRequest.CarId, playerId)
+
+	err = utils.DeleteCarDetails("owned_cars", playerId, sellCarRequest.CarId, ctx)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
+	err = utils.DeleteCarDetails("player_cars_stats", playerId, sellCarRequest.CarId, ctx)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = utils.DeleteCarDetails("player_car_upgrades", playerId, sellCarRequest.CarId, ctx)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	response.ShowResponse(utils.CAR_SOLD_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }

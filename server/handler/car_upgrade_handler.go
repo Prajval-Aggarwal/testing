@@ -20,6 +20,7 @@ import (
 // @Param Authorization header string true "Access token"
 // @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
 // @Success 200 {object} response.Success "Engine upgraded successfully"
+// @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /upgrade-engine [put]
@@ -44,6 +45,21 @@ func UpgradeEngineHandler(ctx *gin.Context) {
 	car.UpgradeEngineService(ctx, upgradeEngineRequest, playerId.(string))
 
 }
+
+// UpgradeTurboService upgrades the turbo of a player's car.
+//
+// @Summary Upgrade Turbo
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "Turbo upgraded successfully"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-turbo [put]
 func UpgradeTurboHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)
@@ -65,6 +81,20 @@ func UpgradeTurboHandler(ctx *gin.Context) {
 	car.UpgradeTurboService(ctx, upgradeTurboRequest, playerId.(string))
 }
 
+// UpgradeIntakeService upgrades the intake of a player's car.
+//
+// @Summary Upgrade intake
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "intake upgraded successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-intake [put]
 func UpgradeIntakeHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)
@@ -87,6 +117,20 @@ func UpgradeIntakeHandler(ctx *gin.Context) {
 
 }
 
+// UpgradenitrousService upgrades the nitrous of a player's car.
+//
+// @Summary Upgrade nitrous
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "nitrous upgraded successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-nitrous [put]
 func UpgradeNitrousHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)
@@ -108,6 +152,20 @@ func UpgradeNitrousHandler(ctx *gin.Context) {
 	car.UpgradeNitrousService(ctx, upgradeNitrousRequest, playerId.(string))
 }
 
+// UpgradebodyService upgrades the body of a player's car.
+//
+// @Summary Upgrade body
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "body upgraded successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-body [put]
 func UpgradeBodyHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)
@@ -130,6 +188,20 @@ func UpgradeBodyHandler(ctx *gin.Context) {
 
 }
 
+// UpgradetiresService upgrades the tires of a player's car.
+//
+// @Summary Upgrade tires
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "tires upgraded successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-tires [put]
 func UpgradeTiresHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)
@@ -152,6 +224,20 @@ func UpgradeTiresHandler(ctx *gin.Context) {
 
 }
 
+// UpgradetransmissionService upgrades the transmission of a player's car.
+//
+// @Summary Upgrade transmission
+// @Description Upgrade the engine of a player's car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Access token"
+// @Param upgradeRequest body request.CarUpgradesRequest true "Upgrade Request"
+// @Success 200 {object} response.Success "transmission upgraded successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /upgrade-transmission [put]
 func UpgradeTransmissionHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is ", playerId)

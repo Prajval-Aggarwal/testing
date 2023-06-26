@@ -18,6 +18,7 @@ type OwnedCars struct {
 	PlayerId string `json:"playerId"`
 	CarId    string `json:"carId"`
 	Selected bool   `json:"selected"`
+	Level    int    `json:"level"`
 }
 
 type OwnedGarage struct {
@@ -28,14 +29,14 @@ type OwnedGarage struct {
 }
 type PlayerCarsStats struct {
 	PlayerId    string    `json:"playerId"`
-	CarId       uuid.UUID `json:"carId"`
+	CarId       string `json:"carId"`
 	Power       int64     `json:"power"`
 	Grip        int64     `json:"grip"`
 	ShiftTime   float64   `json:"shiftTime"`
 	Weight      int64     `json:"weight"`
-	OR          float64   `json:"or"` //overall rating of the car
+	OVR          float64   `json:"or"` //overall rating of the car
 	Durability  int64     `json:"Durability"`
-	NitrousTime int       `json:"nitrousTime"` //increased when nitrous is upgraded
+	NitrousTime float64   `json:"nitrousTime"` //increased when nitrous is upgraded
 
 }
 

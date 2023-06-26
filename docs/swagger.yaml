@@ -1,4 +1,4 @@
-basePath: localhost:3000
+basePath: /
 definitions:
   request.AddCarRequest:
     properties:
@@ -334,7 +334,7 @@ paths:
       tags:
       - Authentication
   /sell-car:
-    post:
+    delete:
       consumes:
       - application/json
       description: Sell a car for a player
@@ -421,6 +421,45 @@ paths:
       summary: Update Email
       tags:
       - Player
+  /upgrade-body:
+    put:
+      consumes:
+      - application/json
+      description: Upgrade the engine of a player's car
+      parameters:
+      - description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Upgrade Request
+        in: body
+        name: upgradeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.CarUpgradesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: body upgraded successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Upgrade body
+      tags:
+      - Car
   /upgrade-engine:
     put:
       consumes:
@@ -449,6 +488,10 @@ paths:
           description: Bad request
           schema:
             $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
         "500":
           description: Internal server error
           schema:
@@ -456,7 +499,7 @@ paths:
       summary: Upgrade Engine
       tags:
       - Car
-  /upgrage-garage:
+  /upgrade-garage:
     put:
       consumes:
       - application/json
@@ -495,4 +538,199 @@ paths:
       summary: Upgrade Garage
       tags:
       - Garage
+  /upgrade-intake:
+    put:
+      consumes:
+      - application/json
+      description: Upgrade the engine of a player's car
+      parameters:
+      - description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Upgrade Request
+        in: body
+        name: upgradeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.CarUpgradesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: intake upgraded successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Upgrade intake
+      tags:
+      - Car
+  /upgrade-nitrous:
+    put:
+      consumes:
+      - application/json
+      description: Upgrade the engine of a player's car
+      parameters:
+      - description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Upgrade Request
+        in: body
+        name: upgradeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.CarUpgradesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: nitrous upgraded successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Upgrade nitrous
+      tags:
+      - Car
+  /upgrade-tires:
+    put:
+      consumes:
+      - application/json
+      description: Upgrade the engine of a player's car
+      parameters:
+      - description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Upgrade Request
+        in: body
+        name: upgradeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.CarUpgradesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: tires upgraded successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Upgrade tires
+      tags:
+      - Car
+  /upgrade-transmission:
+    put:
+      consumes:
+      - application/json
+      description: Upgrade the engine of a player's car
+      parameters:
+      - description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Upgrade Request
+        in: body
+        name: upgradeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.CarUpgradesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: transmission upgraded successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Upgrade transmission
+      tags:
+      - Car
+  /upgrade-turbo:
+    put:
+      consumes:
+      - application/json
+      description: Upgrade the engine of a player's car
+      parameters:
+      - description: Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Upgrade Request
+        in: body
+        name: upgradeRequest
+        required: true
+        schema:
+          $ref: '#/definitions/request.CarUpgradesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Turbo upgraded successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Upgrade Turbo
+      tags:
+      - Car
 swagger: "2.0"

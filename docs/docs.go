@@ -434,7 +434,7 @@ const docTemplate = `{
             }
         },
         "/sell-car": {
-            "post": {
+            "delete": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -568,6 +568,65 @@ const docTemplate = `{
                 }
             }
         },
+        "/upgrade-body": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Upgrade body",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "body upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/upgrade-engine": {
             "put": {
                 "description": "Upgrade the engine of a player's car",
@@ -612,6 +671,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/response.Success"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
@@ -621,7 +686,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/upgrage-garage": {
+        "/upgrade-garage": {
             "put": {
                 "description": "Upgrade a player's garage to the next level",
                 "consumes": [
@@ -655,6 +720,301 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Garage upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/upgrade-intake": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Upgrade intake",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "intake upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/upgrade-nitrous": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Upgrade nitrous",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "nitrous upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/upgrade-tires": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Upgrade tires",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "tires upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/upgrade-transmission": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Upgrade transmission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "transmission upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/upgrade-turbo": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Upgrade Turbo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Turbo upgraded successfully",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -775,14 +1135,12 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "2.0",
 	Host:             "",
-	BasePath:         "localhost:3000",
+	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "Drag Racing",
 	Description:      "This is the doumentation for drag racing game",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "{{",
-	RightDelim:       "}}",
 }
 
 func init() {

@@ -3,6 +3,7 @@
         "carClass": "Class X",
         "level": 1,
         "grip": 100,
+        "overallRating":4.0,
         "weight": 1500,
         "cashPrice": 5000,
         "coinPrice": 200
@@ -11,6 +12,7 @@
         "carClass": "Class X",
         "level": 2,
         "grip": 110,
+        "overallRating":4.0,
         "weight": 1450,
         "cashPrice": 8000,
         "coinPrice": 300
@@ -19,6 +21,7 @@
         "carClass": "Class X",
         "level": 3,
         "grip": 120,
+        "overallRating":4.0,
         "weight": 1400,
         "cashPrice": 12000,
         "coinPrice": 400
@@ -27,6 +30,7 @@
         "carClass": "Class X",
         "level": 4,
         "grip": 130,
+        "overallRating":4.0,
         "weight": 1350,
         "cashPrice": 16000,
         "coinPrice": 500
@@ -35,6 +39,7 @@
         "carClass": "Class X",
         "level": 5,
         "grip": 140,
+        "overallRating":4.0,
         "weight": 1300,
         "cashPrice": 20000,
         "coinPrice": 600
@@ -43,6 +48,7 @@
         "carClass": "Class Y",
         "level": 1,
         "grip": 120,
+        "overallRating":4.0,
         "weight": 1000,
         "cashPrice": 5000,
         "coinPrice": 200
@@ -59,6 +65,7 @@
         "carClass": "Class Y",
         "level": 3,
         "grip": 140,
+        "overallRating":4.0,
         "weight": 1200,
         "cashPrice": 12000,
         "coinPrice": 400
@@ -67,6 +74,7 @@
         "carClass": "Class Y",
         "level": 4,
         "grip": 150,
+        "overallRating":4.0,
         "weight": 1300,
         "cashPrice": 16000,
         "coinPrice": 500
@@ -75,6 +83,7 @@
         "carClass": "Class Y",
         "level": 5,
         "grip": 160,
+        "overallRating":4.0,
         "weight": 1400,
         "cashPrice": 20000,
         "coinPrice": 600
@@ -83,6 +92,7 @@
         "carClass": "Class Z",
         "level": 1,
         "grip": 125,
+        "overallRating":4.0,
         "weight": 2000,
         "cashPrice": 5000,
         "coinPrice": 200
@@ -91,6 +101,7 @@
         "carClass": "Class Z",
         "level": 2,
         "grip": 145,
+        "overallRating":4.0,
         "weight": 2200,
         "cashPrice": 8000,
         "coinPrice": 300
@@ -99,6 +110,7 @@
         "carClass": "Class Z",
         "level": 3,
         "grip": 167,
+        "overallRating":4.0,
         "weight": 2400,
         "cashPrice": 12000,
         "coinPrice": 400
@@ -107,6 +119,7 @@
         "carClass": "Class Z",
         "level": 4,
         "grip": 196,
+        "overallRating":4.0,
         "weight": 2600,
         "cashPrice": 16000,
         "coinPrice": 500
@@ -115,6 +128,7 @@
         "carClass": "Class Z",
         "level": 5,
         "grip": 204,
+        "overallRating":4.0,
         "weight": 2800,
         "cashPrice": 20000,
         "coinPrice": 600
@@ -123,6 +137,7 @@
         "carClass": "Class W",
         "level": 1,
         "grip": 200,
+        "overallRating":4.0,
         "weight": 2200,
         "cashPrice": 5000,
         "coinPrice": 200
@@ -139,6 +154,7 @@
         "carClass": "Class W",
         "level": 3,
         "grip": 220,
+        "overallRating":4.0,
         "weight": 2600,
         "cashPrice": 12000,
         "coinPrice": 400
@@ -147,6 +163,7 @@
         "carClass": "Class W",
         "level": 4,
         "grip": 230,
+        "overallRating":4.0,
         "weight": 2800,
         "cashPrice": 16000,
         "coinPrice": 500
@@ -155,6 +172,7 @@
         "carClass": "Class W",
         "level": 5,
         "grip": 240,
+        "overallRating":4.0,
         "weight": 3000,
         "cashPrice": 20000,
         "coinPrice": 600

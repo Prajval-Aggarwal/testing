@@ -77,7 +77,7 @@ func GetAllGarageListHandler(ctx *gin.Context) {
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /upgrage-garage [put]
+// @Router /upgrade-garage [put]
 func UpgradeGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
