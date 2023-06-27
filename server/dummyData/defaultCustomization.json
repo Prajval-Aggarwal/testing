@@ -1,0 +1,373 @@
+[
+    {
+        "carId": "1",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "1",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "1",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "1",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    },
+    {
+        "carId": "2",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "2",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "2",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "2",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    },
+    {
+        "carId": "3",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "3",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "3",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "3",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    },
+    {
+        "carId": "4",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "4",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "4",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "4",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    },
+    {
+        "carId": "5",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "5",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "5",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "5",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    },
+    {
+        "carId": "6",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "6",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "6",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "6",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    }
+
+
+    ,
+
+    {
+        "carId": "7",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "7",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "7",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "7",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    }
+
+    ,
+
+    {
+        "carId": "8",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "8",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "8",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "8",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    }
+
+    ,
+
+    {
+        "carId": "9",
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "9",
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "9",
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": ""
+    },
+    {
+        "carId": "9",
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "value": ""
+    }
+
+]

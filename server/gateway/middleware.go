@@ -35,8 +35,8 @@ func UserAuthorization(ctx *gin.Context) {
 		return
 	}
 
-	fmt.Println("player is is", claims.Id.String())
-	ctx.Set("playerId", claims.Id.String())
+	fmt.Println("player is is", claims.Id)
+	ctx.Set("playerId", claims.Id)
 	//set the token details into context for further processing in handler function
 
 	ctx.Next()

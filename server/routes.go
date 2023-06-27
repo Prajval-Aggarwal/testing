@@ -40,6 +40,12 @@ func ConfigureRoutes(server *Server) {
 	server.engine.PUT("/upgrade-tires", gateway.UserAuthorization, handler.UpgradeTiresHandler)
 	server.engine.PUT("/upgrade-transmission", gateway.UserAuthorization, handler.UpgradeTransmissionHandler)
 
+	//car Customiztion routes
+	server.engine.PUT("/car/customise/color", gateway.UserAuthorization, handler.ColorCustomizeHandler)
+	server.engine.PUT("/car/customise/wheels", gateway.UserAuthorization, handler.WheelsCustomizeHandler)
+	server.engine.PUT("/car/customise/interior", gateway.UserAuthorization, handler.InteriorCustomizeHandler)
+	server.engine.PUT("/car/customise/license", gateway.UserAuthorization, handler.LicenseCustomizeHandler)
+
 	server.engine.GET("/add-dummy-data", handler.AddDummyDataHandler)
 
 	//swagger routes

@@ -1,0 +1,282 @@
+[
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Fluorescent",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 100.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Fluorescent",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 100.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Fluorescent",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 100.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Pastel",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 110.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Pastel",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 110.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Pastel",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 110.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Military",
+        "colorCode": "Red",
+        "colorName": "",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 120.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Military",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 120.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "paint",
+        "colorType": "Military",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 120.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Materials",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 130.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Materials",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Cash",
+        "value": "",
+        "currAmount": 130.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Materials",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 130.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Solids",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 200.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Solids",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 200.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Solids",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 200.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Patterns",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 210.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Patterns",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 210.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Patterns",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 210.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 220.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 220.0
+    },
+    {
+        "part": "color",
+        "colorCategory": "livery",
+        "colorType": "Stripes",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 220.0
+    },
+    {
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 240.0
+    },
+    {
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": "",
+        "currAmount":240.0
+ },
+    {
+        "part": "wheels",
+        "colorCategory": "caliper",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 240.0
+    },
+    {
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Red",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 260.0
+    },
+    {
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Blue",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 260.0
+    },
+    {
+        "part": "interior",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "Green",
+        "currType": "Coins",
+        "value": "",
+        "currAmount": 260.0
+    },
+    {
+        "part": "license",
+        "colorCategory": "",
+        "colorType": "",
+        "colorCode": "",
+        "colorName": "",
+        "currType": "",
+        "currAmount": 260.0,
+          "value": ""
+    }
+]

@@ -159,8 +159,9 @@ func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
 
 }
 
-func SetPlayerCarUpgrades(playerId string, carId string, ctx *gin.Context) error {
-	fmt.Println("jsdfjka;jkdbfljsdalfjbsaljbflsab;jkf")
+func SetPlayerCarDefaults(playerId string, carId string) error {
+
+	//set default car upgrades
 	playerCarUpgrades := model.PlayerCarUpgrades{
 		PlayerId:     playerId,
 		CarId:        carId,
@@ -177,6 +178,53 @@ func SetPlayerCarUpgrades(playerId string, carId string, ctx *gin.Context) error
 		//	response.ShowResponse(err.Error(), HTTP_INTERNAL_SERVER_ERROR, FAILURE, nil, ctx)
 		return err
 	}
+
+	//set default car customizations
+	var carDefualtCutomizations []model.DefaultCustomization
+	err = db.FindAll(&carDefualtCutomizations, carId, "car_id")
+	if err != nil {
+		return err
+	}
+	for _, customise := range carDefualtCutomizations {
+		playerCarCustomizations := model.PlayerCarCustomization{
+			PlayerId:      playerId,
+			CarId:         carId,
+			Part:          customise.Part,
+			ColorCategory: customise.ColorCategory,
+			ColorType:     customise.ColorType,
+			ColorCode:     customise.ColorCode,
+			ColorName:     customise.ColorName,
+			Value:         customise.Value,
+		}
+		err = db.CreateRecord(playerCarCustomizations)
+		if err != nil {
+			return err
+		}
+	}
+
+	//set default car stats
+	var currentCarStat model.CarStats
+	err = db.FindById(&currentCarStat, carId, "car_id")
+	if err != nil {
+
+		return err
+	}
+	playerCarStats := model.PlayerCarsStats{
+		PlayerId:    playerId,
+		CarId:       carId,
+		Power:       currentCarStat.Power,
+		Grip:        currentCarStat.Grip,
+		ShiftTime:   currentCarStat.ShiftTime,
+		Weight:      currentCarStat.Weight,
+		OVR:         currentCarStat.OVR,
+		Durability:  currentCarStat.Durability,
+		NitrousTime: float64(currentCarStat.NitrousTime),
+	}
+	err = db.CreateRecord(&playerCarStats)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -188,4 +236,18 @@ func DeleteCarDetails(tableName string, playerId string, carId string, ctx *gin.
 		return err
 	}
 	return nil
+}
+
+func IsCarEquipped(playerId string, carId string) bool {
+	var exists bool
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=? AND selected=true"
+	err := db.QueryExecutor(query, &exists, playerId, carId)
+	if err != nil {
+		return false
+	}
+	if !exists {
+		return false
+	}
+
+	return true
 }

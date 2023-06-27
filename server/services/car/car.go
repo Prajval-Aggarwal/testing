@@ -13,8 +13,21 @@ import (
 
 func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId string) {
 
-	query := "Update owned_cars SET selected=false WHERE player_id=? AND selected=true"
-	err := db.RawExecutor(query, playerId)
+	//check if the car is bought or not
+	var exists bool
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=?"
+	err := db.QueryExecutor(query, &exists, playerId, equipRequest.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	if !exists {
+		response.ShowResponse("Record not fond", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	query = "Update owned_cars SET selected=false WHERE player_id=? AND selected=true"
+	err = db.RawExecutor(query, playerId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
@@ -104,12 +117,6 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		return
 	}
 
-	var currentCarStat model.CarStats
-	err = db.FindById(&currentCarStat, carRequest.CarId, "car_id")
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
 	//Add the car to players account and make it as players current selected car
 	playerCar := model.OwnedCars{
 		PlayerId: playerId,
@@ -118,34 +125,20 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		Level:    1,
 	}
 
-	playerCarStats := model.PlayerCarsStats{
-		PlayerId:    playerId,
-		CarId:       carRequest.CarId,
-		Power:       currentCarStat.Power,
-		Grip:        currentCarStat.Grip,
-		ShiftTime:   currentCarStat.ShiftTime,
-		Weight:      currentCarStat.Weight,
-		OVR:         currentCarStat.OVR,
-		Durability:  currentCarStat.Durability,
-		NitrousTime: float64(currentCarStat.NitrousTime),
-	}
-
-	//set initial car parts level
-	err = utils.SetPlayerCarUpgrades(playerId, carRequest.CarId, ctx)
+	//set bought car defaults
+	err = utils.SetPlayerCarDefaults(playerId, carRequest.CarId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
+
+	//creae player record
 	err = db.CreateRecord(&playerCar)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
-	err = db.CreateRecord(&playerCarStats)
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
-		return
-	}
+
 	response.ShowResponse(utils.CAR_BOUGHT_SUCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
 
