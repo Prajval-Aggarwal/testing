@@ -52,7 +52,7 @@ const (
 	LOGIN_SUCCESS                    string = "Login Successfull"
 	LOGIN_FAILED                     string = "Login Failed"
 	ACCESS_DENIED                    string = "Access Denied"
-	INVALID_TOKEN                    string = "Invalid token"
+	INVALID_TOKEN                    string = "Token Absent or Invalid token"
 	NOT_FOUND                        string = "Record not found"
 	DATA_FETCH_SUCCESS               string = "Data Fetch Successfully"
 	UPGRADE_LEVEL                    string = "Upgrade your level to unlock the car"
@@ -72,6 +72,8 @@ const (
 	UPGRADE_SUCCESS                  string = "Part upgraged successfully"
 	LICENSE_PLATE_CUSTOMIZED_SUCCESS string = "License Plate updated sucessfuly"
 	INTERIOR_CUSTOMIZED_SUCCESS      string = "Interior updated sucessfuly"
+	WHEELS_CUSTOMIZED_SUCCESS        string = "Wheels updated succesfully"
+	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
 
 	EQUIP_CORRECT_CAR string = "Car need to be selected first"
 )

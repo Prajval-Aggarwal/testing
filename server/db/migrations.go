@@ -36,7 +36,7 @@ func AutoMigrateDatabase(db *gorm.DB) {
 		dbVersion.Version = 2
 	}
 	if dbVersion.Version < 3 {
-		err := db.AutoMigrate(&model.CarCustomization{}, &model.DefaultCustomization{})
+		err := db.AutoMigrate(&model.CarCustomization{}, &model.DefaultCustomization{}, &model.PlayerCarCustomization{})
 		if err != nil {
 			panic(err)
 		}
@@ -44,6 +44,16 @@ func AutoMigrateDatabase(db *gorm.DB) {
 			Version: 3,
 		})
 		dbVersion.Version = 3
+	}
+	if dbVersion.Version < 4 {
+		err := db.AutoMigrate(&model.PlayerCarCustomization{})
+		if err != nil {
+			panic(err)
+		}
+		db.Where("version=?", dbVersion.Version).Updates(&model.DbVersion{
+			Version: 4,
+		})
+		dbVersion.Version = 4
 	}
 
 }

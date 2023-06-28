@@ -16,3 +16,11 @@ type WheelCustomizeRequest struct {
 	ColorName     string `json:"colorName"`
 	ColorCode     string `json:"colorCode"`
 }
+
+type ColorCustomizationRequest struct {
+	CarId         string `json:"carId"`
+	ColorCategory string `json:"colorCategory"`
+	ColorType     string `json:"colorType"`
+	ColorName     string `json:"colorName"`
+	ColorCode     string `json:"colorCode"`
+}

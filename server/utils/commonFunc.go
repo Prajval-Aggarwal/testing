@@ -240,7 +240,7 @@ func DeleteCarDetails(tableName string, playerId string, carId string, ctx *gin.
 
 func IsCarEquipped(playerId string, carId string) bool {
 	var exists bool
-	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=? AND selected=true"
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=? AND selected=true)"
 	err := db.QueryExecutor(query, &exists, playerId, carId)
 	if err != nil {
 		return false

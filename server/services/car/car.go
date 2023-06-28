@@ -49,7 +49,7 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 	var playerDetails model.Player
 
 	fmt.Println("car details is", carRequest.CarId)
-	//if player laready has that car
+	//if player already has that car
 	var exists bool
 	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id =?)"
 	err := db.QueryExecutor(query, &exists, playerId, carRequest.CarId)

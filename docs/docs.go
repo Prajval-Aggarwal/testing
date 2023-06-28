@@ -215,6 +215,236 @@ const docTemplate = `{
                 }
             }
         },
+        "/car/customise/color": {
+            "put": {
+                "description": "Customizes the color of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Color Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Color customization request object",
+                        "name": "colorReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ColorCustomizationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/customise/interior": {
+            "put": {
+                "description": "Customizes the interior of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Interior Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Interior customization request object",
+                        "name": "interiorReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InteriorCustomizeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/customise/license": {
+            "put": {
+                "description": "Customizes the license plate of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "License Plate Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "License plate customization request object",
+                        "name": "licenseRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.LicenseRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/customise/wheels": {
+            "put": {
+                "description": "Customizes the wheels of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Wheel Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Wheel customization request object",
+                        "name": "wheelReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.WheelCustomizeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/equip-car": {
             "put": {
                 "description": "Equip a car for a player",
@@ -1072,6 +1302,26 @@ const docTemplate = `{
                 }
             }
         },
+        "request.ColorCustomizationRequest": {
+            "type": "object",
+            "properties": {
+                "carId": {
+                    "type": "string"
+                },
+                "colorCategory": {
+                    "type": "string"
+                },
+                "colorCode": {
+                    "type": "string"
+                },
+                "colorName": {
+                    "type": "string"
+                },
+                "colorType": {
+                    "type": "string"
+                }
+            }
+        },
         "request.GarageRequest": {
             "type": "object",
             "properties": {
@@ -1097,6 +1347,31 @@ const docTemplate = `{
                 }
             }
         },
+        "request.InteriorCustomizeRequest": {
+            "type": "object",
+            "properties": {
+                "carId": {
+                    "type": "string"
+                },
+                "colorCode": {
+                    "type": "string"
+                },
+                "colorName": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.LicenseRequest": {
+            "type": "object",
+            "properties": {
+                "carId": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
         "request.LoginRequest": {
             "type": "object",
             "properties": {
@@ -1109,6 +1384,23 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "email": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.WheelCustomizeRequest": {
+            "type": "object",
+            "properties": {
+                "carId": {
+                    "type": "string"
+                },
+                "colorCategory": {
+                    "type": "string"
+                },
+                "colorCode": {
+                    "type": "string"
+                },
+                "colorName": {
                     "type": "string"
                 }
             }
@@ -1141,6 +1433,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "This is the doumentation for drag racing game",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
+	LeftDelim:        "{{",
+	RightDelim:       "}}",
 }
 
 func init() {
