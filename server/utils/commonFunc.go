@@ -229,7 +229,7 @@ func SetPlayerCarDefaults(playerId string, carId string) error {
 }
 
 func DeleteCarDetails(tableName string, playerId string, carId string, ctx *gin.Context) error {
-	query := "DELETE FROM " + tableName + "car_id =? AND player_id =?"
+	query := "DELETE FROM " + tableName + " WHERE car_id =? AND player_id =?"
 	err := db.RawExecutor(query, carId, playerId)
 	if err != nil {
 		response.ShowResponse(err.Error(), HTTP_BAD_REQUEST, FAILURE, nil, ctx)

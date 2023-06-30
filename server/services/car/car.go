@@ -15,7 +15,7 @@ func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId
 
 	//check if the car is bought or not
 	var exists bool
-	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=?"
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=?)"
 	err := db.QueryExecutor(query, &exists, playerId, equipRequest.CarId)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
