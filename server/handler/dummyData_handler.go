@@ -38,8 +38,8 @@ func AddDummyDataHandler(ctx *gin.Context) {
 	addtoDb("server/dummyData/nitrousUpgrades.json", &[]model.Nitrous{})
 
 	//car custoization
-	// addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
-	// addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
+	addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
+	addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
 
 }
 
