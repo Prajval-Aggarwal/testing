@@ -24,3 +24,17 @@ type ColorCustomizationRequest struct {
 	ColorName     string `json:"colorName"`
 	ColorCode     string `json:"colorCode"`
 }
+
+type GetCarColorCategoriesRequest struct {
+	Part string `json:"part"`
+}
+type GetCarColorTypesRequest struct {
+	Part          string `json:"part"`
+	ColorCategory string `json:"colorCategory"`
+}
+
+type GetCarColorRequest struct {
+	Part          string `json:"part"`
+	ColorCategory string `json:"colorCategory"`
+	ColorType     string `json:"colorType"`
+}

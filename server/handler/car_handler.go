@@ -22,7 +22,7 @@ import (
 // @Success 200 {object} response.Success "Car equipped successfully"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure  401 {object} response.Success "Unauthorised"
-// @Router /equip-car [put]
+// @Router /car/equip [put]
 func EquipCarHandler(ctx *gin.Context) {
 	var equipRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
@@ -58,7 +58,7 @@ func EquipCarHandler(ctx *gin.Context) {
 // @Failure 404 {object} response.Success "Car not found"
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /buy-car [post]
+// @Router /car/buy [post]
 func BuyCarHandler(ctx *gin.Context) {
 	var carRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
@@ -96,7 +96,7 @@ func BuyCarHandler(ctx *gin.Context) {
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 404 {object} response.Success "Car not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /sell-car [delete]
+// @Router /car/sell [delete]
 func SellCarHandler(ctx *gin.Context) {
 	var sellCarRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
