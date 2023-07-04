@@ -30,7 +30,7 @@ func BuyGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var buyRequest request.GarageRequest
@@ -83,7 +83,7 @@ func UpgradeGarageHandler(ctx *gin.Context) {
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var upgradeRequest request.GarageRequest
@@ -120,7 +120,7 @@ func AddCarToGarageHandler(ctx *gin.Context) {
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var addCarRequest request.AddCarRequest
@@ -156,7 +156,7 @@ func GetPlayerGarageListHandler(ctx *gin.Context) {
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	garage.GetPlayerGarageListService(ctx, playerId.(string))

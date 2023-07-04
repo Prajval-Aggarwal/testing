@@ -29,16 +29,19 @@ func ColorCustomizeHandler(ctx *gin.Context) {
 	fmt.Println("player id is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 
 	var colorReq request.ColorCustomizationRequest
 	err := utils.RequestDecoding(ctx, &colorReq)
 	if err != nil {
-
-		fmt.Println("error in decoding")
-		response.ShowResponse("Bad Request", utils.HTTP_BAD_REQUEST, err.Error(), nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, err.Error(), nil, ctx)
+		return
+	}
+	err = colorReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 	car.ColorCustomizationService(ctx, colorReq, playerId.(string))
@@ -63,7 +66,7 @@ func WheelsCustomizeHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id is:", playerId)
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var wheelReq request.WheelCustomizeRequest
@@ -72,6 +75,12 @@ func WheelsCustomizeHandler(ctx *gin.Context) {
 
 		fmt.Println("error in decoding")
 		response.ShowResponse("Bad Request", utils.HTTP_BAD_REQUEST, err.Error(), nil, ctx)
+		return
+	}
+
+	err = wheelReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -98,7 +107,7 @@ func InteriorCustomizeHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id is:", playerId)
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -111,6 +120,11 @@ func InteriorCustomizeHandler(ctx *gin.Context) {
 		return
 	}
 
+	err = interiorReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	//call the service method
 	car.InteriorCustomizeService(ctx, interiorReq, playerId.(string))
 
@@ -133,12 +147,17 @@ func LicenseCustomizeHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id is:", playerId)
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 
 	var licenseRequest request.LicenseRequest
 	err := utils.RequestDecoding(ctx, &licenseRequest)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	err = licenseRequest.Validate()
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
@@ -178,6 +197,11 @@ func GetCarColorCategoriesHandler(ctx *gin.Context) {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
+	err = categoryReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	car.GetCarColorCategories(ctx, categoryReq.Part)
 }
 
@@ -198,6 +222,11 @@ func GetCarColorTypesHandler(ctx *gin.Context) {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
+	err = carColorReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	car.GetCarColorTypes(ctx, carColorReq)
 }
 
@@ -214,6 +243,11 @@ func GetCarColorTypesHandler(ctx *gin.Context) {
 func GetCarColorsHandler(ctx *gin.Context) {
 	var carColorReq request.GetCarColorRequest
 	err := utils.RequestDecoding(ctx, &carColorReq)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	err = carColorReq.Validate()
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return

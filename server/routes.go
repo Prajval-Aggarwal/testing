@@ -5,6 +5,7 @@ import (
 	"main/server/gateway"
 	"main/server/handler"
 
+	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -13,6 +14,12 @@ func ConfigureRoutes(server *Server) {
 
 	//CORS allow
 	server.engine.Use(gateway.CORSMiddleware())
+
+	server.engine.GET("/", func(ctx *gin.Context) {
+		ctx.JSON(200, gin.H{
+			"message": "Sever listening",
+		})
+	})
 
 	//Auth routes
 	server.engine.POST("/guest-login", handler.GuestLoginHandler)
@@ -23,10 +30,12 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/car/buy", gateway.UserAuthorization, handler.BuyCarHandler)
 	server.engine.PUT("/car/equip", gateway.UserAuthorization, handler.EquipCarHandler)
 	server.engine.DELETE("/car/sell", gateway.UserAuthorization, handler.SellCarHandler)
-
+	server.engine.POST("/car/repair", gateway.UserAuthorization, handler.RepairCarHandler)
+	server.engine.GET("/car/get-all", handler.GetAllCarsHandler)
+	server.engine.POST("/car/get-by-id", handler.GetCarByIdHandler)
 	//Player garage routes
 	server.engine.POST("/garage/buy", gateway.UserAuthorization, handler.BuyGarageHandler)
-	server.engine.GET("/garages/get-all", gateway.UserAuthorization, handler.GetAllGarageListHandler)
+	server.engine.GET("/garages/get-all", handler.GetAllGarageListHandler)
 	server.engine.POST("/garage/add-car", gateway.UserAuthorization, handler.AddCarToGarageHandler)
 	server.engine.PUT("/garage/upgrade", gateway.UserAuthorization, handler.UpgradeGarageHandler)
 	server.engine.GET("/garage/get", gateway.UserAuthorization, handler.GetPlayerGarageListHandler)

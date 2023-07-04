@@ -48,9 +48,11 @@ const (
 	FAILURE string = "Failure"
 	SUCCESS string = "Success"
 )
+
 const (
 	LOGIN_SUCCESS                    string = "Login Successfull"
 	LOGIN_FAILED                     string = "Login Failed"
+	EMAIL_EXISTS                     string = "Email is already attached to another player"
 	ACCESS_DENIED                    string = "Access Denied"
 	INVALID_TOKEN                    string = "Token Absent or Invalid token"
 	NOT_FOUND                        string = "Record not found"
@@ -74,6 +76,12 @@ const (
 	INTERIOR_CUSTOMIZED_SUCCESS      string = "Interior updated sucessfuly"
 	WHEELS_CUSTOMIZED_SUCCESS        string = "Wheels updated succesfully"
 	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
+	CAR_REPAIR_SUCCESS               string = "Car repaired successfully"
+	UNAUTHORIZED                     string = "Player not authorized"
+	CAR_ADDED_GARAGE_SUCCESS         string = "Car added to garage sucessfully"
+	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
 
-	EQUIP_CORRECT_CAR string = "Car need to be selected first"
+	CAR_LIMIT_REACHED     string = "Car Limit reached upgarde the garage to increse the limit"
+	CAR_SELECETED_SUCCESS string = "Current car selected successfully"
+	CAR_ALREADY_BOUGHT    string = "Car already bought"
 )

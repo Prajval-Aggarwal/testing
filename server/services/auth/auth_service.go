@@ -117,7 +117,7 @@ func UpdateEmailService(ctx *gin.Context, email request.UpdateEmailRequest, play
 	//token Decoding
 
 	if db.RecordExist("players", email.Email, "email") {
-		response.ShowResponse("Email is already attached to another player", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.EMAIL_EXISTS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 

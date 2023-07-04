@@ -27,7 +27,7 @@ func EquipCarHandler(ctx *gin.Context) {
 	var equipRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	err := utils.RequestDecoding(ctx, &equipRequest)
@@ -63,7 +63,7 @@ func BuyCarHandler(ctx *gin.Context) {
 	var carRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -101,7 +101,7 @@ func SellCarHandler(ctx *gin.Context) {
 	var sellCarRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -120,24 +120,76 @@ func SellCarHandler(ctx *gin.Context) {
 
 }
 
+// @Summary Repair car
+// @Description Repair a car by deducting the repair cost from the player's coins and updating the car's durability
+// @Accept  json
+// @Tags Car
+// @Produce  json
+// @Param repairCarRequest body request.CarRequest true "Repair car request"
+// @Success 200 {object} response.Success "Car sold successfully"
+// @Failure 400 {object} response.Success "Bad request"
+// @Failure  401 {object} response.Success "Unauthorised"
+// @Failure 404 {object} response.Success "Car not found"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /car/repair [post]
 func RepairCarHandler(ctx *gin.Context) {
-	var sellCarRequest request.CarRequest
+	var repairCarRequest request.CarRequest
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player is from token is:", playerId)
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
-	err := utils.RequestDecoding(ctx, &sellCarRequest)
+	err := utils.RequestDecoding(ctx, &repairCarRequest)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
-	err = sellCarRequest.Validate()
+	err = repairCarRequest.Validate()
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	//car.RepairCarService(ctx, sellCarRequest, playerId.(string))
+	car.RepairCarService(ctx, repairCarRequest, playerId.(string))
+}
+
+// @Summary Get car by ID
+// @Description Retrieve car details, stats, and customizations by car ID
+// @Accept  json
+// @Tags Car
+// @Produce  json
+// @Param getReq body  request.CarRequest true "Get car by ID request"
+// @Success 200 {object} response.Success "Data fetch success"
+// @Failure 404 {object} response.Success "Not Found"
+// @Failure 500 {object} response.Success "Internal Server Error"
+// @Router /car/get-by-id [post]
+func GetCarByIdHandler(ctx *gin.Context) {
+	var getCarReq request.CarRequest
+	err := utils.RequestDecoding(ctx, &getCarReq)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	err = getCarReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	car.GetCarByIdService(ctx, getCarReq)
+}
+
+// GetAllCarsServiceretrieves the list of all car.
+//
+// @Summary Get All Garage List
+// @Description Retrieve the list of all car
+// @Tags Car
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.Success "Garage list fetched successfully"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /car/get-all [get]
+func GetAllCarsHandler(ctx *gin.Context) {
+	car.GetAllCarsService(ctx)
 }
