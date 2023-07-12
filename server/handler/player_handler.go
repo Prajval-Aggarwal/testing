@@ -14,7 +14,7 @@ import (
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Access token"
-// @Success 200 {object} response.Success "Car equipped successfully"
+// @Success 200 {object} response.Success "Data fetched successfully"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Router /player-details [get]
