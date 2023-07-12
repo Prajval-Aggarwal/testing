@@ -26,6 +26,9 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/login", handler.LoginHandler)
 	server.engine.PUT("/update-email", gateway.UserAuthorization, handler.UpdateEmailHandler)
 
+	//player details
+	server.engine.GET("/player-details", gateway.UserAuthorization, handler.GetPlayerDetailsHandler)
+
 	//Player routes
 	server.engine.POST("/car/buy", gateway.UserAuthorization, handler.BuyCarHandler)
 	server.engine.PUT("/car/equip", gateway.UserAuthorization, handler.EquipCarHandler)

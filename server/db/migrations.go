@@ -55,5 +55,15 @@ func AutoMigrateDatabase(db *gorm.DB) {
 		})
 		dbVersion.Version = 4
 	}
+	if dbVersion.Version < 5 {
+		err := db.AutoMigrate(&model.PlayerRaceHistory{}, &model.OwnedBattleArenas{})
+		if err != nil {
+			panic(err)
+		}
+		db.Where("version=?", dbVersion.Version).Updates(&model.DbVersion{
+			Version: 5,
+		})
+		dbVersion.Version = 5
+	}
 
 }
