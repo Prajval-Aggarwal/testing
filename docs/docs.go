@@ -1741,7 +1741,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Car equipped successfully",
+                        "description": "Data fetched successfully",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
