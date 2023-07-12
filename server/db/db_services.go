@@ -78,3 +78,13 @@ func RawExecutor(query string, args ...interface{}) error {
 	}
 	return nil
 }
+
+// func Fun1(query string, args ...interface{}) response.CarResponse {
+// 	carDetails := &response.CarResponse{}
+// 	row := db.Raw(query, args...).Row()
+
+// 	row.Scan(&carDetails.CarId)
+// 	row.Scan(&carDetails.CarName)
+// 	return **&carDetails
+
+// }

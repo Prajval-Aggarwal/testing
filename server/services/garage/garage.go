@@ -73,7 +73,7 @@ func UpgradeGarageService(ctx *gin.Context, upgradeRequest request.GarageRequest
 		return
 	}
 	if !exists {
-		response.ShowResponse("Record not fond", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -173,7 +173,7 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 	if !exists {
-		response.ShowResponse("Record not fond", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -185,7 +185,7 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 	if !exists {
-		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -207,7 +207,7 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 	if count == int64(ownedGarageDetails.CarLimit) {
-		response.ShowResponse("Car Limit reached upgarde the garage to increse the limit", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.CAR_LIMIT_REACHED, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -224,5 +224,5 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 
-	response.ShowResponse("Car added to garage sucessfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+	response.ShowResponse(utils.CAR_ADDED_GARAGE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }

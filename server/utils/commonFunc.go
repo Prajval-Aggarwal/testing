@@ -97,7 +97,7 @@ func AlreadyAtMax(val int) bool {
 // 	}
 // }
 
-func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
+func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats) {
 
 	//list of points where car level upgrades automatically
 	var car model.OwnedCars
@@ -110,7 +110,9 @@ func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
 		if car.Level == 1 {
 			//upgrade the level
 			car.Level = 2
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+			//increase 30% repasir cost
+			car.RepairCost += (0.3 * car.RepairCost)
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 			if err != nil {
 				fmt.Println("error in level upgrade")
 			}
@@ -122,7 +124,7 @@ func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
 		if car.Level == 2 {
 			//upgrade the level
 			car.Level = 3
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
 			if err != nil {
 				fmt.Println("error in level upgrade")
@@ -135,7 +137,7 @@ func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
 		if car.Level == 3 {
 			//upgrade the level
 			car.Level = 4
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
 			if err != nil {
 				fmt.Println("error in level upgrade")
@@ -148,7 +150,7 @@ func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
 		if car.Level == 4 {
 			//upgrade the level
 			car.Level = 5
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id")
+			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
 			if err != nil {
 				fmt.Println("error in level upgrade")
@@ -250,4 +252,12 @@ func IsCarEquipped(playerId string, carId string) bool {
 	}
 
 	return true
+}
+
+func IsEmpty(field string) error {
+
+	if field == "" {
+		return errors.New(field + " cannot be empty")
+	}
+	return nil
 }

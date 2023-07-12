@@ -14,6 +14,7 @@ import (
 func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId string) {
 
 	//check if the car is bought or not
+
 	var exists bool
 	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=?)"
 	err := db.QueryExecutor(query, &exists, playerId, equipRequest.CarId)
@@ -22,7 +23,7 @@ func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId
 		return
 	}
 	if !exists {
-		response.ShowResponse("Record not fond", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -39,7 +40,7 @@ func EquipCarService(ctx *gin.Context, equipRequest request.CarRequest, playerId
 		return
 	}
 
-	response.ShowResponse("Current car selected successfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+	response.ShowResponse(utils.CAR_SELECETED_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }
 
@@ -58,7 +59,7 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		return
 	}
 	if exists {
-		response.ShowResponse("Car already bought", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.CAR_ALREADY_BOUGHT, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 
 		return
 	}
@@ -119,10 +120,11 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 
 	//Add the car to players account and make it as players current selected car
 	playerCar := model.OwnedCars{
-		PlayerId: playerId,
-		CarId:    carRequest.CarId,
-		Selected: true,
-		Level:    1,
+		PlayerId:   playerId,
+		CarId:      carRequest.CarId,
+		Selected:   true,
+		Level:      1,
+		RepairCost: 100.0,
 	}
 
 	//set bought car defaults
@@ -198,4 +200,95 @@ func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerI
 	}
 	response.ShowResponse(utils.CAR_SOLD_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
+}
+
+func RepairCarService(ctx *gin.Context, repairCarRequest request.CarRequest, playerId string) {
+
+	// check if the player has owned the car
+	if !db.RecordExist("owned_cars", repairCarRequest.CarId, "car_id") {
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
+		return
+	}
+	var playerDetails model.Player
+	var ownedCarDetails model.OwnedCars
+	err := db.FindById(&ownedCarDetails, repairCarRequest.CarId, "car_id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	//check if player has required amount
+
+	if playerDetails.Coins < int64(ownedCarDetails.RepairCost) {
+		response.ShowResponse(utils.NOT_ENOUGH_COINS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	playerDetails.Coins -= int64(ownedCarDetails.RepairCost)
+
+	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	// get the stats for that car
+	var carStats model.CarStats
+	err = db.FindById(&carStats, repairCarRequest.CarId, "car_id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	query := "UPDATE player_cars_stats SET durability=? WHERE player_id=? AND car_id=?"
+	err = db.RawExecutor(query, carStats.Durability, playerId, repairCarRequest.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	response.ShowResponse(utils.CAR_REPAIR_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+
+}
+
+func GetAllCarsService(ctx *gin.Context) {
+	var carDetails []model.Car
+	query := "SELECT * FROM cars"
+	err := db.QueryExecutor(query, &carDetails)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	response.ShowResponse(utils.DATA_FETCH_SUCCESS, utils.HTTP_OK, utils.SUCCESS, carDetails, ctx)
+}
+
+func GetCarByIdService(ctx *gin.Context, getReq request.CarRequest) {
+	var carResponse response.CarResponse
+	var carDetails model.Car
+	var carStats model.CarStats
+	var customization []model.DefaultCustomization
+
+	//check if the car is present with given car id or not
+
+	if !db.RecordExist("cars", getReq.CarId, "car_id") {
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	query := "SELECT * FROM cars WHERE car_id=?"
+	db.QueryExecutor(query, &carDetails, getReq.CarId)
+
+	query = "SELECT * FROM default_customizations WHERE car_id=?"
+	db.QueryExecutor(query, &customization, getReq.CarId)
+
+	query = "SELECT * FROM car_stats WHERE car_id=?"
+	db.QueryExecutor(query, &carStats, getReq.CarId)
+
+	carResponse.CarName = carDetails.CarName
+	carResponse.Car = carDetails
+	carResponse.CarStats = carStats
+	carResponse.Customization = customization
+
+	response.ShowResponse(utils.DATA_FETCH_SUCCESS, utils.HTTP_OK, utils.SUCCESS, carResponse, ctx)
 }

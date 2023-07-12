@@ -8,66 +8,7 @@
     },
     "basePath": "/",
     "paths": {
-        "/add-car-garage": {
-            "post": {
-                "description": "Add a car to a player's garage",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Garage"
-                ],
-                "summary": "Add Car to Garage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Add Car Request",
-                        "name": "addCarRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.AddCarRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Car added to garage successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/buy-car": {
+        "/car/buy": {
             "post": {
                 "security": [
                     {
@@ -137,7 +78,965 @@
                 }
             }
         },
-        "/buy-garage": {
+        "/car/customise/color": {
+            "put": {
+                "description": "Customizes the color of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Color Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Color customization request object",
+                        "name": "colorReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ColorCustomizationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/customise/interior": {
+            "put": {
+                "description": "Customizes the interior of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Interior Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Interior customization request object",
+                        "name": "interiorReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.InteriorCustomizeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/customise/license": {
+            "put": {
+                "description": "Customizes the license plate of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "License Plate Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "License plate customization request object",
+                        "name": "licenseRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.LicenseRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/customise/wheels": {
+            "put": {
+                "description": "Customizes the wheels of a player's car.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Wheel Customization",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the player",
+                        "name": "playerId",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Wheel customization request object",
+                        "name": "wheelReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.WheelCustomizeRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/equip": {
+            "put": {
+                "description": "Equip a car for a player",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Equip Car",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Equip Car Request",
+                        "name": "equipRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car equipped successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/get-all": {
+            "get": {
+                "description": "Retrieve the list of all car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Get All Garage List",
+                "responses": {
+                    "200": {
+                        "description": "Garage list fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/get-by-id": {
+            "post": {
+                "description": "Retrieve car details, stats, and customizations by car ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Get car by ID",
+                "parameters": [
+                    {
+                        "description": "Get car by ID request",
+                        "name": "getReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data fetch success",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/repair": {
+            "post": {
+                "description": "Repair a car by deducting the repair cost from the player's coins and updating the car's durability",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Repair car",
+                "parameters": [
+                    {
+                        "description": "Repair car request",
+                        "name": "repairCarRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car sold successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Car not found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/sell": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Sell a car for a player",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car"
+                ],
+                "summary": "Sell Car",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Sell Car Request",
+                        "name": "sellCarRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car sold successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Car not found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/body": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade body",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "body upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/engine": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade Engine",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Engine upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/intake": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade intake",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "intake upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/nitrous": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade nitrous",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "nitrous upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/tires": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade tires",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "tires upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/transmission": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade transmission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "transmission upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/car/upgrade/turbo": {
+            "put": {
+                "description": "Upgrade the engine of a player's car",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Upgrades"
+                ],
+                "summary": "Upgrade Turbo",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CarUpgradesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Turbo upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/garage/add-car": {
+            "post": {
+                "description": "Add a car to a player's garage",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Add Car to Garage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Add Car Request",
+                        "name": "addCarRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddCarRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car added to garage successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/garage/buy": {
             "post": {
                 "security": [
                     {
@@ -207,319 +1106,7 @@
                 }
             }
         },
-        "/car/customise/color": {
-            "put": {
-                "description": "Customizes the color of a player's car.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Color Customization",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Color customization request object",
-                        "name": "colorReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.ColorCustomizationRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/car/customise/interior": {
-            "put": {
-                "description": "Customizes the interior of a player's car.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Interior Customization",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Interior customization request object",
-                        "name": "interiorReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.InteriorCustomizeRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/car/customise/license": {
-            "put": {
-                "description": "Customizes the license plate of a player's car.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "License Plate Customization",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "License plate customization request object",
-                        "name": "licenseRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.LicenseRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/car/customise/wheels": {
-            "put": {
-                "description": "Customizes the wheels of a player's car.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Wheel Customization",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Wheel customization request object",
-                        "name": "wheelReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.WheelCustomizeRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/equip-car": {
-            "put": {
-                "description": "Equip a car for a player",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Equip Car",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Equip Car Request",
-                        "name": "equipRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Car equipped successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/get-all-garages": {
-            "get": {
-                "description": "Retrieve the list of all garages",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Garage"
-                ],
-                "summary": "Get All Garage List",
-                "responses": {
-                    "200": {
-                        "description": "Garage list fetched successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/get-garage": {
+        "/garage/get": {
             "get": {
                 "description": "Retrieve the list of garages owned by a player",
                 "consumes": [
@@ -556,6 +1143,267 @@
                     },
                     "500": {
                         "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/garage/upgrade": {
+            "put": {
+                "description": "Upgrade a player's garage to the next level",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Upgrade Garage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Upgrade Request",
+                        "name": "upgradeRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GarageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Garage upgraded successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/garages/get-all": {
+            "get": {
+                "description": "Retrieve the list of all garages",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Get All Garage List",
+                "responses": {
+                    "200": {
+                        "description": "Garage list fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/get-color-category": {
+            "get": {
+                "description": "Retrieve a list of car color categories for a specific part",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Get car color categories",
+                "parameters": [
+                    {
+                        "description": "Car customization part",
+                        "name": "part",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetCarColorCategoriesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/get-color-type": {
+            "get": {
+                "description": "Retrieve a list of car color types for a specific part and color category",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Get car color types",
+                "parameters": [
+                    {
+                        "description": "Car color type like fluorescent,military",
+                        "name": "part",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetCarColorTypesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/get-colors": {
+            "get": {
+                "description": "Retrieve a list of car color types for a specific part and color category",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Get car color types",
+                "parameters": [
+                    {
+                        "description": "Car color type like fluorescent,military",
+                        "name": "part",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetCarColorTypesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/get-customization": {
+            "get": {
+                "description": "Retrieve a list of car customization parts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Car-Customize"
+                ],
+                "summary": "Get car customization parts",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -655,76 +1503,6 @@
                 }
             }
         },
-        "/sell-car": {
-            "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "description": "Sell a car for a player",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Sell Car",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Sell Car Request",
-                        "name": "sellCarRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Car sold successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Car not found",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
         "/update-email": {
             "put": {
                 "description": "Update the email address of a player",
@@ -777,478 +1555,6 @@
                     },
                     "404": {
                         "description": "Player not found",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-body": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade body",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "body upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-engine": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade Engine",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Engine upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-garage": {
-            "put": {
-                "description": "Upgrade a player's garage to the next level",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Garage"
-                ],
-                "summary": "Upgrade Garage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.GarageRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Garage upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-intake": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade intake",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "intake upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-nitrous": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade nitrous",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "nitrous upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-tires": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade tires",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "tires upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-transmission": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade transmission",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "transmission upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/upgrade-turbo": {
-            "put": {
-                "description": "Upgrade the engine of a player's car",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Car"
-                ],
-                "summary": "Upgrade Turbo",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Upgrade Request",
-                        "name": "upgradeRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CarUpgradesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Turbo upgraded successfully",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -1318,6 +1624,25 @@
             "type": "object",
             "properties": {
                 "carId": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.GetCarColorCategoriesRequest": {
+            "type": "object",
+            "properties": {
+                "part": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.GetCarColorTypesRequest": {
+            "type": "object",
+            "properties": {
+                "colorCategory": {
+                    "type": "string"
+                },
+                "part": {
                     "type": "string"
                 }
             }

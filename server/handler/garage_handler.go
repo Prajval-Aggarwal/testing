@@ -25,12 +25,12 @@ import (
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {object} response.Success "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /buy-garage [post]
+// @Router /garage/buy [post]
 func BuyGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var buyRequest request.GarageRequest
@@ -59,7 +59,7 @@ func BuyGarageHandler(ctx *gin.Context) {
 // @Produce json
 // @Success 200 {object} response.Success "Garage list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /get-all-garages [get]
+// @Router /garages/get-all [get]
 func GetAllGarageListHandler(ctx *gin.Context) {
 	garage.GetAllGarageListService(ctx)
 }
@@ -77,13 +77,13 @@ func GetAllGarageListHandler(ctx *gin.Context) {
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /upgrade-garage [put]
+// @Router /garage/upgrade [put]
 func UpgradeGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var upgradeRequest request.GarageRequest
@@ -114,13 +114,13 @@ func UpgradeGarageHandler(ctx *gin.Context) {
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /add-car-garage [post]
+// @Router /garage/add-car [post]
 func AddCarToGarageHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	var addCarRequest request.AddCarRequest
@@ -150,13 +150,13 @@ func AddCarToGarageHandler(ctx *gin.Context) {
 // @Success 200 {object} response.Success "Data fetched successfully"
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /get-garage [get]
+// @Router /garage/get [get]
 func GetPlayerGarageListHandler(ctx *gin.Context) {
 	playerId, exists := ctx.Get("playerId")
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
-		response.ShowResponse("Unauthorised", utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 	garage.GetPlayerGarageListService(ctx, playerId.(string))

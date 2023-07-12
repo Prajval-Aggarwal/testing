@@ -20,4 +20,5 @@ lint-fix:
 	@echo "⚠️️ run \"make lint-check\" again to check what did not fix yet"
 
 run:
+	/home/chicmic/go/bin/swag init
 	go run main.go
