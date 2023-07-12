@@ -32,6 +32,7 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 		playerRecord := model.Player{
 			PlayerId:   playeruuid,
 			PlayerName: guestLoginReuqest.PlayerName,
+			Level:      1,
 			Role:       "player",
 			OS:         int64(guestLoginReuqest.OS),
 			Coins:      10000000,
@@ -47,6 +48,15 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 				ExpiresAt: jwt.NewNumericDate(accessTokenexpirationTime),
 			},
 		}
+		playerRaceHist := model.PlayerRaceHistory{
+			PlayerId:         playeruuid,
+			DistanceTraveled: 0,
+			ShdWon:           0,
+			TotalShdPlayed:   0,
+			TdWon:            0,
+			TotalTdPlayed:    0,
+		}
+
 		accessToken, err := token.GenerateToken(accessTokenClaims)
 		if err != nil {
 			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -55,6 +65,12 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 
 		//create a record in database
 		err = db.CreateRecord(&playerRecord)
+		if err != nil {
+			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+			return
+		}
+
+		err = db.CreateRecord(&playerRaceHist)
 		if err != nil {
 			response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return

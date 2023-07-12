@@ -26,6 +26,20 @@ type OwnedGarage struct {
 	GarageLevel int    `json:"garageLevel,omitempty"`
 	CarLimit    int    `json:"carLimit,omitempty"`
 }
+
+type PlayerRaceHistory struct {
+	PlayerId         string `json:"playerId,omitempty"`
+	DistanceTraveled int64  `json:"distanceTraveled"`
+	ShdWon           int64  `json:"showDownWon"`
+	TotalShdPlayed   int64  `json:"totalShdPlayed"`
+	TdWon            int64  `json:"takeDownWon"`
+	TotalTdPlayed    int64  `json:"totalTdPlayed"`
+}
+
+type OwnedBattleArenas struct {
+	PlayerId string `json:"playerId,omitempty"`
+	ArenaId  string `json:"arenaId,omitempty"`
+}
 type PlayerCarsStats struct {
 	PlayerId    string  `json:"playerId,omitempty"`
 	CarId       string  `json:"carId,omitempty"`

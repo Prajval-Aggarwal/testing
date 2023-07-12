@@ -1,6 +1,9 @@
 package db
 
 import (
+	"fmt"
+	"main/server/response"
+
 	"gorm.io/gorm"
 )
 
@@ -79,12 +82,12 @@ func RawExecutor(query string, args ...interface{}) error {
 	return nil
 }
 
-// func Fun1(query string, args ...interface{}) response.CarResponse {
-// 	carDetails := &response.CarResponse{}
-// 	row := db.Raw(query, args...).Row()
+func ResponseQuery(query string, args ...interface{}) response.PlayerResposne {
+	playerResposne := &response.PlayerResposne{}
+	row := db.Raw(query, args...).Row()
+	fmt.Println("card Details is", playerResposne)
+	row.Scan(&playerResposne.PlayerId, &playerResposne.PlayerName, &playerResposne.Level, &playerResposne.Role, &playerResposne.Email, &playerResposne.Coins, &playerResposne.Cash, &playerResposne.CarsOwned, &playerResposne.GaragesOwned, &playerResposne.DistanceTraveled, &playerResposne.ShdWon, &playerResposne.ShdWinRatio, &playerResposne.TdWon, &playerResposne.TdWinRatio)
 
-// 	row.Scan(&carDetails.CarId)
-// 	row.Scan(&carDetails.CarName)
-// 	return **&carDetails
+	return *playerResposne
 
-// }
+}
