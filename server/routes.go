@@ -36,6 +36,7 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/car/repair", gateway.UserAuthorization, handler.RepairCarHandler)
 	server.engine.GET("/car/get-all", handler.GetAllCarsHandler)
 	server.engine.POST("/car/get-by-id", handler.GetCarByIdHandler)
+
 	//Player garage routes
 	server.engine.POST("/garage/buy", gateway.UserAuthorization, handler.BuyGarageHandler)
 	server.engine.GET("/garages/get-all", handler.GetAllGarageListHandler)
@@ -62,6 +63,15 @@ func ConfigureRoutes(server *Server) {
 	server.engine.GET("/get-color-category", handler.GetCarColorCategoriesHandler)
 	server.engine.GET("/get-color-type", handler.GetCarColorTypesHandler)
 	server.engine.GET("/get-colors", handler.GetCarColorsHandler)
+
+	//arena routes
+	server.engine.POST("/arena/challenge", gateway.UserAuthorization, handler.ChallengeArenaHandler)
+	server.engine.POST("/arena/end", gateway.UserAuthorization, handler.EndChallengeHandler)
+	server.engine.PUT("/arena/replace-car", gateway.UserAuthorization, handler.ReplaceArenaCarHandler)
+	server.engine.GET("/arena/get", handler.GetArenaHandler)
+	server.engine.GET("/arena/get-id", handler.GetArenaByIdHandler)
+
+	// server.engine.POST("arena/add-car", gateway.UserAuthorization, handler.AddCarArenaHandler)
 
 	//add dummy data in db
 	server.engine.GET("/add-dummy-data", handler.AddDummyDataHandler)

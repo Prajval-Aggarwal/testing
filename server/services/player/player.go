@@ -10,7 +10,6 @@ import (
 
 func GetPlayerDetails(ctx *gin.Context, playerId string) {
 
-	playerId = "04d2c987-4d73-4ad5-a194-56e54355b73c"
 	var playerResponse response.PlayerResposne
 	query := `SELECT
 		p.player_id,

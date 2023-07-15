@@ -1,0 +1,72 @@
+[
+    {
+        "arenaId": "1",
+        "arenaName": "California",
+        "arenaLevel": "2",
+        "longitude": 31.45,
+        "latitude": 11.21
+    },
+    {
+        "arenaId": "2",
+        "arenaName": "New York",
+        "arenaLevel": "3",
+        "longitude": 40.71,
+        "latitude": -74.01
+    },
+    {
+        "arenaId": "3",
+        "arenaName": "Texas",
+        "arenaLevel": "1",
+        "longitude": 29.76,
+        "latitude": -95.37
+    },
+    {
+        "arenaId": "4",
+        "arenaName": "Florida",
+        "arenaLevel": "4",
+        "longitude": 27.99,
+        "latitude": -81.69
+    },
+    {
+        "arenaId": "5",
+        "arenaName": "Arizona",
+        "arenaLevel": "2",
+        "longitude": 33.44,
+        "latitude": -112.07
+    },
+    {
+        "arenaId": "6",
+        "arenaName": "Nevada",
+        "arenaLevel": "3",
+        "longitude": 36.16,
+        "latitude": -115.13
+    },
+    {
+        "arenaId": "7",
+        "arenaName": "Colorado",
+        "arenaLevel": "1",
+        "longitude": 39.74,
+        "latitude": -104.99
+    },
+    {
+        "arenaId": "8",
+        "arenaName": "Oregon",
+        "arenaLevel": "4",
+        "longitude": 45.52,
+        "latitude": -122.68
+    },
+    {
+        "arenaId": "9",
+        "arenaName": "Illinois",
+        "arenaLevel": "2",
+        "longitude": 41.88,
+        "latitude": -87.63
+    },
+    {
+        "arenaId": "10",
+        "arenaName": "Washington",
+        "arenaLevel": "3",
+        "longitude": 47.61,
+        "latitude": -122.33
+    }
+]

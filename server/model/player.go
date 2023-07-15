@@ -1,9 +1,11 @@
 package model
 
+import "time"
+
 type Player struct {
 	PlayerId   string `json:"playerId,omitempty"`
 	PlayerName string `json:"playerName" gorm:"unique,omitempty"`
-	Level      int    `json:"level,omitempty"`
+	Level      int64  `json:"level,omitempty"`
 	Role       string `json:"role,omitempty"`
 	Email      string `json:"email,omitempty"`
 	Coins      int64  `json:"coins,omitempty"`
@@ -37,8 +39,12 @@ type PlayerRaceHistory struct {
 }
 
 type OwnedBattleArenas struct {
-	PlayerId string `json:"playerId,omitempty"`
-	ArenaId  string `json:"arenaId,omitempty"`
+	PlayerId string    `json:"playerId,omitempty"`
+	ArenaId  string    `json:"arenaId,omitempty"`
+	WinTime  time.Time `json:"winTime,omitempty"`
+	TimeWon  time.Time `json:"timeWon,omitempty"`
+	CarId    string    `json:"carId,omitempty"`
+	Status   string    `json:"status,omitempty"`
 }
 type PlayerCarsStats struct {
 	PlayerId    string  `json:"playerId,omitempty"`

@@ -19,6 +19,11 @@ definitions:
       paymentMode:
         type: string
     type: object
+  request.ChallengeReq:
+    properties:
+      arenaId:
+        type: string
+    type: object
   request.ColorCustomizationRequest:
     properties:
       carId:
@@ -30,6 +35,19 @@ definitions:
       colorName:
         type: string
       colorType:
+        type: string
+    type: object
+  request.EndChallengeReq:
+    properties:
+      arenaId:
+        type: string
+      carId1:
+        type: string
+      carId2:
+        type: string
+      playerId:
+        type: string
+      winTime2:
         type: string
     type: object
   request.GarageRequest:
@@ -81,6 +99,13 @@ definitions:
       email:
         type: string
     type: object
+  request.ReplaceReq:
+    properties:
+      arenaId:
+        type: string
+      carId:
+        type: string
+    type: object
   request.UpdateEmailRequest:
     properties:
       email:
@@ -113,6 +138,111 @@ info:
   title: Drag Racing
   version: "2.0"
 paths:
+  /arena/challenge:
+    post:
+      consumes:
+      - application/json
+      description: Challenge the arena with the given request
+      parameters:
+      - description: The ID of the player
+        in: header
+        name: playerId
+        required: true
+        type: string
+      - description: Challenge Request
+        in: body
+        name: challengereq
+        required: true
+        schema:
+          $ref: '#/definitions/request.ChallengeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Challenge Arena
+      tags:
+      - Arena
+  /arena/end:
+    post:
+      consumes:
+      - application/json
+      description: Ends the current challenge and saves the data
+      parameters:
+      - description: The ID of the player
+        in: header
+        name: playerId
+        required: true
+        type: string
+      - description: End Challenge Request
+        in: body
+        name: challengereq
+        required: true
+        schema:
+          $ref: '#/definitions/request.EndChallengeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: End Challenge
+      tags:
+      - Arena
+  /arena/replace-car:
+    put:
+      consumes:
+      - application/json
+      description: Add or replaces the car in the arena car slot
+      parameters:
+      - description: The ID of the player
+        in: header
+        name: playerId
+        required: true
+        type: string
+      - description: Replace car Request
+        in: body
+        name: challengereq
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReplaceReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Replace Car
+      tags:
+      - Arena
   /car/buy:
     post:
       consumes:

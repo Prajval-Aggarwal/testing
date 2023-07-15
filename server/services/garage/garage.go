@@ -37,7 +37,7 @@ func BuyGarageService(ctx *gin.Context, buyRequest request.GarageRequest, player
 	//check if the player is eligible to buy the garage if yes add it to player garage list else return error
 
 	if playerDetails.Coins < int64(garageDetails.CoinsRequired) {
-		if playerDetails.Level <= int(garageDetails.Level) {
+		if playerDetails.Level <= garageDetails.Level {
 			response.ShowResponse(utils.UPGRADE_LEVEL, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
 		}
@@ -224,5 +224,5 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 
-	response.ShowResponse(utils.CAR_ADDED_GARAGE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+	response.ShowResponse(utils.CAR_ADDED_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
