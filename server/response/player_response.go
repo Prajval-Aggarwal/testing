@@ -4,6 +4,7 @@ type PlayerResposne struct {
 	PlayerId         string `json:"playerId"`
 	PlayerName       string `json:"playerName" gorm:"unique"`
 	Level            int    `json:"level"`
+	XP               int64  `json:"xp"`
 	Role             string `json:"role"`
 	Email            string `json:"email"`
 	Coins            int64  `json:"coins"`

@@ -15,6 +15,7 @@ func GetPlayerDetails(ctx *gin.Context, playerId string) {
 		p.player_id,
 		p.player_name,
 		p.level,
+		p.xp,
 		p.role,
 		p.email,
 		p.coins,

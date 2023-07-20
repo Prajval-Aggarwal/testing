@@ -7,6 +7,7 @@ type Player struct {
 	PlayerName string `json:"playerName" gorm:"unique,omitempty"`
 	Level      int64  `json:"level,omitempty"`
 	Role       string `json:"role,omitempty"`
+	XP         string `json:"xp,omitempty"`
 	Email      string `json:"email,omitempty"`
 	Coins      int64  `json:"coins,omitempty"`
 	Cash       int64  `json:"cash,omitempty"`
@@ -18,7 +19,6 @@ type OwnedCars struct {
 	PlayerId   string  `json:"playerId,omitempty"`
 	CarId      string  `json:"carId,omitempty"`
 	Selected   bool    `json:"selected,omitempty"`
-	Level      int     `json:"level,omitempty"`
 	RepairCost float64 `json:"repairCost,omitempty"` //will always b in coins no cash
 }
 

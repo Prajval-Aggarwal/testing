@@ -1,92 +1,163 @@
+
 [
   {
-    "carId": "1",
-    "carName": "Car 1",
-    "level": 5,
+    "carId": 1,
+    "carName": "carId_1",
+    "class": "D",
     "currType": "cash",
-    "currAmount": 100,
-    "maxLevel": 10,
-    "class": "Class X",
+    "cost": 750,
     "locked": false
   },
   {
-    "carId": "2",
-    "carName": "Car 2",
-    "level": 6,
+    "carId": 2,
+    "carName": "carId_2",
+    "class": "D",
     "currType": "coins",
-    "currAmount": 200,
-    "maxLevel": 12,
-    "class": "Class Y",
+    "cost": 2250,
     "locked": true
   },
   {
-    "carId": "3",
-    "carName": "Car 3",
-    "level": 3,
+    "carId": 3,
+    "carName": "carId_3",
+    "class": "D",
     "currType": "coins",
-    "currAmount": 50,
-    "maxLevel": 8,
-    "class": "Class Z",
-    "locked": false
-  },
-  {
-    "carId": "4",
-    "carName": "Car 4",
-    "level": 7,
-    "currType": "coins",
-    "currAmount": 150,
-    "maxLevel": 9,
-    "class": "Class W",
+    "cost": 2500,
     "locked": true
   },
   {
-    "carId": "5",
-    "carName": "Car 5",
-    "level": 5,
+    "carId": 4,
+    "carName": "carId_4",
+    "class": "D",
+    "currType": "coins",
+    "cost": 2750,
+    "locked": true
+  },
+  {
+    "carId": 5,
+    "carName": "carId_5",
+    "class": "D",
+    "currType": "coins",
+    "cost": 1750,
+    "locked": true
+  },
+  {
+    "carId": 6,
+    "carName": "carId_6",
+    "class": "D",
     "currType": "cash",
-    "currAmount": 80,
-    "maxLevel": 12,
-    "class": "Class Y",
+    "cost": 500,
     "locked": true
   },
   {
-    "carId": "6",
-    "carName": "Car 6",
-    "level": 6,
+    "carId": 7,
+    "carName": "carId_7",
+    "class": "D",
     "currType": "coins",
-    "currAmount": 120,
-    "maxLevel": 10,
-    "class": "Class Z",
-    "locked": false
+    "cost": 2000,
+    "locked": true
   },
   {
-    "carId": "7",
-    "carName": "Car 7",
-    "level": 8,
+    "carId": 8,
+    "carName": "carId_8",
+    "class": "C",
     "currType": "coins",
-    "currAmount": 200,
-    "maxLevel": 11,
-    "class": "Class X",
+    "cost": 7250,
     "locked": true
   },
   {
-    "carId": "8",
-    "carName": "cash",
-    "level": 4,
-    "currType": "Type H",
-    "currAmount": 50,
-    "maxLevel": 7,
-    "class": "Class W",
+    "carId": 9,
+    "carName": "carId_9",
+    "class": "C",
+    "currType": "cash",
+    "cost": 2250,
     "locked": true
   },
   {
-    "carId": "9",
-    "carName": "Car 9",
-    "level": 6,
-    "currType": "coins" ,
-    "currAmount": 150,
-    "maxLevel": 9,
-    "class": "Class Z",
+    "carId": 10,
+    "carName": "carId_10",
+    "class": "C",
+    "currType": "coins",
+    "cost": 9250,
+    "locked": true
+  },
+  {
+    "carId": 11,
+    "carName": "carId_11",
+    "class": "C",
+    "currType": "coins",
+    "cost": 7750,
+    "locked": true
+  },
+  {
+    "carId": 12,
+    "carName": "carId_12",
+    "class": "C",
+    "currType": "cash",
+    "cost": 1750,
+    "locked": true
+  },
+  {
+    "carId": 13,
+    "carName": "carId_13",
+    "class": "B",
+    "currType": "cash",
+    "cost": 4750,
+    "locked": true
+  },
+  {
+    "carId": 14,
+    "carName": "carId_14",
+    "class": "B",
+    "currType": "coins",
+    "cost": 26750,
+    "locked": true
+  },
+  {
+    "carId": 15,
+    "carName": "carId_15",
+    "class":"B",
+    "currType": "coins",
+    "cost": 26750,
+    "locked": true
+  },
+  {
+    "carId": 16,
+    "carName": "carId_16",
+    "class": "A",
+    "currType": "coins",
+    "cost": 54000,
+    "locked": true
+  },
+  {
+    "carId": 17,
+    "carName": "carId_17",
+    "class": "A",
+    "currType": "cash",
+    "cost": 7000,
+    "locked": true
+  },
+  {
+    "carId": 18,
+    "carName": "carId_18",
+    "class": "A",
+    "currType": "coins",
+    "cost": 51000,
+    "locked": true
+  },
+  {
+    "carId": 19,
+    "carName": "carId_19",
+    "class": "S",
+    "currType": "coins",
+    "cost": 96750,
+    "locked": true
+  },
+  {
+    "carId": 20,
+    "carName": "car_id_20",
+    "class": "S",
+    "currType": "cash",
+    "cost": 12250,
     "locked": true
   }
 ]

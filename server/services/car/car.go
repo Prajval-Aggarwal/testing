@@ -96,12 +96,7 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 	}
 
 	if amount < int64(carDetails.CurrAmount) && currType == carDetails.CurrType {
-		if playerDetails.Level <= carDetails.Level {
-			response.ShowResponse(utils.UPGRADE_LEVEL, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-			return
-		}
 		response.ShowResponse(utils.NOT_ENOUGH_COINS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-
 		return
 	}
 
@@ -123,7 +118,6 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 		PlayerId:   playerId,
 		CarId:      carRequest.CarId,
 		Selected:   true,
-		Level:      1,
 		RepairCost: 100.0,
 	}
 

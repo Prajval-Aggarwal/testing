@@ -86,7 +86,7 @@ func ResponseQuery(query string, args ...interface{}) response.PlayerResposne {
 	playerResposne := &response.PlayerResposne{}
 	row := db.Raw(query, args...).Row()
 	fmt.Println("card Details is", playerResposne)
-	row.Scan(&playerResposne.PlayerId, &playerResposne.PlayerName, &playerResposne.Level, &playerResposne.Role, &playerResposne.Email, &playerResposne.Coins, &playerResposne.Cash, &playerResposne.CarsOwned, &playerResposne.GaragesOwned, &playerResposne.DistanceTraveled, &playerResposne.ShdWon, &playerResposne.ShdWinRatio, &playerResposne.TdWon, &playerResposne.TdWinRatio)
+	row.Scan(&playerResposne.PlayerId, &playerResposne.PlayerName, &playerResposne.Level, &playerResposne.XP, &playerResposne.Role, &playerResposne.Email, &playerResposne.Coins, &playerResposne.Cash, &playerResposne.CarsOwned, &playerResposne.GaragesOwned, &playerResposne.DistanceTraveled, &playerResposne.ShdWon, &playerResposne.ShdWinRatio, &playerResposne.TdWon, &playerResposne.TdWinRatio)
 
 	return *playerResposne
 

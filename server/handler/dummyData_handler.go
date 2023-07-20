@@ -20,15 +20,15 @@ func ReadJSONFile(filePath string) ([]byte, error) {
 }
 func AddDummyDataHandler(ctx *gin.Context) {
 	fmt.Println("jhj")
-	// car  dummy data
-	// addtoDb("server/dummyData/car.json", &[]model.Car{})
-	// addtoDb("server/dummyData/carStats.json", &[]model.CarStats{})
+	//car  dummy data
+	addtoDb("server/dummyData/car.json", &[]model.Car{})
+	addtoDb("server/dummyData/carStats.json", &[]model.CarStats{})
 
-	// // //garage dummy data
-	// addtoDb("server/dummyData/garage.json", &[]model.Garage{})
-	// addtoDb("server/dummyData/garageUpgrades.json", &[]model.GarageUpgrades{})
+	// //garage dummy data
+	addtoDb("server/dummyData/garage.json", &[]model.Garage{})
+	addtoDb("server/dummyData/garageUpgrades.json", &[]model.GarageUpgrades{})
 
-	// // //car upgrades dummy data
+	// //car upgrades dummy data
 	// addtoDb("server/dummyData/engineUpgrades.json", &[]model.Engine{})
 	// addtoDb("server/dummyData/turboUpgrades.json", &[]model.Turbo{})
 	// addtoDb("server/dummyData/intakeUpgrades.json", &[]model.Intake{})
@@ -37,13 +37,18 @@ func AddDummyDataHandler(ctx *gin.Context) {
 	// addtoDb("server/dummyData/transmissionUpgrades.json", &[]model.Transmission{})
 	// addtoDb("server/dummyData/nitrousUpgrades.json", &[]model.Nitrous{})
 
-	// //car customization
-	// addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
-	// addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
+	//car customization
+	addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
+	addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
 
 	//arena
 	addtoDb("server/dummyData/arena.json", &[]model.Arena{})
 	addtoDb("server/dummyData/arenaLevel.json", &[]model.ArenaReq{})
+
+	addtoDb("server/dummyData/upgrades.json", &[]model.Upgrades{})
+	addtoDb("server/dummyData/looseRewards.json", &[]model.LostRewards{})
+	addtoDb("server/dummyData/winRewards.json", &[]model.WinRewards{})
+	addtoDb("server/dummyData/classMultiplier.json", &[]model.RatingMulti{})
 
 }
 
@@ -83,43 +88,7 @@ func addtoDb(filePath string, modelType interface{}) {
 			fmt.Println("garage upgrades data:", item)
 			db.CreateRecord(&item)
 		}
-	case *[]model.Engine:
-		// Handle other struct types similarly
-		for _, item := range *slice {
-			fmt.Println("engine upgrades data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.Turbo:
-		// Handle other struct types similarly
-		for _, item := range *slice {
-			fmt.Println("turbo upgrades data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.Intake:
-		// Handle other struct types similarly
-		for _, item := range *slice {
-			fmt.Println("intake upgrades data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.Nitrous:
-		// Handle other struct types similarly
-		for _, item := range *slice {
-			fmt.Println("nitrous upgrades data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.Body:
-		// Handle other struct types similarly
-		for _, item := range *slice {
-			fmt.Println("body upgrades data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.Tires:
-		// Handle other struct types similarly
-		for _, item := range *slice {
-			fmt.Println("tires upgrades data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.Transmission:
+	case *[]model.Upgrades:
 		// Handle other struct types similarly
 		for _, item := range *slice {
 			fmt.Println("transmission upgrades data:", item)
@@ -146,7 +115,21 @@ func addtoDb(filePath string, modelType interface{}) {
 			fmt.Println("arena level data:", item)
 			db.CreateRecord(&item)
 		}
-
+	case *[]model.WinRewards:
+		for _, item := range *slice {
+			fmt.Println("win rewards data:", item)
+			db.CreateRecord(&item)
+		}
+	case *[]model.LostRewards:
+		for _, item := range *slice {
+			fmt.Println("lost rewards data:", item)
+			db.CreateRecord(&item)
+		}
+	case *[]model.RatingMulti:
+		for _, item := range *slice {
+			fmt.Println("rating data:", item)
+			db.CreateRecord(&item)
+		}
 	default:
 		log.Fatal("Invalid modelType provided")
 	}

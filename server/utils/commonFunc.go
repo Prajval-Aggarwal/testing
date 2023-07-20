@@ -2,7 +2,6 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/response"
@@ -97,69 +96,69 @@ func AlreadyAtMax(val int) bool {
 // 	}
 // }
 
-func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats) {
+// func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats) {
 
-	//list of points where car level upgrades automatically
-	var car model.OwnedCars
-	query := "select * from owned_cars where player_id=? and car_id=?;"
+// 	//list of points where car level upgrades automatically
+// 	var car model.OwnedCars
+// 	query := "select * from owned_cars where player_id=? and car_id=?;"
 
-	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
+// 	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
 
-	if playerCarStats.OVR >= 20 && playerCarStats.OVR < 40 {
+// 	if playerCarStats.OVR >= 20 && playerCarStats.OVR < 40 {
 
-		if car.Level == 1 {
-			//upgrade the level
-			car.Level = 2
-			//increase 30% repasir cost
-			car.RepairCost += (0.3 * car.RepairCost)
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
+// 		if car.Level == 1 {
+// 			//upgrade the level
+// 			car.Level = 2
+// 			//increase 30% repasir cost
+// 			car.RepairCost += (0.3 * car.RepairCost)
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
 
-		}
-	} else if playerCarStats.OVR >= 40 && playerCarStats.OVR < 60 {
+// 		}
+// 	} else if playerCarStats.OVR >= 40 && playerCarStats.OVR < 60 {
 
-		if car.Level == 2 {
-			//upgrade the level
-			car.Level = 3
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 		if car.Level == 2 {
+// 			//upgrade the level
+// 			car.Level = 3
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
 
-		}
-	} else if playerCarStats.OVR >= 60 && playerCarStats.OVR < 80 {
+// 		}
+// 	} else if playerCarStats.OVR >= 60 && playerCarStats.OVR < 80 {
 
-		if car.Level == 3 {
-			//upgrade the level
-			car.Level = 4
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 		if car.Level == 3 {
+// 			//upgrade the level
+// 			car.Level = 4
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
 
-		}
-	} else if playerCarStats.OVR >= 80 && playerCarStats.OVR <= 100 {
+// 		}
+// 	} else if playerCarStats.OVR >= 80 && playerCarStats.OVR <= 100 {
 
-		if car.Level == 4 {
-			//upgrade the level
-			car.Level = 5
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 		if car.Level == 4 {
+// 			//upgrade the level
+// 			car.Level = 5
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
-		}
-	}
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
+// 		}
+// 	}
 
-}
+// }
 
 func SetPlayerCarDefaults(playerId string, carId string) error {
 
@@ -167,13 +166,13 @@ func SetPlayerCarDefaults(playerId string, carId string) error {
 	playerCarUpgrades := model.PlayerCarUpgrades{
 		PlayerId:     playerId,
 		CarId:        carId,
-		Engine:       1,
-		Turbo:        1,
-		Intake:       1,
-		Nitrous:      1,
-		Body:         1,
-		Tires:        1,
-		Transmission: 1,
+		Engine:       0,
+		Turbo:        0,
+		Intake:       0,
+		Nitrous:      0,
+		Body:         0,
+		Tires:        0,
+		Transmission: 0,
 	}
 	err := db.CreateRecord(playerCarUpgrades)
 	if err != nil {

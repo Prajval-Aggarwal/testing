@@ -126,7 +126,6 @@ func UpgradeEngineService(ctx *gin.Context, upgradeRequest request.CarUpgradesRe
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
@@ -252,7 +251,6 @@ func UpgradeTurboService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
@@ -378,7 +376,6 @@ func UpgradeIntakeService(ctx *gin.Context, upgradeRequest request.CarUpgradesRe
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
@@ -504,7 +501,6 @@ func UpgradeNitrousService(ctx *gin.Context, upgradeRequest request.CarUpgradesR
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
@@ -630,7 +626,6 @@ func UpgradeBodyService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequ
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
@@ -756,7 +751,6 @@ func UpgradeTiresService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
@@ -882,7 +876,6 @@ func UpgradeTransmissionService(ctx *gin.Context, upgradeRequest request.CarUpgr
 	}
 
 	//after every upgrade check if the car stats has reached a certain value above which the car level upgrades automatically
-	utils.UpgradeCarLevel(&playerCarStats)
 
 	response.ShowResponse(utils.UPGRADE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
