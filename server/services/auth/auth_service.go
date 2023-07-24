@@ -30,14 +30,15 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 		fmt.Println("unique player id is", playeruuid)
 
 		playerRecord := model.Player{
-			PlayerId:   playeruuid,
-			PlayerName: guestLoginReuqest.PlayerName,
-			Level:      1,
-			Role:       "player",
-			OS:         int64(guestLoginReuqest.OS),
-			Coins:      10000000,
-			Cash:       10000000,
-			DeviceId:   guestLoginReuqest.DeviceId,
+			PlayerId:    playeruuid,
+			PlayerName:  guestLoginReuqest.PlayerName,
+			Level:       1,
+			Role:        "player",
+			OS:          int64(guestLoginReuqest.OS),
+			Coins:       10000000,
+			Cash:        10000000,
+			RepairParts: 0,
+			DeviceId:    guestLoginReuqest.DeviceId,
 		}
 
 		accessTokenClaims := model.Claims{

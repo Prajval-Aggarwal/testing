@@ -3,23 +3,23 @@ package model
 import "time"
 
 type Player struct {
-	PlayerId   string `json:"playerId,omitempty"`
-	PlayerName string `json:"playerName" gorm:"unique,omitempty"`
-	Level      int64  `json:"level,omitempty"`
-	Role       string `json:"role,omitempty"`
-	XP         string `json:"xp,omitempty"`
-	Email      string `json:"email,omitempty"`
-	Coins      int64  `json:"coins,omitempty"`
-	Cash       int64  `json:"cash,omitempty"`
-	DeviceId   string `json:"deviceId,omitempty"`
-	OS         int64  `json:"os,omitempty"` // o for android 1 for ios
+	PlayerId    string `json:"playerId,omitempty"`
+	PlayerName  string `json:"playerName" gorm:"unique,omitempty"`
+	Level       int64  `json:"level,omitempty"`
+	Role        string `json:"role,omitempty"`
+	XP          string `json:"xp,omitempty"`
+	Email       string `json:"email,omitempty"`
+	Coins       int64  `json:"coins,omitempty"`
+	Cash        int64  `json:"cash,omitempty"`
+	RepairParts int64  `json:"repairParts,omitempty"`
+	DeviceId    string `json:"deviceId,omitempty"`
+	OS          int64  `json:"os,omitempty"` // o for android 1 for ios
 }
 
 type OwnedCars struct {
-	PlayerId   string  `json:"playerId,omitempty"`
-	CarId      string  `json:"carId,omitempty"`
-	Selected   bool    `json:"selected,omitempty"`
-	RepairCost float64 `json:"repairCost,omitempty"` //will always b in coins no cash
+	PlayerId string `json:"playerId,omitempty"`
+	CarId    string `json:"carId,omitempty"`
+	Selected bool   `json:"selected,omitempty"`
 }
 
 type OwnedGarage struct {

@@ -9,6 +9,7 @@ type PlayerResposne struct {
 	Email            string `json:"email"`
 	Coins            int64  `json:"coins"`
 	Cash             int64  `json:"cash"`
+	RepairParts      int64  `json:"repairRewards"`
 	CarsOwned        int64  `json:"carsOwned"`
 	GaragesOwned     int64  `json:"garagesOwned"`
 	DistanceTraveled int64  `json:"distanceTraveled"`

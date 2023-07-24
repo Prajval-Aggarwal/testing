@@ -20,6 +20,7 @@ func GetPlayerDetails(ctx *gin.Context, playerId string) {
 		p.email,
 		p.coins,
 		p.cash,
+		p.repair_parts
     COUNT(oc.car_id) AS CarsOwned,
     COUNT(og.garage_id) AS GaragesOwned,
     prh.distance_traveled,
