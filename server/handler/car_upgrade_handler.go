@@ -259,3 +259,26 @@ func UpgradeTransmissionHandler(ctx *gin.Context) {
 	car.UpgradeTransmissionService(ctx, upgradeTransmissionRequest, playerId.(string))
 
 }
+
+func GetCarStatsHandler(ctx *gin.Context) {
+	playerId, exists := ctx.Get("playerId")
+	fmt.Println("player id from token is ", playerId)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+	var getReq request.CarRequest
+	err := utils.RequestDecoding(ctx, &getReq)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = getReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	car.GetCarStatsService(ctx, playerId.(string), getReq)
+}

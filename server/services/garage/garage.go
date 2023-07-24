@@ -37,12 +37,21 @@ func BuyGarageService(ctx *gin.Context, buyRequest request.GarageRequest, player
 	//check if the player is eligible to buy the garage if yes add it to player garage list else return error
 
 	if playerDetails.Coins < int64(garageDetails.CoinsRequired) {
-		if playerDetails.Level <= int(garageDetails.Level) {
+		if playerDetails.Level <= garageDetails.Level {
 			response.ShowResponse(utils.UPGRADE_LEVEL, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 			return
 		}
 		response.ShowResponse(utils.NOT_ENOUGH_COINS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 
+		return
+	}
+	tx := db.BeginTransaction()
+	playerDetails.Coins -= int64(garageDetails.CoinsRequired)
+	query := "UPDATE players SET coins=? WHERE player_id=?"
+	tx.Exec(query, playerDetails.Coins, playerId)
+	if err != nil {
+		tx.Rollback()
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
@@ -55,10 +64,14 @@ func BuyGarageService(ctx *gin.Context, buyRequest request.GarageRequest, player
 
 	err = db.CreateRecord(&ownedGarage)
 	if err != nil {
+		tx.Rollback()
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
-
+	if err := tx.Commit().Error; err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
 	response.ShowResponse(utils.GARAGE_BOUGHT_SUCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }
@@ -224,5 +237,5 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 		return
 	}
 
-	response.ShowResponse(utils.CAR_ADDED_GARAGE_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+	response.ShowResponse(utils.CAR_ADDED_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }

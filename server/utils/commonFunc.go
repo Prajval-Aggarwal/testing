@@ -2,10 +2,10 @@ package utils
 
 import (
 	"errors"
-	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/response"
+	"math"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -97,69 +97,69 @@ func AlreadyAtMax(val int) bool {
 // 	}
 // }
 
-func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats) {
+// func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats) {
 
-	//list of points where car level upgrades automatically
-	var car model.OwnedCars
-	query := "select * from owned_cars where player_id=? and car_id=?;"
+// 	//list of points where car level upgrades automatically
+// 	var car model.OwnedCars
+// 	query := "select * from owned_cars where player_id=? and car_id=?;"
 
-	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
+// 	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
 
-	if playerCarStats.OVR >= 20 && playerCarStats.OVR < 40 {
+// 	if playerCarStats.OVR >= 20 && playerCarStats.OVR < 40 {
 
-		if car.Level == 1 {
-			//upgrade the level
-			car.Level = 2
-			//increase 30% repasir cost
-			car.RepairCost += (0.3 * car.RepairCost)
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
+// 		if car.Level == 1 {
+// 			//upgrade the level
+// 			car.Level = 2
+// 			//increase 30% repasir cost
+// 			car.RepairCost += (0.3 * car.RepairCost)
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
 
-		}
-	} else if playerCarStats.OVR >= 40 && playerCarStats.OVR < 60 {
+// 		}
+// 	} else if playerCarStats.OVR >= 40 && playerCarStats.OVR < 60 {
 
-		if car.Level == 2 {
-			//upgrade the level
-			car.Level = 3
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 		if car.Level == 2 {
+// 			//upgrade the level
+// 			car.Level = 3
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
 
-		}
-	} else if playerCarStats.OVR >= 60 && playerCarStats.OVR < 80 {
+// 		}
+// 	} else if playerCarStats.OVR >= 60 && playerCarStats.OVR < 80 {
 
-		if car.Level == 3 {
-			//upgrade the level
-			car.Level = 4
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 		if car.Level == 3 {
+// 			//upgrade the level
+// 			car.Level = 4
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
 
-		}
-	} else if playerCarStats.OVR >= 80 && playerCarStats.OVR <= 100 {
+// 		}
+// 	} else if playerCarStats.OVR >= 80 && playerCarStats.OVR <= 100 {
 
-		if car.Level == 4 {
-			//upgrade the level
-			car.Level = 5
-			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
+// 		if car.Level == 4 {
+// 			//upgrade the level
+// 			car.Level = 5
+// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
 
-			if err != nil {
-				fmt.Println("error in level upgrade")
-			}
-			fmt.Println("CAR LEVEL UPGRADED!!")
-		}
-	}
+// 			if err != nil {
+// 				fmt.Println("error in level upgrade")
+// 			}
+// 			fmt.Println("CAR LEVEL UPGRADED!!")
+// 		}
+// 	}
 
-}
+// }
 
 func SetPlayerCarDefaults(playerId string, carId string) error {
 
@@ -167,13 +167,13 @@ func SetPlayerCarDefaults(playerId string, carId string) error {
 	playerCarUpgrades := model.PlayerCarUpgrades{
 		PlayerId:     playerId,
 		CarId:        carId,
-		Engine:       1,
-		Turbo:        1,
-		Intake:       1,
+		Engine:       0,
+		Turbo:        0,
+		Intake:       0,
 		Nitrous:      1,
-		Body:         1,
-		Tires:        1,
-		Transmission: 1,
+		Body:         0,
+		Tires:        0,
+		Transmission: 0,
 	}
 	err := db.CreateRecord(playerCarUpgrades)
 	if err != nil {
@@ -260,4 +260,70 @@ func IsEmpty(field string) error {
 		return errors.New(field + " cannot be empty")
 	}
 	return nil
+}
+
+func CalculateOVR(classOr, power, grip, weight float64) float64 {
+	x := (classOr * (0.7*float64(power) + (0.6 * float64(grip)))) - 0.02*float64(weight)
+	return x
+}
+
+func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCarsStats, *model.PlayerCarUpgrades, string, int64, *model.RatingMulti, error) {
+	var playerDetails model.Player
+	var playerCarStats model.PlayerCarsStats
+	var carClassDetails string
+
+	var playerCarUpgrades model.PlayerCarUpgrades
+	var maxUpgradeLevel int64
+	var classRating model.RatingMulti
+	//check if the car is owned or not
+	var exists bool
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=?)"
+	err := db.QueryExecutor(query, &exists, playerId, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+	if !exists {
+		return nil, nil, nil, "", 0, nil, errors.New(NOT_FOUND)
+	}
+	err = db.FindById(&playerDetails, playerId, "player_id")
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT * FROM player_cars_stats WHERE player_id=? AND car_id=?"
+	err = db.QueryExecutor(query, &playerCarStats, playerId, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT class FROM cars WHERE car_id=?"
+	err = db.QueryExecutor(query, &carClassDetails, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT * FROM rating_multis WHERE class=?"
+	err = db.QueryExecutor(query, &classRating, carClassDetails)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT * FROM player_car_upgrades WHERE player_id=? AND car_id=?"
+	err = db.QueryExecutor(query, &playerCarUpgrades, playerId, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT upgrade_level FROM upgrades WHERE class =? ORDER BY upgrade_level DESC LIMIT 1;"
+	err = db.QueryExecutor(query, &maxUpgradeLevel, carClassDetails)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	return &playerDetails, &playerCarStats, &playerCarUpgrades, carClassDetails, maxUpgradeLevel, &classRating, nil
+}
+
+func RoundFloat(val float64, precision uint) float64 {
+	ratio := math.Pow(10, float64(precision))
+	return math.Round(val*ratio) / ratio
 }

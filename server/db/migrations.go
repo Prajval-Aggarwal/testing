@@ -16,7 +16,7 @@ func AutoMigrateDatabase(db *gorm.DB) {
 	}
 	fmt.Println("db version is:", dbVersion.Version)
 	if dbVersion.Version < 1 {
-		err := db.AutoMigrate(&model.Player{}, &model.OwnedCars{}, &model.Car{}, &model.CarStats{}, &model.Garage{}, &model.GarageCarList{}, &model.GarageUpgrades{}, &model.OwnedGarage{}, &model.Engine{}, &model.Turbo{}, &model.Intake{}, &model.Body{}, &model.Nitrous{}, &model.Tires{}, &model.Transmission{}, &model.PlayerCarUpgrades{}, &model.PlayerCarsStats{})
+		err := db.AutoMigrate(&model.Player{}, &model.OwnedCars{}, &model.Car{}, &model.CarStats{}, &model.Garage{}, &model.GarageCarList{}, &model.GarageUpgrades{}, &model.OwnedGarage{}, &model.PlayerCarUpgrades{}, &model.PlayerCarsStats{}, &model.Upgrades{}, &model.LostRewards{}, &model.WinRewards{}, &model.RatingMulti{})
 		if err != nil {
 			panic(err)
 		}
@@ -64,6 +64,16 @@ func AutoMigrateDatabase(db *gorm.DB) {
 			Version: 5,
 		})
 		dbVersion.Version = 5
+	}
+	if dbVersion.Version < 6 {
+		err := db.AutoMigrate(&model.Arena{}, &model.ArenaReq{})
+		if err != nil {
+			panic(err)
+		}
+		db.Where("version=?", dbVersion.Version).Updates(&model.DbVersion{
+			Version: 6,
+		})
+		dbVersion.Version = 6
 	}
 
 }

@@ -1,5 +1,5 @@
 package model
 
 type DbVersion struct {
-	Version int `json:"version"`
+	Version int64 `json:"version"`
 }

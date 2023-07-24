@@ -78,10 +78,23 @@ const (
 	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
 	CAR_REPAIR_SUCCESS               string = "Car repaired successfully"
 	UNAUTHORIZED                     string = "Player not authorized"
-	CAR_ADDED_GARAGE_SUCCESS         string = "Car added to garage sucessfully"
+	CAR_ADDED_SUCCESS                string = "Car added to sucessfully"
 	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
 
+	CAR_ALREAY_ALLOTED    string = "Car already alotted to others arena"
 	CAR_LIMIT_REACHED     string = "Car Limit reached upgarde the garage to increse the limit"
 	CAR_SELECETED_SUCCESS string = "Current car selected successfully"
 	CAR_ALREADY_BOUGHT    string = "Car already bought"
+
+	CAR_REPLACED_SUCCESS string = "Car replaced sucessfully"
+
+	WON                       string = "You WON"
+	LOSE                      string = "You LOST"
+	UPGRADE_REACHED_MAX_LEVEL string = "Part reached to its max level"
+)
+
+const (
+	UPGRADE_POWER      int64   = 2
+	UPGRADE_SHIFT_TIME float64 = 0.1
+	UPGRADE_GRIP       float64 = 1.0
 )

@@ -13,13 +13,11 @@ func (a CarRequest) Validate() error {
 }
 
 type CarUpgradesRequest struct {
-	CarId       string `json:"carId"`
-	PaymentMode string `json:"paymentMode"`
+	CarId string `json:"carId"`
 }
 
 func (a CarUpgradesRequest) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.CarId, validation.Required),
-		validation.Field(&a.PaymentMode, validation.Required),
 	)
 }

@@ -1,0 +1,203 @@
+[
+    {
+      "class": "D",
+      "upgradeLevel": 1,
+      "cost": 250
+    },
+    {
+      "class": "D",
+      "upgradeLevel": 2,
+      "cost": 500
+    },
+    {
+      "class": "D",
+      "upgradeLevel": 3,
+      "cost": 750
+    },
+    {
+      "class": "C",
+      "upgradeLevel": 1,
+      "cost": 500
+    },
+    {
+      "class": "C",
+      "upgradeLevel": 2,
+      "cost": 1500
+    },
+    {
+      "class": "C",
+      "upgradeLevel": 3,
+      "cost": 2000
+    },
+    {
+      "class": "C",
+      "upgradeLevel": 4,
+      "cost": 2500
+    },
+    {
+      "class": "C",
+      "upgradeLevel": 5,
+      "cost": 3500
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 1,
+      "cost": 1500
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 2,
+      "cost": 2250
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 3,
+      "cost": 3750
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 4,
+      "cost": 4500
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 5,
+      "cost": 6000
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 6,
+      "cost": 6750
+    },
+    {
+      "class": "B",
+      "upgradeLevel": 7,
+      "cost": 8250
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 1,
+      "cost": 2000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 2,
+      "cost": 3000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 3,
+      "cost": 5000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 4,
+      "cost": 7000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 5,
+      "cost": 9000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 6,
+      "cost": 10000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 7,
+      "cost": 12000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 8,
+      "cost": 14000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 9,
+      "cost": 15000
+    },
+    {
+      "class": "A",
+      "upgradeLevel": 10,
+      "cost": 17000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 1,
+      "cost": 2500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 2,
+      "cost": 5000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 3,
+      "cost": 7500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 4,
+      "cost": 10000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 5,
+      "cost": 12500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 6,
+      "cost": 15000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 7,
+      "cost": 17500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 8,
+      "cost": 20000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 9,
+      "cost": 22500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 10,
+      "cost": 25000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 11,
+      "cost": 27500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 12,
+      "cost": 30000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 13,
+      "cost": 32500
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 14,
+      "cost": 35000
+    },
+    {
+      "class": "S",
+      "upgradeLevel": 15,
+      "cost": 37500
+    }
+  ]
+  

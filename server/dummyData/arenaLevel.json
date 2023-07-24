@@ -1,0 +1,22 @@
+[
+    {
+        "arenaLevel": 1,
+        "playerLevel": 3,
+        "minCarReq": 2
+    },
+    {
+        "arenaLevel": 2,
+        "playerLevel": 5,
+        "minCarReq": 4
+    },
+    {
+        "arenaLevel": 3,
+        "playerLevel": 7,
+        "minCarReq": 6
+    },
+    {
+        "arenaLevel": 4,
+        "playerLevel": 8,
+        "minCarReq": 10
+    }
+]
