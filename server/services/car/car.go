@@ -115,10 +115,9 @@ func BuyCarService(ctx *gin.Context, carRequest request.CarRequest, playerId str
 
 	//Add the car to players account and make it as players current selected car
 	playerCar := model.OwnedCars{
-		PlayerId:   playerId,
-		CarId:      carRequest.CarId,
-		Selected:   true,
-		RepairCost: 100.0,
+		PlayerId: playerId,
+		CarId:    carRequest.CarId,
+		Selected: true,
 	}
 
 	//set bought car defaults
@@ -198,51 +197,53 @@ func SellCarService(ctx *gin.Context, sellCarRequest request.CarRequest, playerI
 
 func RepairCarService(ctx *gin.Context, repairCarRequest request.CarRequest, playerId string) {
 
-	// check if the player has owned the car
-	if !db.RecordExist("owned_cars", repairCarRequest.CarId, "car_id") {
-		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
-		return
-	}
 	var playerDetails model.Player
-	var ownedCarDetails model.OwnedCars
-	err := db.FindById(&ownedCarDetails, repairCarRequest.CarId, "car_id")
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	//check if player has required amount
-
-	if playerDetails.Coins < int64(ownedCarDetails.RepairCost) {
-		response.ShowResponse(utils.NOT_ENOUGH_COINS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	playerDetails.Coins -= int64(ownedCarDetails.RepairCost)
-
-	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
+	err := db.FindById(&playerDetails, playerId, "player_id")
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	// get the stats for that car
-	var carStats model.CarStats
-	err = db.FindById(&carStats, repairCarRequest.CarId, "car_id")
+	var carDetails model.CarStats
+	err = db.FindById(&carDetails, repairCarRequest.CarId, "car_id")
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	query := "UPDATE player_cars_stats SET durability=? WHERE player_id=? AND car_id=?"
-	err = db.RawExecutor(query, carStats.Durability, playerId, repairCarRequest.CarId)
+	var playerCarStats model.PlayerCarsStats
+	query := "SELECT * FROM player_cars_stats WHERE car_id=? AND player_id=?"
+	err = db.QueryExecutor(query, &playerCarStats, repairCarRequest.CarId, playerId)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
+	durabilityDiff := carDetails.Durability - playerCarStats.Durability
+
+	if durabilityDiff*5 > playerDetails.RepairParts {
+		response.ShowResponse(utils.NOT_ENOUGH_REPAIR_PARTS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	tx := db.BeginTransaction()
+	if tx.Error != nil {
+		response.ShowResponse(tx.Error.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	playerCarStats.Durability = carDetails.Durability
+	query = "UPDATE player_cars_stats SET durability = ? WHERE player_id=? AND car_id=?"
+	err = tx.Exec(query, carDetails.Durability, playerId, repairCarRequest.CarId).Error
+	if err != nil {
+		tx.Rollback() // Rollback the transaction if there's an error
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	if err := tx.Commit().Error; err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
 	response.ShowResponse(utils.CAR_REPAIR_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
-
 }
 
 func GetAllCarsService(ctx *gin.Context) {

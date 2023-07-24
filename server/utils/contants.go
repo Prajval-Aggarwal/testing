@@ -58,6 +58,7 @@ const (
 	NOT_FOUND                        string = "Record not found"
 	DATA_FETCH_SUCCESS               string = "Data Fetch Successfully"
 	UPGRADE_LEVEL                    string = "Upgrade your level to unlock the car"
+	NOT_ENOUGH_REPAIR_PARTS          string = "Not enough repair parts"
 	NOT_ENOUGH_COINS                 string = "Not enough coins"
 	GARAGE_BOUGHT_SUCESS             string = "Garage bought successfully"
 	GARAGE_LIST_FETCHED              string = "Garage list fetched successfully"
