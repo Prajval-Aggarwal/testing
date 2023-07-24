@@ -45,6 +45,15 @@ func BuyGarageService(ctx *gin.Context, buyRequest request.GarageRequest, player
 
 		return
 	}
+	tx := db.BeginTransaction()
+	playerDetails.Coins -= int64(garageDetails.CoinsRequired)
+	query := "UPDATE players SET coins=? WHERE player_id=?"
+	tx.Exec(query, playerDetails.Coins, playerId)
+	if err != nil {
+		tx.Rollback()
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
 	//add garage to players account
 	ownedGarage := model.OwnedGarage{
@@ -55,10 +64,14 @@ func BuyGarageService(ctx *gin.Context, buyRequest request.GarageRequest, player
 
 	err = db.CreateRecord(&ownedGarage)
 	if err != nil {
+		tx.Rollback()
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
-
+	if err := tx.Commit().Error; err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
 	response.ShowResponse(utils.GARAGE_BOUGHT_SUCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 
 }

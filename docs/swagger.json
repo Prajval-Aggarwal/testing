@@ -114,6 +114,64 @@
                 }
             }
         },
+        "/arena/get": {
+            "get": {
+                "description": "Gets the list of all the arenas",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Get Arenas",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/arena/get-id": {
+            "get": {
+                "description": "Gets a particular arena",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Get Arenas By id",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/arena/replace-car": {
             "put": {
                 "description": "Add or replaces the car in the arena car slot",
@@ -1796,9 +1854,6 @@
             "type": "object",
             "properties": {
                 "carId": {
-                    "type": "string"
-                },
-                "paymentMode": {
                     "type": "string"
                 }
             }

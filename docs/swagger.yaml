@@ -16,8 +16,6 @@ definitions:
     properties:
       carId:
         type: string
-      paymentMode:
-        type: string
     type: object
   request.ChallengeReq:
     properties:
@@ -206,6 +204,44 @@ paths:
           schema:
             $ref: '#/definitions/response.Success'
       summary: End Challenge
+      tags:
+      - Arena
+  /arena/get:
+    get:
+      consumes:
+      - application/json
+      description: Gets the list of all the arenas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get Arenas
+      tags:
+      - Arena
+  /arena/get-id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a particular arena
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get Arenas By id
       tags:
       - Arena
   /arena/replace-car:

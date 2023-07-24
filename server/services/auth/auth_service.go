@@ -23,7 +23,7 @@ func GuestLoginService(ctx *gin.Context, guestLoginReuqest request.GuestLoginReq
 	//Generate access and refresh token
 
 	if guestLoginReuqest.Token == "" {
-		accessTokenexpirationTime := time.Now().Add(5 * time.Hour) //5 minute expiration time for access token
+		accessTokenexpirationTime := time.Now().Add(48 * time.Hour) //5 minute expiration time for access token
 
 		fmt.Println("accessTokenExpiration time is", accessTokenexpirationTime)
 		playeruuid := uuid.New().String()
@@ -103,7 +103,7 @@ func LoginService(ctx *gin.Context, loginDetails request.LoginRequest) {
 		return
 	}
 
-	accessTokenexpirationTime := time.Now().Add(5 * time.Hour) //5 minute expiration time for access token
+	accessTokenexpirationTime := time.Now().Add(48 * time.Hour) //5 minute expiration time for access token
 
 	accessTokenClaims := model.Claims{
 		Id:   playerLogin.PlayerId,

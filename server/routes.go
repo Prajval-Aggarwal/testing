@@ -53,6 +53,8 @@ func ConfigureRoutes(server *Server) {
 	server.engine.PUT("/car/upgrade/tires", gateway.UserAuthorization, handler.UpgradeTiresHandler)
 	server.engine.PUT("/car/upgrade/transmission", gateway.UserAuthorization, handler.UpgradeTransmissionHandler)
 
+	server.engine.GET("/car/stats", gateway.UserAuthorization, handler.GetCarStatsHandler)
+
 	//car Customiztion routes
 	server.engine.PUT("/car/customise/color", gateway.UserAuthorization, handler.ColorCustomizeHandler)
 	server.engine.PUT("/car/customise/wheels", gateway.UserAuthorization, handler.WheelsCustomizeHandler)

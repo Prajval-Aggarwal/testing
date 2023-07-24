@@ -5,6 +5,7 @@ import (
 	"main/server/db"
 	"main/server/model"
 	"main/server/response"
+	"math"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -169,7 +170,7 @@ func SetPlayerCarDefaults(playerId string, carId string) error {
 		Engine:       0,
 		Turbo:        0,
 		Intake:       0,
-		Nitrous:      0,
+		Nitrous:      1,
 		Body:         0,
 		Tires:        0,
 		Transmission: 0,
@@ -259,4 +260,70 @@ func IsEmpty(field string) error {
 		return errors.New(field + " cannot be empty")
 	}
 	return nil
+}
+
+func CalculateOVR(classOr, power, grip, weight float64) float64 {
+	x := (classOr * (0.7*float64(power) + (0.6 * float64(grip)))) - 0.02*float64(weight)
+	return x
+}
+
+func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCarsStats, *model.PlayerCarUpgrades, string, int64, *model.RatingMulti, error) {
+	var playerDetails model.Player
+	var playerCarStats model.PlayerCarsStats
+	var carClassDetails string
+
+	var playerCarUpgrades model.PlayerCarUpgrades
+	var maxUpgradeLevel int64
+	var classRating model.RatingMulti
+	//check if the car is owned or not
+	var exists bool
+	query := "SELECT EXISTS(SELECT * FROM owned_cars WHERE player_id =? AND car_id=?)"
+	err := db.QueryExecutor(query, &exists, playerId, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+	if !exists {
+		return nil, nil, nil, "", 0, nil, errors.New(NOT_FOUND)
+	}
+	err = db.FindById(&playerDetails, playerId, "player_id")
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT * FROM player_cars_stats WHERE player_id=? AND car_id=?"
+	err = db.QueryExecutor(query, &playerCarStats, playerId, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT class FROM cars WHERE car_id=?"
+	err = db.QueryExecutor(query, &carClassDetails, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT * FROM rating_multis WHERE class=?"
+	err = db.QueryExecutor(query, &classRating, carClassDetails)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT * FROM player_car_upgrades WHERE player_id=? AND car_id=?"
+	err = db.QueryExecutor(query, &playerCarUpgrades, playerId, carId)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	query = "SELECT upgrade_level FROM upgrades WHERE class =? ORDER BY upgrade_level DESC LIMIT 1;"
+	err = db.QueryExecutor(query, &maxUpgradeLevel, carClassDetails)
+	if err != nil {
+		return nil, nil, nil, "", 0, nil, err
+	}
+
+	return &playerDetails, &playerCarStats, &playerCarUpgrades, carClassDetails, maxUpgradeLevel, &classRating, nil
+}
+
+func RoundFloat(val float64, precision uint) float64 {
+	ratio := math.Pow(10, float64(precision))
+	return math.Round(val*ratio) / ratio
 }

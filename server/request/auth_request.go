@@ -8,7 +8,7 @@ import (
 type GuestLoginRequest struct {
 	PlayerName string `json:"playerName"`
 	DeviceId   string `json:"deviceId"`
-	OS         int    `json:"os"`
+	OS         int64  `json:"os"`
 	Token      string `json:"token"`
 }
 type LoginRequest struct {

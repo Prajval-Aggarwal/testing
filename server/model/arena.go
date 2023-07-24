@@ -3,8 +3,8 @@ package model
 type Arena struct {
 	ArenaId    string  `json:"arenaId"`
 	ArenaName  string  `json:"arenaName"`
-	ArenaLevel int     `json:"arenaLevel"`
-	Perks      int     `json:"perks"`
+	ArenaLevel int64   `json:"arenaLevel"`
+	Perks      int64   `json:"perks"`
 	Longitude  float64 `json:"longitude"`
 	Latitude   float64 `json:"latitude"`
 }

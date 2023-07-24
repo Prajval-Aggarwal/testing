@@ -88,6 +88,13 @@ const (
 
 	CAR_REPLACED_SUCCESS string = "Car replaced sucessfully"
 
-	WON  string = "You WON"
-	LOSE string = "You LOST"
+	WON                       string = "You WON"
+	LOSE                      string = "You LOST"
+	UPGRADE_REACHED_MAX_LEVEL string = "Part reached to its max level"
+)
+
+const (
+	UPGRADE_POWER      int64   = 2
+	UPGRADE_SHIFT_TIME float64 = 0.1
+	UPGRADE_GRIP       float64 = 1.0
 )
