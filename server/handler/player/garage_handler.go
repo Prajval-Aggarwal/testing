@@ -50,20 +50,6 @@ func BuyGarageHandler(ctx *gin.Context) {
 
 }
 
-// GetAllGarageListService retrieves the list of all garages.
-//
-// @Summary Get All Garage List
-// @Description Retrieve the list of all garages
-// @Tags Garage
-// @Accept json
-// @Produce json
-// @Success 200 {object} response.Success "Garage list fetched successfully"
-// @Failure 500 {object} response.Success "Internal server error"
-// @Router /garages/get-all [get]
-func GetAllGarageListHandler(ctx *gin.Context) {
-	garage.GetAllGarageListService(ctx)
-}
-
 // UpgradeGarageService upgrades a player's garage.
 //
 // @Summary Upgrade Garage

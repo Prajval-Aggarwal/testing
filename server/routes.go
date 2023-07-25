@@ -5,6 +5,9 @@ import (
 	"main/server/gateway"
 	"main/server/handler"
 
+	admin "main/server/handler/admin"
+	player "main/server/handler/player"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -21,47 +24,60 @@ func ConfigureRoutes(server *Server) {
 		})
 	})
 
+	//Admin Login Route
+
+	server.engine.POST("/admin/login", admin.AdminLoginHandler)
+	server.engine.POST("/admin/signup", admin.AdminSignUpHandler)
+	server.engine.POST("/forgot-password", admin.ForgotPasswordHandler)
+	server.engine.PATCH("/reset-password", admin.ResetPasswordHandler)
+	
 	//Auth routes
-	server.engine.POST("/guest-login", handler.GuestLoginHandler)
-	server.engine.POST("/login", handler.LoginHandler)
-	server.engine.PUT("/update-email", gateway.UserAuthorization, handler.UpdateEmailHandler)
+	server.engine.POST("/guest-login", admin.GuestLoginHandler)
+	server.engine.POST("/login", admin.LoginHandler)
+	server.engine.PUT("/update-email", gateway.UserAuthorization, admin.UpdateEmailHandler)
 
 	//player details
 	server.engine.GET("/player-details", gateway.UserAuthorization, handler.GetPlayerDetailsHandler)
 
 	//Player routes
-	server.engine.POST("/car/buy", gateway.UserAuthorization, handler.BuyCarHandler)
-	server.engine.PUT("/car/equip", gateway.UserAuthorization, handler.EquipCarHandler)
-	server.engine.DELETE("/car/sell", gateway.UserAuthorization, handler.SellCarHandler)
-	server.engine.POST("/car/repair", gateway.UserAuthorization, handler.RepairCarHandler)
-	server.engine.GET("/car/get-all", handler.GetAllCarsHandler)
-	server.engine.POST("/car/get-by-id", handler.GetCarByIdHandler)
+	server.engine.POST("/car/buy", gateway.UserAuthorization, player.BuyCarHandler)
+	server.engine.PUT("/car/equip", gateway.UserAuthorization, player.EquipCarHandler)
+	server.engine.DELETE("/car/sell", gateway.UserAuthorization, player.SellCarHandler)
+	server.engine.POST("/car/repair", gateway.UserAuthorization, player.RepairCarHandler)
+	server.engine.GET("/car/get-all", player.GetAllCarsHandler)
+	server.engine.POST("/car/get-by-id", player.GetCarByIdHandler)
+
 	//Player garage routes
-	server.engine.POST("/garage/buy", gateway.UserAuthorization, handler.BuyGarageHandler)
-	server.engine.GET("/garages/get-all", handler.GetAllGarageListHandler)
-	server.engine.POST("/garage/add-car", gateway.UserAuthorization, handler.AddCarToGarageHandler)
-	server.engine.PUT("/garage/upgrade", gateway.UserAuthorization, handler.UpgradeGarageHandler)
-	server.engine.GET("/garage/get", gateway.UserAuthorization, handler.GetPlayerGarageListHandler)
+	server.engine.POST("/garage/buy", gateway.UserAuthorization, player.BuyGarageHandler)
+	server.engine.GET("/garages/get-all", admin.GetAllGarageListHandler)
+	server.engine.POST("/garage/add-car", gateway.UserAuthorization, player.AddCarToGarageHandler)
+	server.engine.PUT("/garage/upgrade", gateway.UserAuthorization, player.UpgradeGarageHandler)
+	server.engine.GET("/garage/get", gateway.UserAuthorization, player.GetPlayerGarageListHandler)
+
+	//Admin garage routes
+	server.engine.POST("/admin/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
+	server.engine.DELETE("/admin/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
+	server.engine.PUT("/admin/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
 
 	//Car upgrade routes
-	server.engine.PUT("/car/upgrade/engine", gateway.UserAuthorization, handler.UpgradeEngineHandler)
-	server.engine.PUT("/car/upgrade/turbo", gateway.UserAuthorization, handler.UpgradeTurboHandler)
-	server.engine.PUT("/car/upgrade/intake", gateway.UserAuthorization, handler.UpgradeIntakeHandler)
-	server.engine.PUT("/car/upgrade/nitrous", gateway.UserAuthorization, handler.UpgradeNitrousHandler)
-	server.engine.PUT("/car/upgrade/body", gateway.UserAuthorization, handler.UpgradeBodyHandler)
-	server.engine.PUT("/car/upgrade/tires", gateway.UserAuthorization, handler.UpgradeTiresHandler)
-	server.engine.PUT("/car/upgrade/transmission", gateway.UserAuthorization, handler.UpgradeTransmissionHandler)
+	server.engine.PUT("/car/upgrade/engine", gateway.UserAuthorization, player.UpgradeEngineHandler)
+	server.engine.PUT("/car/upgrade/turbo", gateway.UserAuthorization, player.UpgradeTurboHandler)
+	server.engine.PUT("/car/upgrade/intake", gateway.UserAuthorization, player.UpgradeIntakeHandler)
+	server.engine.PUT("/car/upgrade/nitrous", gateway.UserAuthorization, player.UpgradeNitrousHandler)
+	server.engine.PUT("/car/upgrade/body", gateway.UserAuthorization, player.UpgradeBodyHandler)
+	server.engine.PUT("/car/upgrade/tires", gateway.UserAuthorization, player.UpgradeTiresHandler)
+	server.engine.PUT("/car/upgrade/transmission", gateway.UserAuthorization, player.UpgradeTransmissionHandler)
 
 	//car Customiztion routes
-	server.engine.PUT("/car/customise/color", gateway.UserAuthorization, handler.ColorCustomizeHandler)
-	server.engine.PUT("/car/customise/wheels", gateway.UserAuthorization, handler.WheelsCustomizeHandler)
-	server.engine.PUT("/car/customise/interior", gateway.UserAuthorization, handler.InteriorCustomizeHandler)
-	server.engine.PUT("/car/customise/license", gateway.UserAuthorization, handler.LicenseCustomizeHandler)
+	server.engine.PUT("/car/customise/color", gateway.UserAuthorization, player.ColorCustomizeHandler)
+	server.engine.PUT("/car/customise/wheels", gateway.UserAuthorization, player.WheelsCustomizeHandler)
+	server.engine.PUT("/car/customise/interior", gateway.UserAuthorization, player.InteriorCustomizeHandler)
+	server.engine.PUT("/car/customise/license", gateway.UserAuthorization, player.LicenseCustomizeHandler)
 
-	server.engine.GET("/get-customization", handler.GetCarCustomiseHandler)
-	server.engine.GET("/get-color-category", handler.GetCarColorCategoriesHandler)
-	server.engine.GET("/get-color-type", handler.GetCarColorTypesHandler)
-	server.engine.GET("/get-colors", handler.GetCarColorsHandler)
+	server.engine.GET("/get-customization", player.GetCarCustomiseHandler)
+	server.engine.GET("/get-color-category", player.GetCarColorCategoriesHandler)
+	server.engine.GET("/get-color-type", player.GetCarColorTypesHandler)
+	server.engine.GET("/get-colors", player.GetCarColorsHandler)
 
 	//add dummy data in db
 	server.engine.GET("/add-dummy-data", handler.AddDummyDataHandler)

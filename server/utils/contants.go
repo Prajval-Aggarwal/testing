@@ -84,4 +84,8 @@ const (
 	CAR_LIMIT_REACHED     string = "Car Limit reached upgarde the garage to increse the limit"
 	CAR_SELECETED_SUCCESS string = "Current car selected successfully"
 	CAR_ALREADY_BOUGHT    string = "Car already bought"
+
+	GARAGE_ADD_SUCCESS    string = "Garage Added successfully"
+	GARAGE_DELETE_SUCCESS string = "Garage Deleted successfully"
+	GARAGE_UPDATE_SUCCESS string = "Garage Updated successfully"
 )

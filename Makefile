@@ -21,4 +21,3 @@ lint-fix:
 
 run:
 	/home/chicmic/go/bin/swag init
-	go run main.go
