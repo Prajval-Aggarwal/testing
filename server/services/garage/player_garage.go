@@ -122,7 +122,7 @@ func UpgradeGarageService(ctx *gin.Context, upgradeRequest request.GarageRequest
 	playerDetails.Coins -= garageUpgrades.UpgradeAmount
 
 	ownedGarageStatus.GarageLevel += 1
-	ownedGarageStatus.CarLimit = garageUpgrades.CarLimit
+	ownedGarageStatus.CarLimit = (garageUpgrades.CarLimit)
 
 	//update it in database
 	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
@@ -139,20 +139,6 @@ func UpgradeGarageService(ctx *gin.Context, upgradeRequest request.GarageRequest
 	}
 
 	response.ShowResponse(utils.GARAGE_UPGRADED, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
-}
-
-func GetAllGarageListService(ctx *gin.Context) {
-	var garageList []model.Garage
-
-	query := "SELECT * FROM garages"
-	err := db.QueryExecutor(query, &garageList)
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	response.ShowResponse(utils.GARAGE_LIST_FETCHED, utils.HTTP_OK, utils.SUCCESS, garageList, ctx)
-
 }
 
 func GetPlayerGarageListService(ctx *gin.Context, playerId string) {

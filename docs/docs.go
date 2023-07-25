@@ -16,223 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/arena/challenge": {
-            "post": {
-                "description": "Challenge the arena with the given request",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "Challenge Arena",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Challenge Request",
-                        "name": "challengereq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.ChallengeReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/arena/end": {
-            "post": {
-                "description": "Ends the current challenge and saves the data",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "End Challenge",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "End Challenge Request",
-                        "name": "challengereq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.EndChallengeReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/arena/get": {
-            "get": {
-                "description": "Gets the list of all the arenas",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "Get Arenas",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/arena/get-id": {
-            "get": {
-                "description": "Gets a particular arena",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "Get Arenas By id",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/arena/replace-car": {
-            "put": {
-                "description": "Add or replaces the car in the arena car slot",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "Replace Car",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Replace car Request",
-                        "name": "challengereq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.ReplaceReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorised",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
         "/car/buy": {
             "post": {
                 "security": [
@@ -1850,6 +1633,28 @@ const docTemplate = `{
                 }
             }
         },
+        "request.AddGarageRequest": {
+            "type": "object",
+            "properties": {
+                "coinsRequired": {
+                    "description": "coins required to unlock the garage",
+                    "type": "integer"
+                },
+                "garageName": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "level": {
+                    "description": "level reuired to unlock the garage",
+                    "type": "integer"
+                },
+                "longitute": {
+                    "type": "number"
+                }
+            }
+        },
         "request.CarRequest": {
             "type": "object",
             "properties": {
@@ -1890,26 +1695,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "colorType": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.EndChallengeReq": {
-            "type": "object",
-            "properties": {
-                "arenaId": {
-                    "type": "string"
-                },
-                "carId1": {
-                    "type": "string"
-                },
-                "carId2": {
-                    "type": "string"
-                },
-                "playerId": {
-                    "type": "string"
-                },
-                "winTime2": {
                     "type": "string"
                 }
             }
@@ -2007,6 +1792,31 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string"
+                }
+            }
+        },
+        "request.UpdateGarageReq": {
+            "type": "object",
+            "properties": {
+                "coinsRequired": {
+                    "description": "coins required to unlock the garage",
+                    "type": "integer"
+                },
+                "garageId": {
+                    "type": "string"
+                },
+                "garageName": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "level": {
+                    "description": "level reuired to unlock the garage",
+                    "type": "integer"
+                },
+                "longitute": {
+                    "type": "number"
                 }
             }
         },

@@ -98,4 +98,8 @@ const (
 	UPGRADE_POWER      int64   = 2
 	UPGRADE_SHIFT_TIME float64 = 0.1
 	UPGRADE_GRIP       float64 = 1.0
+
+	GARAGE_ADD_SUCCESS    string = "Garage Added successfully"
+	GARAGE_DELETE_SUCCESS string = "Garage Deleted successfully"
+	GARAGE_UPDATE_SUCCESS string = "Garage Updated successfully"
 )
