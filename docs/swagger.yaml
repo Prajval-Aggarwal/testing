@@ -50,6 +50,11 @@ definitions:
       colorType:
         type: string
     type: object
+  request.DeletGarageReq:
+    properties:
+      garageId:
+        type: string
+    type: object
   request.EndChallengeReq:
     properties:
       arenaId:
@@ -61,11 +66,6 @@ definitions:
       playerId:
         type: string
       winTime2:
-        type: string
-    type: object
-  request.DeletGarageReq:
-    properties:
-      garageId:
         type: string
     type: object
   request.GarageRequest:
@@ -179,6 +179,11 @@ paths:
       - application/json
       description: Add a new garage to the system
       parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Garage request payload
         in: body
         name: garageReq
@@ -209,6 +214,11 @@ paths:
       - application/json
       description: Delete a garage by its ID
       parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Garage request payload
         in: body
         name: garageReq
@@ -243,6 +253,11 @@ paths:
       - application/json
       description: Update a garage by its ID
       parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Update request payload
         in: body
         name: updateReq
