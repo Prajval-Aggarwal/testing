@@ -65,6 +65,16 @@ func AutoMigrateDatabase(db *gorm.DB) {
 		})
 		dbVersion.Version = 5
 	}
+	if dbVersion.Version < 6 {
+		err := db.AutoMigrate(&model.ResetSession{})
+		if err != nil {
+			panic(err)
+		}
+		db.Where("version=?", dbVersion.Version).Updates(&model.DbVersion{
+			Version: 6,
+		})
+		dbVersion.Version = 6
+	}
 	if dbVersion.Version < 7 {
 		err := db.AutoMigrate(&model.Arena{})
 		if err != nil {

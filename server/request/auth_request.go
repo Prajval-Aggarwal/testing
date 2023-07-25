@@ -5,6 +5,11 @@ import (
 	"github.com/go-ozzo/ozzo-validation/is"
 )
 
+type AdminLoginReq struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type GuestLoginRequest struct {
 	PlayerName string `json:"playerName"`
 	DeviceId   string `json:"deviceId"`
@@ -18,8 +23,32 @@ type LoginRequest struct {
 type UpdateEmailRequest struct {
 	Email string `json:"email"`
 }
+type ForgotPassRequest struct {
+	Email string `json:"email" `
+}
+
+type UpdatePasswordRequest struct {
+	Password string `json:"password" `
+}
 
 // Validation
+func (a UpdatePasswordRequest) Validate() error {
+	return validation.ValidateStruct(&a,
+		validation.Field(&a.Password, validation.Required),
+	)
+}
+func (a ForgotPassRequest) Validate() error {
+	return validation.ValidateStruct(&a,
+		validation.Field(&a.Email, validation.Required, is.Email),
+	)
+}
+
+func (a AdminLoginReq) Validate() error {
+	return validation.ValidateStruct(&a,
+		validation.Field(&a.Email, validation.Required),
+		validation.Field(&a.Password, validation.Required),
+	)
+}
 func (a GuestLoginRequest) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.PlayerName, validation.Required),

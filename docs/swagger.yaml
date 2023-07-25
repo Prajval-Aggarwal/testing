@@ -14,6 +14,21 @@ definitions:
       garageId:
         type: string
     type: object
+  request.AddGarageRequest:
+    properties:
+      coinsRequired:
+        description: coins required to unlock the garage
+        type: integer
+      garageName:
+        type: string
+      latitude:
+        type: number
+      level:
+        description: level reuired to unlock the garage
+        type: integer
+      longitute:
+        type: number
+    type: object
   request.CarRequest:
     properties:
       carId:
@@ -35,17 +50,6 @@ definitions:
       colorName:
         type: string
       colorType:
-        type: string
-    type: object
-  request.EndChallengeReq:
-    properties:
-      arenaId:
-        type: string
-      playerId:
-        type: string
-      raceId:
-        type: string
-      winTime2:
         type: string
     type: object
   request.GarageRequest:
@@ -109,6 +113,23 @@ definitions:
       email:
         type: string
     type: object
+  request.UpdateGarageReq:
+    properties:
+      coinsRequired:
+        description: coins required to unlock the garage
+        type: integer
+      garageId:
+        type: string
+      garageName:
+        type: string
+      latitude:
+        type: number
+      level:
+        description: level reuired to unlock the garage
+        type: integer
+      longitute:
+        type: number
+    type: object
   request.WheelCustomizeRequest:
     properties:
       carId:
@@ -136,142 +157,6 @@ info:
   title: Drag Racing
   version: "2.0"
 paths:
-  /arena/add-car:
-    post:
-      consumes:
-      - application/json
-      description: Add a car to the player's slot in a specific arena
-      parameters:
-      - description: Player Access token
-        in: header
-        name: Authorization
-        required: true
-        type: string
-      - description: Add car to slot request payload
-        in: body
-        name: addCarReq
-        required: true
-        schema:
-          $ref: '#/definitions/request.AddCarArenaRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Car added to slot successfully
-          schema:
-            $ref: '#/definitions/response.Success'
-        "400":
-          description: Bad request. Invalid payload
-          schema:
-            $ref: '#/definitions/response.Success'
-        "404":
-          description: Car or player not found
-          schema:
-            $ref: '#/definitions/response.Success'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/response.Success'
-      summary: Add a car to slot
-      tags:
-      - Arena
-  /arena/end:
-    post:
-      consumes:
-      - application/json
-      description: Ends the current challenge and saves the data
-      parameters:
-      - description: The ID of the player
-        in: header
-        name: playerId
-        required: true
-        type: string
-      - description: End Challenge Request
-        in: body
-        name: challengereq
-        required: true
-        schema:
-          $ref: '#/definitions/request.EndChallengeReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/response.Success'
-        "400":
-          description: Bad request
-          schema:
-            $ref: '#/definitions/response.Success'
-        "401":
-          description: Unauthorised
-          schema:
-            $ref: '#/definitions/response.Success'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/response.Success'
-      summary: End Challenge
-      tags:
-      - Arena
-  /arena/get:
-    get:
-      consumes:
-      - application/json
-      description: Gets the list of all the arenas
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/response.Success'
-        "400":
-          description: Bad request
-          schema:
-            $ref: '#/definitions/response.Success'
-      summary: Get Arenas
-      tags:
-      - Arena
-  /arena/replace-car:
-    put:
-      consumes:
-      - application/json
-      description: Add or replaces the car in the arena car slot
-      parameters:
-      - description: The ID of the player
-        in: header
-        name: playerId
-        required: true
-        type: string
-      - description: Replace car Request
-        in: body
-        name: challengereq
-        required: true
-        schema:
-          $ref: '#/definitions/request.ReplaceReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/response.Success'
-        "400":
-          description: Bad request
-          schema:
-            $ref: '#/definitions/response.Success'
-        "401":
-          description: Unauthorised
-          schema:
-            $ref: '#/definitions/response.Success'
-        "500":
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/response.Success'
-      summary: Replace Car
-      tags:
-      - Arena
   /car/buy:
     post:
       consumes:

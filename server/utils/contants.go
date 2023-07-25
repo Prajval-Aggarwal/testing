@@ -119,7 +119,10 @@ const (
 	MEDIUM_PERK string = "@every 3h"
 	HARD_PERK   string = "@every 7h"
 
-	EASY_ARENA_SLOT   int64 = 3
-	MEDIUM_ARENA_SLOT int64 = 5
-	HARD_ARENA_SLOT   int64 = 7
+	GARAGE_ADD_SUCCESS    string = "Garage Added successfully"
+	GARAGE_DELETE_SUCCESS string = "Garage Deleted successfully"
+	GARAGE_UPDATE_SUCCESS string = "Garage Updated successfully"
+	EASY_ARENA_SLOT       int64  = 3
+	MEDIUM_ARENA_SLOT     int64  = 5
+	HARD_ARENA_SLOT       int64  = 7
 )
