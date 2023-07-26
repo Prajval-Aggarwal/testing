@@ -25,7 +25,7 @@ import (
 // @Router /car/equip [put]
 func EquipCarHandler(ctx *gin.Context) {
 	var equipRequest request.CarRequest
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
@@ -61,7 +61,7 @@ func EquipCarHandler(ctx *gin.Context) {
 // @Router /car/buy [post]
 func BuyCarHandler(ctx *gin.Context) {
 	var carRequest request.CarRequest
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
@@ -99,7 +99,7 @@ func BuyCarHandler(ctx *gin.Context) {
 // @Router /car/sell [delete]
 func SellCarHandler(ctx *gin.Context) {
 	var sellCarRequest request.CarRequest
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
@@ -134,7 +134,7 @@ func SellCarHandler(ctx *gin.Context) {
 // @Router /car/repair [post]
 func RepairCarHandler(ctx *gin.Context) {
 	var repairCarRequest request.CarRequest
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player is from token is:", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)

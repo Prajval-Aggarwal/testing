@@ -7,7 +7,7 @@ type Player struct {
 	PlayerName  string `json:"playerName" gorm:"unique,omitempty"`
 	Level       int64  `json:"level,omitempty"`
 	Role        string `json:"role,omitempty"`
-	XP          string `json:"xp,omitempty"`
+	XP          int64  `json:"xp,omitempty"`
 	Email       string `json:"email,omitempty"`
 	Coins       int64  `json:"coins,omitempty"`
 	Cash        int64  `json:"cash,omitempty"`
@@ -30,19 +30,18 @@ type OwnedGarage struct {
 }
 
 type PlayerRaceHistory struct {
-	PlayerId         string `json:"playerId,omitempty"`
-	DistanceTraveled int64  `json:"distanceTraveled"`
-	ShdWon           int64  `json:"showDownWon"`
-	TotalShdPlayed   int64  `json:"totalShdPlayed"`
-	TdWon            int64  `json:"takeDownWon"`
-	TotalTdPlayed    int64  `json:"totalTdPlayed"`
+	PlayerId         string  `json:"playerId,omitempty"`
+	DistanceTraveled float64 `json:"distanceTraveled"`
+	ShdWon           int64   `json:"showDownWon"`
+	TotalShdPlayed   int64   `json:"totalShdPlayed"`
+	TdWon            int64   `json:"takeDownWon"`
+	TotalTdPlayed    int64   `json:"totalTdPlayed"`
 }
 
 type OwnedBattleArenas struct {
 	PlayerId string    `json:"playerId,omitempty"`
 	ArenaId  string    `json:"arenaId,omitempty"`
 	WinTime  time.Time `json:"winTime,omitempty"`
-	TimeWon  time.Time `json:"timeWon,omitempty"`
 	CarId    string    `json:"carId,omitempty"`
 	Status   string    `json:"status,omitempty"`
 }

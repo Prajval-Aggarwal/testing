@@ -19,7 +19,7 @@ import (
 // @Failure  401 {object} response.Success "Unauthorised"
 // @Router /player-details [get]
 func GetPlayerDetailsHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return

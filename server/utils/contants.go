@@ -50,6 +50,8 @@ const (
 )
 
 const (
+	PLAYER_ID string = "playerId"
+
 	LOGIN_SUCCESS                    string = "Login Successfull"
 	LOGIN_FAILED                     string = "Login Failed"
 	EMAIL_EXISTS                     string = "Email is already attached to another player"
@@ -99,3 +101,16 @@ const (
 	UPGRADE_SHIFT_TIME float64 = 0.1
 	UPGRADE_GRIP       float64 = 1.0
 )
+
+const (
+	EASY_PERK   string = "@every 30m"
+	MEDIUM_PERK string = "@every 3h"
+	HARD_PERK   string = "@every 7h"
+)
+
+/*
+	EASY -> 1
+	MEDIUM -> 2
+	HARD -> 3
+
+*/

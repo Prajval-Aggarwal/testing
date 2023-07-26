@@ -1,0 +1,106 @@
+[
+    {
+        "raceId": "1",
+        "raceName": "showdowns",
+        "raceLevel": "easy",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "2",
+        "raceName": "showdowns",
+        "raceLevel": "medium",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "3",
+        "raceName": "showdowns",
+        "raceLevel": "hard",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "4",
+        "raceName": "showdowns",
+        "raceLevel": "easy",
+        "raceSeries":1,
+        "raceLength": 0.25
+    },
+    {
+        "raceId": "5",
+        "raceName": "showdowns",
+        "raceLevel": "easy",
+        "raceSeries":1,
+        "raceLength": 0.25
+    },
+    {
+        "raceId": "6",
+        "raceName": "showdowns",
+        "raceLevel": "easy",
+        "raceSeries":1,
+        "raceLength": 0.25
+    },
+    {
+        "raceId": "7",
+        "raceName": "quarterMile",
+        "raceLevel": "easy",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "8",
+        "raceName": "quarterMile",
+        "raceLevel": "medium",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "9",
+        "raceName": "quarterMile",
+        "raceLevel": "hard",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "10",
+        "raceName": "takedowns",
+        "raceLevel": "easy",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "11",
+        "raceName": "takedowns",
+        "raceLevel": "medium",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "12",
+        "raceName": "takedowns",
+        "raceLevel": "hard",
+        "raceSeries":1,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "13",
+        "raceName": "arena",
+        "raceLevel": "easy",
+        "raceSeries":3,
+        "raceLength": 0.5
+    }, {
+        "raceId": "14",
+        "raceName": "arena",
+        "raceLevel": "medium",
+        "raceSeries":5,
+        "raceLength": 0.5
+    },
+    {
+        "raceId": "15",
+        "raceName": "arena",
+        "raceLevel": "hard",
+        "raceSeries":7,
+        "raceLength": 0.5
+    }
+]

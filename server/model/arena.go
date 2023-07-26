@@ -1,17 +1,26 @@
 package model
 
+import "time"
+
 type Arena struct {
 	ArenaId    string  `json:"arenaId"`
 	ArenaName  string  `json:"arenaName"`
-	ArenaLevel int64   `json:"arenaLevel"`
-	Perks      int64   `json:"perks"`
+	ArenaLevel string  `json:"arenaLevel"`
 	Longitude  float64 `json:"longitude"`
 	Latitude   float64 `json:"latitude"`
 }
 
 // minimum requirements for an arena
-type ArenaReq struct {
-	ArenaLevel  int64 `json:"arenaLevel"`
-	PlayerLevel int64 `json:"playerLevel"`
-	MinCarReq   int64 `json:"minCarReq"`
+type ArenaRaceRecord struct {
+	RaceId   string    `json:"raceId" gorm:"default:uuid_generate_v4();primaryKey"`
+	PlayerId string    `json:"playerId"`
+	ArenaId  string    `json:"arenaId"`
+	Time     time.Time `json:"time"`
+	Result   string    `json:"result"`
+}
+
+type ArenaSeries struct {
+	ArenaId   string `json:"ArenaId"`
+	PlayerId  string `json:"playerId"`
+	WinStreak int64  `json:"winStreak"`
 }

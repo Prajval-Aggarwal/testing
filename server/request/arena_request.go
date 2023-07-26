@@ -25,8 +25,8 @@ type EndChallengeReq struct {
 	ArenaId  string    `json:"arenaId"`
 	PlayerId string    `json:"playerId"`
 	WinTime  time.Time `json:"winTime2"`
-	CarId1   string    `json:"carId1"`
-	CarId2   string    `json:"carId2"`
+	RaceId   string    `json:"raceId"`
+	RaceType string    `json:"raceType"`
 }
 
 // validation on structs
@@ -52,11 +52,9 @@ func (a AddCarArenaRequest) Validate() error {
 
 func (a EndChallengeReq) Validate() error {
 	return validation.ValidateStruct(&a,
-		validation.Field(&a.ArenaId, validation.Required),
 		validation.Field(&a.PlayerId, validation.Required),
 		validation.Field(&a.WinTime, validation.Required),
-		validation.Field(&a.CarId1, validation.Required),
-		validation.Field(&a.CarId2, validation.Required),
+		validation.Field(&a.RaceType, validation.Required),
 	)
 }
 

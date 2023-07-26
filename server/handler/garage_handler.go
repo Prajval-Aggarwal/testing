@@ -27,7 +27,7 @@ import (
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /garage/buy [post]
 func BuyGarageHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is:", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -79,7 +79,7 @@ func GetAllGarageListHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /garage/upgrade [put]
 func UpgradeGarageHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
@@ -116,7 +116,7 @@ func UpgradeGarageHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /garage/add-car [post]
 func AddCarToGarageHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {
@@ -152,7 +152,7 @@ func AddCarToGarageHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /garage/get [get]
 func GetPlayerGarageListHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is:", playerId)
 
 	if !exists {

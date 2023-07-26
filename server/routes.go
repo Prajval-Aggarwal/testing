@@ -67,9 +67,7 @@ func ConfigureRoutes(server *Server) {
 	server.engine.GET("/get-colors", handler.GetCarColorsHandler)
 
 	//arena routes
-	server.engine.POST("/arena/challenge", gateway.UserAuthorization, handler.ChallengeArenaHandler)
 	server.engine.POST("/arena/end", gateway.UserAuthorization, handler.EndChallengeHandler)
-	server.engine.PUT("/arena/replace-car", gateway.UserAuthorization, handler.ReplaceArenaCarHandler)
 	server.engine.GET("/arena/get", handler.GetArenaHandler)
 	server.engine.GET("/arena/get-id", handler.GetArenaByIdHandler)
 
