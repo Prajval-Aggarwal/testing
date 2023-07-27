@@ -102,16 +102,9 @@ const (
 	WHEELS_CUSTOMIZED_SUCCESS        string = "Wheels updated succesfully"
 	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
 	CAR_REPAIR_SUCCESS               string = "Car repaired successfully"
-	UPGRADE_REACHED_MAX_LEVEL        string = "Part reached to its max level"
-)
-
-// Garage constants
-const (
-	GARAGE_BOUGHT_SUCESS     string = "Garage bought successfully"
-	GARAGE_LIST_FETCHED      string = "Garage list fetched successfully"
-	GARAGE_UPGRADED          string = "Garage upgrade successfully"
-	ADD_CAR_TO_GARAGE_FAILED string = "Unable to add car to garage"
-)
+	UNAUTHORIZED                     string = "Player not authorized"
+	CAR_ADDED_GARAGE_SUCCESS         string = "Car added to garage sucessfully"
+	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
 
 // Arena constants
 const (
@@ -125,4 +118,8 @@ const (
 	EASY_ARENA_SLOT       int64  = 3
 	MEDIUM_ARENA_SLOT     int64  = 5
 	HARD_ARENA_SLOT       int64  = 7
+	GARAGE_ADD_SUCCESS     string = "Garage Added successfully"
+	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
+	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
+	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
 )

@@ -21,7 +21,20 @@ func AddGarageService(ctx *gin.Context, addGarageReq request.AddGarageRequest) {
 		Locked:        true,
 	}
 
-	err := db.CreateRecord(&newGarage)
+	var exists bool
+	//check that no two same garages are on same locations
+	query := "SELECT EXISTS (SELECT * FROM garages WHERE latitude=? AND longituted=?)"
+	err := db.QueryExecutor(query, &exists, addGarageReq.Latitude, addGarageReq.Longitute)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	if exists {
+		response.ShowResponse(utils.GARAGE_ALREADY_PRESENT, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = db.CreateRecord(&newGarage)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
