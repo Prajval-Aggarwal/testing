@@ -37,10 +37,24 @@ func GuestLoginHandler(ctx *gin.Context) {
 	auth.GuestLoginService(ctx, guestLoginReq)
 }
 
+// just for testing not required...
 func AdminSignUpHandler(ctx *gin.Context) {
 	auth.AdminSignUpService(ctx)
 }
 
+// AdminLoginHandler handles the login for admin users.
+// @Summary Admin Login
+// @Description Login for admin users
+// @Tags Admin
+// @Accept json
+// @Produce json
+// @Param adminLoginReq body request.AdminLoginReq true "Admin login request payload"
+// @Success 200 {object} string "Login success. Access token generated."
+// @Failure 400 {object} string "Bad request. Invalid payload"
+// @Failure 401 {object} string "Unauthorized. Invalid credentials"
+// @Failure 404 {object} string "Admin not found"
+// @Failure 500 {object} string "Internal server error"
+// @Router /admin/login [post]
 func AdminLoginHandler(ctx *gin.Context) {
 	var adminLoginReq request.AdminLoginReq
 	err := utils.RequestDecoding(ctx, &adminLoginReq)
@@ -58,6 +72,14 @@ func AdminLoginHandler(ctx *gin.Context) {
 	auth.AdminLoginService(ctx, adminLoginReq)
 }
 
+// @Description	Forgot password
+// @Accept			json
+// @Produce		json
+// @Success		200			{object}	response.Success
+// @Failure		400			{object}	response.Success
+// @Param			adminEmail	body		request.ForgotPassRequest	true	"Admin registered email"
+// @Tags			Authentication
+// @Router			/forgot-password [post]
 func ForgotPasswordHandler(ctx *gin.Context) {
 	var forgotRequest request.ForgotPassRequest
 	err := utils.RequestDecoding(ctx, &forgotRequest)
@@ -76,6 +98,14 @@ func ForgotPasswordHandler(ctx *gin.Context) {
 	auth.ForgotPassService(ctx, forgotRequest)
 }
 
+// @Description	Reset password
+// @Accept			json
+// @Produce		json
+// @Success		200			{object}	response.Success
+// @Failure		400			{object}	response.Success
+// @Param			NewPassword	body		request.UpdatePasswordRequest	true	"Admins new password"
+// @Tags			Authentication
+// @Router			/reset-password [post]
 func ResetPasswordHandler(ctx *gin.Context) {
 	tokenString := ctx.Request.URL.Query().Get("token")
 	var password request.UpdatePasswordRequest

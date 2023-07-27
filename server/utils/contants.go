@@ -78,7 +78,7 @@ const (
 	WHEELS_CUSTOMIZED_SUCCESS        string = "Wheels updated succesfully"
 	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
 	CAR_REPAIR_SUCCESS               string = "Car repaired successfully"
-	UNAUTHORIZED                     string = "Player not authorized"
+	UNAUTHORIZED                     string = "Not authorized"
 	CAR_ADDED_SUCCESS                string = "Car added to sucessfully"
 	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
 
@@ -99,7 +99,8 @@ const (
 	UPGRADE_SHIFT_TIME float64 = 0.1
 	UPGRADE_GRIP       float64 = 1.0
 
-	GARAGE_ADD_SUCCESS    string = "Garage Added successfully"
-	GARAGE_DELETE_SUCCESS string = "Garage Deleted successfully"
-	GARAGE_UPDATE_SUCCESS string = "Garage Updated successfully"
+	GARAGE_ADD_SUCCESS     string = "Garage Added successfully"
+	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
+	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
+	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
 )
