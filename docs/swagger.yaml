@@ -62,6 +62,24 @@ definitions:
       garageId:
         type: string
     type: object
+  request.EndChallengeReq:
+    properties:
+      arenaId:
+        type: string
+      carId1:
+        type: string
+      carId2:
+        type: string
+      playerId:
+        type: string
+      winTime2:
+        type: string
+    type: object
+  request.ForgotPassRequest:
+    properties:
+      email:
+        type: string
+    type: object
   request.GarageRequest:
     properties:
       carId:
@@ -285,6 +303,187 @@ paths:
       summary: Update a garage
       tags:
       - Garage
+  /admin/login:
+    post:
+      consumes:
+      - application/json
+      description: Login for admin users
+      parameters:
+      - description: Admin login request payload
+        in: body
+        name: adminLoginReq
+        required: true
+        schema:
+          $ref: '#/definitions/request.AdminLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login success. Access token generated.
+          schema:
+            type: string
+        "400":
+          description: Bad request. Invalid payload
+          schema:
+            type: string
+        "401":
+          description: Unauthorized. Invalid credentials
+          schema:
+            type: string
+        "404":
+          description: Admin not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Admin Login
+      tags:
+      - Admin
+  /arena/challenge:
+    post:
+      consumes:
+      - application/json
+      description: Challenge the arena with the given request
+      parameters:
+      - description: The ID of the player
+        in: header
+        name: playerId
+        required: true
+        type: string
+      - description: Challenge Request
+        in: body
+        name: challengereq
+        required: true
+        schema:
+          $ref: '#/definitions/request.ChallengeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Challenge Arena
+      tags:
+      - Arena
+  /arena/end:
+    post:
+      consumes:
+      - application/json
+      description: Ends the current challenge and saves the data
+      parameters:
+      - description: The ID of the player
+        in: header
+        name: playerId
+        required: true
+        type: string
+      - description: End Challenge Request
+        in: body
+        name: challengereq
+        required: true
+        schema:
+          $ref: '#/definitions/request.EndChallengeReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: End Challenge
+      tags:
+      - Arena
+  /arena/get:
+    get:
+      consumes:
+      - application/json
+      description: Gets the list of all the arenas
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get Arenas
+      tags:
+      - Arena
+  /arena/get-id:
+    get:
+      consumes:
+      - application/json
+      description: Gets a particular arena
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get Arenas By id
+      tags:
+      - Arena
+  /arena/replace-car:
+    put:
+      consumes:
+      - application/json
+      description: Add or replaces the car in the arena car slot
+      parameters:
+      - description: The ID of the player
+        in: header
+        name: playerId
+        required: true
+        type: string
+      - description: Replace car Request
+        in: body
+        name: challengereq
+        required: true
+        schema:
+          $ref: '#/definitions/request.ReplaceReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Replace Car
+      tags:
+      - Arena
   /car/buy:
     post:
       consumes:
