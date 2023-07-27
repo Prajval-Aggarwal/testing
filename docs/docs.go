@@ -31,6 +31,13 @@ const docTemplate = `{
                 "summary": "Add a new garage",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Garage request payload",
                         "name": "garageReq",
                         "in": "body",
@@ -76,6 +83,13 @@ const docTemplate = `{
                 ],
                 "summary": "Delete a garage",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Garage request payload",
                         "name": "garageReq",
@@ -129,6 +143,13 @@ const docTemplate = `{
                 "summary": "Update a garage",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Update request payload",
                         "name": "updateReq",
                         "in": "body",
@@ -161,6 +182,64 @@ const docTemplate = `{
                         "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/login": {
+            "post": {
+                "description": "Login for admin users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Admin Login",
+                "parameters": [
+                    {
+                        "description": "Admin login request payload",
+                        "name": "adminLoginReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AdminLoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login success. Access token generated.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. Invalid payload",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Invalid credentials",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Admin not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -1135,6 +1214,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/forgot-password": {
+            "post": {
+                "description": "Forgot password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "description": "Admin registered email",
+                        "name": "adminEmail",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ForgotPassRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/garage/add-car": {
             "post": {
                 "description": "Add a car to a player's garage",
@@ -1705,6 +1823,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/reset-password": {
+            "post": {
+                "description": "Reset password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "description": "Admins new password",
+                        "name": "NewPassword",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdatePasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/update-email": {
             "put": {
                 "description": "Update the email address of a player",
@@ -1805,6 +1962,17 @@ const docTemplate = `{
                 }
             }
         },
+        "request.AdminLoginReq": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "request.CarRequest": {
             "type": "object",
             "properties": {
@@ -1848,6 +2016,14 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "garageId": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.ForgotPassRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
                     "type": "string"
                 }
             }
@@ -1959,6 +2135,14 @@ const docTemplate = `{
                 },
                 "longitute": {
                     "type": "number"
+                }
+            }
+        },
+        "request.UpdatePasswordRequest": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
                 }
             }
         },

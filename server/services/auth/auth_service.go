@@ -185,7 +185,7 @@ func AdminSignUpService(ctx *gin.Context) {
 
 func AdminLoginService(ctx *gin.Context, adminLoginReq request.AdminLoginReq) {
 	var adminDetails model.Admin
-	if !db.RecordExist("admin", "email", adminLoginReq.Email) {
+	if !db.RecordExist("admins", adminLoginReq.Email, "email") {
 		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
 		return
 	}

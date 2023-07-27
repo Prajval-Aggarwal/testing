@@ -22,6 +22,13 @@ definitions:
       longitute:
         type: number
     type: object
+  request.AdminLoginReq:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
   request.CarRequest:
     properties:
       carId:
@@ -50,6 +57,11 @@ definitions:
   request.DeletGarageReq:
     properties:
       garageId:
+        type: string
+    type: object
+  request.ForgotPassRequest:
+    properties:
+      email:
         type: string
     type: object
   request.GarageRequest:
@@ -123,6 +135,11 @@ definitions:
       longitute:
         type: number
     type: object
+  request.UpdatePasswordRequest:
+    properties:
+      password:
+        type: string
+    type: object
   request.WheelCustomizeRequest:
     properties:
       carId:
@@ -156,6 +173,11 @@ paths:
       - application/json
       description: Add a new garage to the system
       parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Garage request payload
         in: body
         name: garageReq
@@ -186,6 +208,11 @@ paths:
       - application/json
       description: Delete a garage by its ID
       parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Garage request payload
         in: body
         name: garageReq
@@ -220,6 +247,11 @@ paths:
       - application/json
       description: Update a garage by its ID
       parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Update request payload
         in: body
         name: updateReq
@@ -248,6 +280,44 @@ paths:
       summary: Update a garage
       tags:
       - Garage
+  /admin/login:
+    post:
+      consumes:
+      - application/json
+      description: Login for admin users
+      parameters:
+      - description: Admin login request payload
+        in: body
+        name: adminLoginReq
+        required: true
+        schema:
+          $ref: '#/definitions/request.AdminLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login success. Access token generated.
+          schema:
+            type: string
+        "400":
+          description: Bad request. Invalid payload
+          schema:
+            type: string
+        "401":
+          description: Unauthorized. Invalid credentials
+          schema:
+            type: string
+        "404":
+          description: Admin not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Admin Login
+      tags:
+      - Admin
   /car/buy:
     post:
       consumes:
@@ -886,6 +956,31 @@ paths:
       summary: Upgrade Turbo
       tags:
       - Car-Upgrades
+  /forgot-password:
+    post:
+      consumes:
+      - application/json
+      description: Forgot password
+      parameters:
+      - description: Admin registered email
+        in: body
+        name: adminEmail
+        required: true
+        schema:
+          $ref: '#/definitions/request.ForgotPassRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Success'
+      tags:
+      - Authentication
   /garage/add-car:
     post:
       consumes:
@@ -1261,6 +1356,31 @@ paths:
       summary: Get player details
       tags:
       - Player
+  /reset-password:
+    post:
+      consumes:
+      - application/json
+      description: Reset password
+      parameters:
+      - description: Admins new password
+        in: body
+        name: NewPassword
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdatePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Success'
+      tags:
+      - Authentication
   /update-email:
     put:
       consumes:
