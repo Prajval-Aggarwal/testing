@@ -68,10 +68,9 @@ func ConfigureRoutes(server *Server) {
 
 	//arena routes
 	server.engine.POST("/arena/end", gateway.UserAuthorization, handler.EndChallengeHandler)
+	server.engine.POST("/arena/add-car", gateway.UserAuthorization, handler.AddCarToSlotHandler)
+	server.engine.POST("/arena/replace-car", gateway.UserAuthorization, handler.ReplaceCarHandler)
 	server.engine.GET("/arena/get", handler.GetArenaHandler)
-	server.engine.GET("/arena/get-id", handler.GetArenaByIdHandler)
-
-	// server.engine.POST("arena/add-car", gateway.UserAuthorization, handler.AddCarArenaHandler)
 
 	//add dummy data in db
 	server.engine.GET("/add-dummy-data", handler.AddDummyDataHandler)

@@ -110,8 +110,11 @@ func UpgradeGarageService(ctx *gin.Context, upgradeRequest request.GarageRequest
 	//get the upgrades for that current garage
 	var garageUpgrades model.GarageUpgrades
 	query = "SELECT * FROM garage_upgrades WHERE garage_id=? AND upgrade_level=?"
-	db.QueryExecutor(query, &garageUpgrades, upgradeRequest.GarageId, ownedGarageStatus.GarageLevel+1)
-
+	err = db.QueryExecutor(query, &garageUpgrades, upgradeRequest.GarageId, ownedGarageStatus.GarageLevel+1)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 	//check if player is compatible to upgrade the garage
 	if playerDetails.Coins < garageUpgrades.UpgradeAmount {
 		response.ShowResponse(utils.NOT_ENOUGH_COINS, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)

@@ -272,13 +272,25 @@ func GetCarByIdService(ctx *gin.Context, getReq request.CarRequest) {
 	}
 
 	query := "SELECT * FROM cars WHERE car_id=?"
-	db.QueryExecutor(query, &carDetails, getReq.CarId)
+	err := db.QueryExecutor(query, &carDetails, getReq.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
 	query = "SELECT * FROM default_customizations WHERE car_id=?"
-	db.QueryExecutor(query, &customization, getReq.CarId)
+	err = db.QueryExecutor(query, &customization, getReq.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
 	query = "SELECT * FROM car_stats WHERE car_id=?"
-	db.QueryExecutor(query, &carStats, getReq.CarId)
+	err = db.QueryExecutor(query, &carStats, getReq.CarId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
 	carResponse.CarName = carDetails.CarName
 	carResponse.Car = carDetails

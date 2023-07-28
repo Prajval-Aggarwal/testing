@@ -327,3 +327,12 @@ func RoundFloat(val float64, precision uint) float64 {
 	ratio := math.Pow(10, float64(precision))
 	return math.Round(val*ratio) / ratio
 }
+
+func IsExisting(query string, values ...interface{}) bool {
+	var exists bool
+	err := db.QueryExecutor(query, &exists, values...)
+	if err != nil {
+		return false
+	}
+	return exists
+}

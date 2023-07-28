@@ -24,3 +24,9 @@ type ArenaSeries struct {
 	PlayerId  string `json:"playerId"`
 	WinStreak int64  `json:"winStreak"`
 }
+
+type CarSlots struct {
+	PlayerId string `json:"PlayerId"`
+	ArenaId  string `json:"ArenaId"`
+	CardId   string `json:"CardId"`
+}

@@ -39,11 +39,12 @@ type PlayerRaceHistory struct {
 }
 
 type OwnedBattleArenas struct {
-	PlayerId string    `json:"playerId,omitempty"`
-	ArenaId  string    `json:"arenaId,omitempty"`
-	WinTime  time.Time `json:"winTime,omitempty"`
-	CarId    string    `json:"carId,omitempty"`
-	Status   string    `json:"status,omitempty"`
+	PlayerId  string    `json:"playerId,omitempty"`
+	ArenaId   string    `json:"arenaId,omitempty"`
+	WinTime   time.Time `json:"winTime,omitempty"`
+	CreatedAt time.Time
+	CarId     string `json:"carId,omitempty"`
+	Status    string `json:"status,omitempty"`
 }
 type PlayerCarsStats struct {
 	PlayerId    string  `json:"playerId,omitempty"`

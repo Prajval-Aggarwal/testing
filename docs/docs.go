@@ -16,9 +16,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/arena/challenge": {
+        "/arena/add-car": {
             "post": {
-                "description": "Challenge the arena with the given request",
+                "description": "Add a car to the player's slot in a specific arena",
                 "consumes": [
                     "application/json"
                 ],
@@ -28,40 +28,46 @@ const docTemplate = `{
                 "tags": [
                     "Arena"
                 ],
-                "summary": "Challenge Arena",
+                "summary": "Add a car to slot",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "The ID of the player",
-                        "name": "playerId",
+                        "description": "Player Access token",
+                        "name": "Authorization",
                         "in": "header",
                         "required": true
                     },
                     {
-                        "description": "Challenge Request",
-                        "name": "challengereq",
+                        "description": "Add car to slot request payload",
+                        "name": "addCarReq",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.ChallengeReq"
+                            "$ref": "#/definitions/request.AddCarArenaRequest"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Car added to slot successfully",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
                     },
                     "400": {
-                        "description": "Bad request",
+                        "description": "Bad request. Invalid payload",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
                     },
-                    "401": {
-                        "description": "Unauthorised",
+                    "404": {
+                        "description": "Car or player not found",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -118,6 +124,12 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
                     }
                 }
             }
@@ -135,35 +147,6 @@ const docTemplate = `{
                     "Arena"
                 ],
                 "summary": "Get Arenas",
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/arena/get-id": {
-            "get": {
-                "description": "Gets a particular arena",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "Get Arenas By id",
                 "responses": {
                     "200": {
                         "description": "Success",
@@ -226,6 +209,12 @@ const docTemplate = `{
                     },
                     "401": {
                         "description": "Unauthorised",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -1839,6 +1828,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.AddCarArenaRequest": {
+            "type": "object",
+            "properties": {
+                "arenaId": {
+                    "type": "string"
+                },
+                "carId": {
+                    "type": "string"
+                }
+            }
+        },
         "request.AddCarRequest": {
             "type": "object",
             "properties": {
@@ -1862,14 +1862,6 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "carId": {
-                    "type": "string"
-                }
-            }
-        },
-        "request.ChallengeReq": {
-            "type": "object",
-            "properties": {
-                "arenaId": {
                     "type": "string"
                 }
             }
@@ -1900,13 +1892,10 @@ const docTemplate = `{
                 "arenaId": {
                     "type": "string"
                 },
-                "carId1": {
-                    "type": "string"
-                },
-                "carId2": {
-                    "type": "string"
-                },
                 "playerId": {
+                    "type": "string"
+                },
+                "raceId": {
                     "type": "string"
                 },
                 "winTime2": {
