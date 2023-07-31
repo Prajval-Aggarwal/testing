@@ -1498,6 +1498,20 @@ const docTemplate = `{
                     "Garage"
                 ],
                 "summary": "Get All Garage List",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of records to skip (default is 0)",
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Maximum number of records to fetch (default is 10)",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Garage list fetched successfully",

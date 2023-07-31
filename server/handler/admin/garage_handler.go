@@ -104,6 +104,8 @@ func UpdateGarageHandler(ctx *gin.Context) {
 // @Tags Garage
 // @Accept json
 // @Produce json
+// @Param skip query integer false "Number of records to skip (default is 0)"
+// @Param limit query integer false "Maximum number of records to fetch (default is 10)"
 // @Success 200 {object} response.Success "Garage list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /garages/get-all [get]

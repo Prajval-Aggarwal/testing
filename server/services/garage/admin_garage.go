@@ -1,11 +1,13 @@
 package garage
 
 import (
+	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/request"
 	"main/server/response"
 	"main/server/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -105,15 +107,33 @@ func UpdateGarageService(ctx *gin.Context, updateReq request.UpdateGarageReq) {
 func GetAllGarageListService(ctx *gin.Context) {
 	var garageList []model.Garage
 
-	query := "SELECT * FROM garages"
-	err := db.QueryExecutor(query, &garageList)
+	// Get the query parameters for skip and limit from the request
+	skipParam := ctx.DefaultQuery("skip", "0")
+	limitParam := ctx.DefaultQuery("limit", "10")
+
+	// Convert skip and limit to integers
+	skip, err := strconv.Atoi(skipParam)
+	if err != nil {
+		response.ShowResponse("Invalid skip value", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	limit, err := strconv.Atoi(limitParam)
+	if err != nil {
+		response.ShowResponse("Invalid limit value", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	// Build the SQL query with skip and limit
+	query := fmt.Sprintf("SELECT * FROM garages LIMIT %d OFFSET %d", limit, skip)
+
+	err = db.QueryExecutor(query, &garageList)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
 
 	response.ShowResponse(utils.GARAGE_LIST_FETCHED, utils.HTTP_OK, utils.SUCCESS, garageList, ctx)
-
 }
 
 func GetGarageById(ctx *gin.Context) {

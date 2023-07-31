@@ -1138,6 +1138,15 @@ paths:
       consumes:
       - application/json
       description: Retrieve the list of all garages
+      parameters:
+      - description: Number of records to skip (default is 0)
+        in: query
+        name: skip
+        type: integer
+      - description: Maximum number of records to fetch (default is 10)
+        in: query
+        name: limit
+        type: integer
       produces:
       - application/json
       responses:
