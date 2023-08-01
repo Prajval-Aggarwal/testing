@@ -99,8 +99,10 @@ func LoginHandler(ctx *gin.Context) {
 	}
 
 	if loginReq.Password != "" {
+		fmt.Println("admin login")
 		auth.AdminLoginService(ctx, loginReq)
 	} else {
+		fmt.Println("player login ")
 		auth.LoginService(ctx, loginReq)
 	}
 

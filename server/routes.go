@@ -39,24 +39,24 @@ func ConfigureRoutes(server *Server) {
 	server.engine.GET("/player-details", handler.GetPlayerDetailsHandler)
 
 	//Player routes
-	server.engine.POST("/car/buy", player.BuyCarHandler)
-	server.engine.PUT("/car/equip", player.EquipCarHandler)
-	server.engine.DELETE("/car/sell", player.SellCarHandler)
-	server.engine.POST("/car/repair", player.RepairCarHandler)
+	server.engine.POST("/car/buy", gateway.AdminAuthorization, player.BuyCarHandler)
+	server.engine.PUT("/car/equip", gateway.AdminAuthorization, player.EquipCarHandler)
+	server.engine.DELETE("/car/sell", gateway.AdminAuthorization, player.SellCarHandler)
+	server.engine.POST("/car/repair", gateway.AdminAuthorization, player.RepairCarHandler)
 	server.engine.GET("/car/get-all", player.GetAllCarsHandler)
 	server.engine.POST("/car/get-by-id", player.GetCarByIdHandler)
 
 	//Player garage routes
-	server.engine.POST("/garage/buy", player.BuyGarageHandler)
+	server.engine.POST("/garage/buy", gateway.AdminAuthorization, player.BuyGarageHandler)
 	server.engine.GET("/garages/get-all", admin.GetAllGarageListHandler)
-	server.engine.POST("/garage/add-car", player.AddCarToGarageHandler)
-	server.engine.PUT("/garage/upgrade", player.UpgradeGarageHandler)
-	server.engine.GET("/garage/get", player.GetPlayerGarageListHandler)
+	server.engine.POST("/garage/add-car", gateway.AdminAuthorization, player.AddCarToGarageHandler)
+	server.engine.PUT("/garage/upgrade", gateway.AdminAuthorization, player.UpgradeGarageHandler)
+	server.engine.GET("/garage/get", gateway.AdminAuthorization, player.GetPlayerGarageListHandler)
 
 	//Admin garage routes
-	server.engine.POST("/admin/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
-	server.engine.DELETE("/admin/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
-	server.engine.PUT("/admin/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
+	server.engine.POST("/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
+	server.engine.DELETE("/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
+	server.engine.PUT("/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
 
 	//Car upgrade routes
 	server.engine.PUT("/car/upgrade/engine", player.UpgradeEngineHandler)

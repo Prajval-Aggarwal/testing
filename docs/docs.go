@@ -16,177 +16,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/garage/add": {
-            "post": {
-                "description": "Add a new garage to the system",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Garage"
-                ],
-                "summary": "Add a new garage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Admin Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Garage request payload",
-                        "name": "garageReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.AddGarageRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Garage added successful",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/garage/delete": {
-            "delete": {
-                "description": "Delete a garage by its ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Garage"
-                ],
-                "summary": "Delete a garage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Admin Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Garage request payload",
-                        "name": "garageReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.DeletGarageReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Garage deleted successful",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Garage not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/garage/update": {
-            "put": {
-                "description": "Update a garage by its ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Garage"
-                ],
-                "summary": "Update a garage",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Admin Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Update request payload",
-                        "name": "updateReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.UpdateGarageReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Garage updated successful",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Garage not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
         "/arena/add-car": {
             "post": {
                 "description": "Add a car to the player's slot in a specific arena",
@@ -1401,6 +1230,59 @@ const docTemplate = `{
                 }
             }
         },
+        "/garage/add": {
+            "post": {
+                "description": "Add a new garage to the system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Add a new garage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Garage request payload",
+                        "name": "garageReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddGarageRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Garage added successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/garage/add-car": {
             "post": {
                 "description": "Add a car to a player's garage",
@@ -1530,6 +1412,65 @@ const docTemplate = `{
                 }
             }
         },
+        "/garage/delete": {
+            "delete": {
+                "description": "Delete a garage by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Delete a garage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Garage request payload",
+                        "name": "garageReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeletGarageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Garage deleted successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Garage not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/garage/get": {
             "get": {
                 "description": "Retrieve the list of garages owned by a player",
@@ -1563,6 +1504,65 @@ const docTemplate = `{
                         "description": "Unauthorised",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/garage/update": {
+            "put": {
+                "description": "Update a garage by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Update a garage",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Update request payload",
+                        "name": "updateReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateGarageReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Garage updated successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Garage not found",
+                        "schema": {
+                            "type": "string"
                         }
                     },
                     "500": {
