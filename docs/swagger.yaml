@@ -29,13 +29,6 @@ definitions:
       longitute:
         type: number
     type: object
-  request.AdminLoginReq:
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-    type: object
   request.CarRequest:
     properties:
       carId:
@@ -59,22 +52,25 @@ definitions:
       colorType:
         type: string
     type: object
+  request.DeletGarageReq:
+    properties:
+      garageId:
+        type: string
+    type: object
   request.EndChallengeReq:
     properties:
       arenaId:
         type: string
-      carId1:
-        type: string
-      carId2:
-        type: string
       playerId:
+        type: string
+      raceId:
         type: string
       winTime2:
         type: string
     type: object
-  request.DeletGarageReq:
+  request.ForgotPassRequest:
     properties:
-      garageId:
+      email:
         type: string
     type: object
   request.GarageRequest:
@@ -124,6 +120,8 @@ definitions:
   request.LoginRequest:
     properties:
       email:
+        type: string
+      password:
         type: string
     type: object
   request.ReplaceReq:
@@ -300,77 +298,43 @@ paths:
       summary: Update a garage
       tags:
       - Garage
-  /admin/login:
+  /arena/add-car:
     post:
       consumes:
       - application/json
-      description: Login for admin users
+      description: Add a car to the player's slot in a specific arena
       parameters:
-      - description: Admin login request payload
+      - description: Player Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Add car to slot request payload
         in: body
-        name: adminLoginReq
+        name: addCarReq
         required: true
         schema:
-          $ref: '#/definitions/request.AdminLoginReq'
+          $ref: '#/definitions/request.AddCarArenaRequest'
       produces:
       - application/json
       responses:
         "200":
-          description: Login success. Access token generated.
+          description: Car added to slot successfully
           schema:
-            type: string
+            $ref: '#/definitions/response.Success'
         "400":
           description: Bad request. Invalid payload
           schema:
-            type: string
-        "401":
-          description: Unauthorized. Invalid credentials
-          schema:
-            type: string
+            $ref: '#/definitions/response.Success'
         "404":
-          description: Admin not found
+          description: Car or player not found
           schema:
-            type: string
+            $ref: '#/definitions/response.Success'
         "500":
           description: Internal server error
           schema:
-            type: string
-      summary: Admin Login
-      tags:
-      - Admin
-  /arena/challenge:
-    post:
-      consumes:
-      - application/json
-      description: Challenge the arena with the given request
-      parameters:
-      - description: The ID of the player
-        in: header
-        name: playerId
-        required: true
-        type: string
-      - description: Challenge Request
-        in: body
-        name: challengereq
-        required: true
-        schema:
-          $ref: '#/definitions/request.ChallengeReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Success
-          schema:
             $ref: '#/definitions/response.Success'
-        "400":
-          description: Bad request
-          schema:
-            $ref: '#/definitions/response.Success'
-        "401":
-          description: Unauthorised
-          schema:
-            $ref: '#/definitions/response.Success'
-      summary: Challenge Arena
+      summary: Add a car to slot
       tags:
       - Arena
   /arena/end:
@@ -405,6 +369,10 @@ paths:
           description: Unauthorised
           schema:
             $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
       summary: End Challenge
       tags:
       - Arena
@@ -425,25 +393,6 @@ paths:
           schema:
             $ref: '#/definitions/response.Success'
       summary: Get Arenas
-      tags:
-      - Arena
-  /arena/get-id:
-    get:
-      consumes:
-      - application/json
-      description: Gets a particular arena
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: '#/definitions/response.Success'
-        "400":
-          description: Bad request
-          schema:
-            $ref: '#/definitions/response.Success'
-      summary: Get Arenas By id
       tags:
       - Arena
   /arena/replace-car:
@@ -476,6 +425,10 @@ paths:
             $ref: '#/definitions/response.Success'
         "401":
           description: Unauthorised
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
           schema:
             $ref: '#/definitions/response.Success'
       summary: Replace Car
@@ -1301,6 +1254,15 @@ paths:
       consumes:
       - application/json
       description: Retrieve the list of all garages
+      parameters:
+      - description: Number of records to skip (default is 0)
+        in: query
+        name: skip
+        type: integer
+      - description: Maximum number of records to fetch (default is 10)
+        in: query
+        name: limit
+        type: integer
       produces:
       - application/json
       responses:

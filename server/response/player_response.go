@@ -4,17 +4,17 @@ type PlayerResposne struct {
 	PlayerId         string `json:"playerId"`
 	PlayerName       string `json:"playerName" gorm:"unique"`
 	Level            int    `json:"level"`
-	XP               int64  `json:"xp"`
+	XP               uint64  `json:"xp"`
 	Role             string `json:"role"`
 	Email            string `json:"email"`
-	Coins            int64  `json:"coins"`
-	Cash             int64  `json:"cash"`
-	RepairParts      int64  `json:"repairRewards"`
-	CarsOwned        int64  `json:"carsOwned"`
-	GaragesOwned     int64  `json:"garagesOwned"`
-	DistanceTraveled int64  `json:"distanceTraveled"`
-	ShdWon           int64  `json:"showDownWon"`
-	ShdWinRatio      int64  `json:"showDownWinRatio"`
-	TdWon            int64  `json:"takeDownWon"`
-	TdWinRatio       int64  `json:"takeDownWinRatio"`
+	Coins            uint64  `json:"coins"`
+	Cash             uint64  `json:"cash"`
+	RepairParts      uint64  `json:"repairRewards"`
+	CarsOwned        uint64  `json:"carsOwned"`
+	GaragesOwned     uint64  `json:"garagesOwned"`
+	DistanceTraveled uint64  `json:"distanceTraveled"`
+	ShdWon           uint64  `json:"showDownWon"`
+	ShdWinRatio      uint64  `json:"showDownWinRatio"`
+	TdWon            uint64  `json:"takeDownWon"`
+	TdWinRatio       uint64  `json:"takeDownWinRatio"`
 }

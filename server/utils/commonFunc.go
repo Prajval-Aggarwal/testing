@@ -267,13 +267,13 @@ func CalculateOVR(classOr, power, grip, weight float64) float64 {
 	return x
 }
 
-func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCarsStats, *model.PlayerCarUpgrades, string, int64, *model.RatingMulti, error) {
+func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCarsStats, *model.PlayerCarUpgrades, string, uint64, *model.RatingMulti, error) {
 	var playerDetails model.Player
 	var playerCarStats model.PlayerCarsStats
 	var carClassDetails string
 
 	var playerCarUpgrades model.PlayerCarUpgrades
-	var maxUpgradeLevel int64
+	var maxUpgradeLevel uint64
 	var classRating model.RatingMulti
 	//check if the car is owned or not
 	var exists bool

@@ -12,7 +12,7 @@ import (
 
 func UpgradeEngineService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
 
-	var upgradeCost int64
+	var upgradeCost uint64
 	isUpgradable := true
 
 	playerDetails, playerCarStats, playerCarUpgrades, carClassDetails, maxUpgradeLevel, classRating, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -86,7 +86,7 @@ func UpgradeEngineService(ctx *gin.Context, upgradeRequest request.CarUpgradesRe
 		return
 	}
 
-	var nextCost int64
+	var nextCost uint64
 	query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Engine+2, carClassDetails)
 	if err != nil {
@@ -113,7 +113,7 @@ func UpgradeEngineService(ctx *gin.Context, upgradeRequest request.CarUpgradesRe
 
 func UpgradeTurboService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
 
-	var upgradeCost int64
+	var upgradeCost uint64
 	isUpgradable := true
 
 	playerDetails, playerCarStats, playerCarUpgrades, carClassDetails, maxUpgradeLevel, classRating, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -181,7 +181,7 @@ func UpgradeTurboService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 		return
 	}
 
-	var nextCost int64
+	var nextCost uint64
 	query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Turbo+2, carClassDetails)
 	if err != nil {
@@ -208,7 +208,7 @@ func UpgradeTurboService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 
 func UpgradeIntakeService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
 
-	var upgradeCost int64
+	var upgradeCost uint64
 	isUpgradable := true
 
 	playerDetails, playerCarStats, playerCarUpgrades, carClassDetails, maxUpgradeLevel, classRating, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -275,7 +275,7 @@ func UpgradeIntakeService(ctx *gin.Context, upgradeRequest request.CarUpgradesRe
 		return
 	}
 
-	var nextCost int64
+	var nextCost uint64
 	query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Intake+2, carClassDetails)
 	if err != nil {
@@ -302,7 +302,7 @@ func UpgradeIntakeService(ctx *gin.Context, upgradeRequest request.CarUpgradesRe
 
 func UpgradeBodyService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
 
-	var upgradeCost int64
+	var upgradeCost uint64
 	isUpgradable := true
 
 	playerDetails, playerCarStats, playerCarUpgrades, carClassDetails, maxUpgradeLevel, classRating, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -355,10 +355,10 @@ func UpgradeBodyService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequ
 		return
 	}
 
-	var ovr = utils.RoundFloat(utils.CalculateOVR(classRating.ORMultiplier, float64(playerCarStats.Power), float64(playerCarStats.Grip+int64(utils.UPGRADE_GRIP)), float64(playerCarStats.Weight)), 2)
+	var ovr = utils.RoundFloat(utils.CalculateOVR(classRating.ORMultiplier, float64(playerCarStats.Power), float64(playerCarStats.Grip+uint64(utils.UPGRADE_GRIP)), float64(playerCarStats.Weight)), 2)
 
 	query = "UPDATE player_cars_stats set grip=? , ovr=? WHERE player_id=? AND car_id=?"
-	err = tx.Exec(query, (playerCarStats.Grip + int64(utils.UPGRADE_GRIP)), ovr, playerId, upgradeRequest.CarId).Error
+	err = tx.Exec(query, (playerCarStats.Grip + uint64(utils.UPGRADE_GRIP)), ovr, playerId, upgradeRequest.CarId).Error
 	if err != nil {
 		tx.Rollback()
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -369,7 +369,7 @@ func UpgradeBodyService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequ
 		return
 	}
 
-	var nextCost int64
+	var nextCost uint64
 	query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Body+2, carClassDetails)
 	if err != nil {
@@ -378,7 +378,7 @@ func UpgradeBodyService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequ
 	}
 	upgradeResponse := response.CarUpgradeResponse{
 		UpgradedPart: "body",
-		Grip:         playerCarStats.Grip + int64(utils.UPGRADE_GRIP),
+		Grip:         playerCarStats.Grip +uint64(utils.UPGRADE_GRIP),
 		OVR:          ovr,
 		Coins:        playerDetails.Coins,
 	}
@@ -396,7 +396,7 @@ func UpgradeBodyService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequ
 
 func UpgradeTiresService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
 
-	var upgradeCost int64
+	var upgradeCost uint64
 	isUpgradable := true
 
 	playerDetails, playerCarStats, playerCarUpgrades, carClassDetails, maxUpgradeLevel, classRating, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -449,10 +449,10 @@ func UpgradeTiresService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 		return
 	}
 
-	var ovr = utils.RoundFloat(utils.CalculateOVR(classRating.ORMultiplier, float64(playerCarStats.Power), float64(playerCarStats.Grip+int64(utils.UPGRADE_GRIP)), float64(playerCarStats.Weight)), 2)
+	var ovr = utils.RoundFloat(utils.CalculateOVR(classRating.ORMultiplier, float64(playerCarStats.Power), float64(playerCarStats.Grip+uint64(utils.UPGRADE_GRIP)), float64(playerCarStats.Weight)), 2)
 
 	query = "UPDATE player_cars_stats set grip=? , ovr=? WHERE player_id=? AND car_id=?"
-	err = tx.Exec(query, (playerCarStats.Grip + int64(utils.UPGRADE_GRIP)), ovr, playerId, upgradeRequest.CarId).Error
+	err = tx.Exec(query, (playerCarStats.Grip + uint64(utils.UPGRADE_GRIP)), ovr, playerId, upgradeRequest.CarId).Error
 	if err != nil {
 		tx.Rollback()
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -463,7 +463,7 @@ func UpgradeTiresService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 		return
 	}
 
-	var nextCost int64
+	var nextCost uint64
 	query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Tires+2, carClassDetails)
 	if err != nil {
@@ -472,7 +472,7 @@ func UpgradeTiresService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 	}
 	upgradeResponse := response.CarUpgradeResponse{
 		UpgradedPart: "tires",
-		Grip:         (playerCarStats.Grip + int64(utils.UPGRADE_GRIP)),
+		Grip:         (playerCarStats.Grip + uint64(utils.UPGRADE_GRIP)),
 		OVR:          ovr,
 		Coins:        playerDetails.Coins,
 	}
@@ -490,7 +490,7 @@ func UpgradeTiresService(ctx *gin.Context, upgradeRequest request.CarUpgradesReq
 
 func UpgradeTransmissionService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
 
-	var upgradeCost int64
+	var upgradeCost uint64
 	isUpgradable := true
 
 	playerDetails, playerCarStats, playerCarUpgrades, carClassDetails, maxUpgradeLevel, classRating, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -557,7 +557,7 @@ func UpgradeTransmissionService(ctx *gin.Context, upgradeRequest request.CarUpgr
 		return
 	}
 
-	var nextCost int64
+	var nextCost uint64
 	query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Transmission+2, carClassDetails)
 	if err != nil {
@@ -583,7 +583,7 @@ func UpgradeTransmissionService(ctx *gin.Context, upgradeRequest request.CarUpgr
 }
 
 func UpgradeNitrousService(ctx *gin.Context, upgradeRequest request.CarUpgradesRequest, playerId string) {
-	var upgradeCost int64
+	var upgradeCost uint64
 	//isUpgradable := true
 
 	playerDetails, _, playerCarUpgrades, carClassDetails, maxUpgradeLevel, _, err := utils.UpgradeData(playerId, upgradeRequest.CarId)
@@ -638,7 +638,7 @@ func UpgradeNitrousService(ctx *gin.Context, upgradeRequest request.CarUpgradesR
 		return
 	}
 
-	// var nextCost int64
+	// var nextCost uint64
 	// query = "SELECT cost FROM upgrades WHERE upgrade_level=? AND class=?"
 	// err = db.QueryExecutor(query, &nextCost, playerCarUpgrades.Engine+2, carClassDetails)
 	// if err != nil {
@@ -672,7 +672,7 @@ func GetCarStatsService(ctx *gin.Context, playerId string, getReq request.CarReq
 		return
 	}
 
-	var nitrousLevel int64
+	var nitrousLevel uint64
 	query = "SELECT nitrous FROM player_car_upgrades WHERE player_id=? AND car_id=?"
 	err = db.QueryExecutor(query, &nitrousLevel, playerId, getReq.CarId)
 	if err != nil {

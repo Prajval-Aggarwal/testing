@@ -80,7 +80,7 @@ const (
 )
 
 const (
-	UPGRADE_POWER      int64   = 2
+	UPGRADE_POWER      uint64  = 2
 	UPGRADE_SHIFT_TIME float64 = 0.1
 	UPGRADE_GRIP       float64 = 1.0
 )
@@ -89,7 +89,7 @@ const (
 const (
 	CAR_ADDED_SUCCESS                string = "Car added  sucessfully"
 	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
-	CAR_ALREAY_ALLOTED               string = "Car already alotted to others arena"
+	CAR_ALREADY_ALLOTTED             string = "Car already alotted to others arena"
 	CAR_LIMIT_REACHED                string = "Car Limit reached upgarde the garage to increse the limit"
 	CAR_SELECETED_SUCCESS            string = "Current car selected successfully"
 	CAR_ALREADY_BOUGHT               string = "Car already bought"
@@ -102,9 +102,21 @@ const (
 	WHEELS_CUSTOMIZED_SUCCESS        string = "Wheels updated succesfully"
 	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
 	CAR_REPAIR_SUCCESS               string = "Car repaired successfully"
-	UNAUTHORIZED                     string = "Player not authorized"
-	CAR_ADDED_GARAGE_SUCCESS         string = "Car added to garage sucessfully"
-	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
+	UPGRADE_REACHED_MAX_LEVEL        string = "Part reached to its max level"
+)
+
+// Garage constants
+const (
+	GARAGE_BOUGHT_SUCESS     string = "Garage bought successfully"
+	GARAGE_LIST_FETCHED      string = "Garage list fetched successfully"
+	GARAGE_UPGRADED          string = "Garage upgrade successfully"
+	ADD_CAR_TO_GARAGE_FAILED string = "Unable to add car to garage"
+
+	GARAGE_ADD_SUCCESS     string = "Garage Added successfully"
+	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
+	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
+	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
+)
 
 // Arena constants
 const (
@@ -112,14 +124,7 @@ const (
 	MEDIUM_PERK string = "@every 3h"
 	HARD_PERK   string = "@every 7h"
 
-	GARAGE_ADD_SUCCESS    string = "Garage Added successfully"
-	GARAGE_DELETE_SUCCESS string = "Garage Deleted successfully"
-	GARAGE_UPDATE_SUCCESS string = "Garage Updated successfully"
-	EASY_ARENA_SLOT       int64  = 3
-	MEDIUM_ARENA_SLOT     int64  = 5
-	HARD_ARENA_SLOT       int64  = 7
-	GARAGE_ADD_SUCCESS     string = "Garage Added successfully"
-	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
-	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
-	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
+	EASY_ARENA_SLOT   uint64 = 3
+	MEDIUM_ARENA_SLOT uint64 = 5
+	HARD_ARENA_SLOT   uint64 = 7
 )

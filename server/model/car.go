@@ -11,11 +11,11 @@ type Car struct {
 
 type CarStats struct {
 	CarId       string  `json:"carId,omitempty"`
-	Power       int64   `json:"power,omitempty"`
-	Grip        int64   `json:"grip,omitempty"`
-	Weight      int64   `json:"weight,omitempty"`
+	Power       uint64  `json:"power,omitempty"`
+	Grip        uint64  `json:"grip,omitempty"`
+	Weight      uint64  `json:"weight,omitempty"`
 	ShiftTime   float64 `json:"shiftTime,omitempty"`
 	OVR         float64 `json:"or,omitempty"` //overall rating of the car
-	Durability  int64   `json:"durability,omitempty"`
-	NitrousTime int64   `json:"nitrousTime,omitempty"` //increased when nitrous is upgraded
+	Durability  uint64  `json:"durability,omitempty"`
+	NitrousTime uint64  `json:"nitrousTime,omitempty"` //increased when nitrous is upgraded
 }

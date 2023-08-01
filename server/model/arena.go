@@ -5,6 +5,7 @@ import "time"
 type Arena struct {
 	ArenaId    string  `json:"arenaId"`
 	ArenaName  string  `json:"arenaName"`
+	Perks      uint64  `json:"perks"`
 	ArenaLevel string  `json:"arenaLevel"`
 	Longitude  float64 `json:"longitude"`
 	Latitude   float64 `json:"latitude"`
@@ -22,7 +23,7 @@ type ArenaRaceRecord struct {
 type ArenaSeries struct {
 	ArenaId   string `json:"ArenaId"`
 	PlayerId  string `json:"playerId"`
-	WinStreak int64  `json:"winStreak"`
+	WinStreak uint64 `json:"winStreak"`
 }
 
 type CarSlots struct {
