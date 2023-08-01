@@ -1,5 +1,6 @@
 package utils
 
+// Status codes
 const (
 	HTTP_BAD_REQUEST                     int64 = 400
 	HTTP_UNAUTHORIZED                    int64 = 401
@@ -45,31 +46,54 @@ const (
 )
 
 const (
-	FAILURE string = "Failure"
-	SUCCESS string = "Success"
+	FAILURE       string = "Failure"
+	SUCCESS       string = "Success"
+	ACCESS_DENIED string = "Access Denied"
+	INVALID_TOKEN string = "Token Absent or Invalid token"
 )
 
 const (
-	LOGIN_SUCCESS                    string = "Login Successfull"
-	LOGIN_FAILED                     string = "Login Failed"
-	EMAIL_EXISTS                     string = "Email is already attached to another player"
-	ACCESS_DENIED                    string = "Access Denied"
-	INVALID_TOKEN                    string = "Token Absent or Invalid token"
-	NOT_FOUND                        string = "Record not found"
-	DATA_FETCH_SUCCESS               string = "Data Fetch Successfully"
-	UPGRADE_LEVEL                    string = "Upgrade your level to unlock the car"
-	NOT_ENOUGH_REPAIR_PARTS          string = "Not enough repair parts"
-	NOT_ENOUGH_COINS                 string = "Not enough coins"
-	GARAGE_BOUGHT_SUCESS             string = "Garage bought successfully"
-	GARAGE_LIST_FETCHED              string = "Garage list fetched successfully"
-	FAILED_TO_UPDATE                 string = "Failed to update in database"
-	GARAGE_UPGRADED                  string = "Garage upgrade successfully"
-	ADD_CAR_TO_GARAGE_FAILED         string = "Unable to add car to garage"
-	PARTS_CANNOT_BE_UPGRADED         string = "Part cannot be upgarded more"
-	CASH_LIMIT_EXCEEDED              string = "Cash limit exceeded"
-	COINS_LIMIT_EXCEEDED             string = "Coins limit exceeded"
-	STATS_ERROR                      string = "Stats error"
-	EMAIL_UPDATED_SUCCESS            string = "Email updated successfully"
+	AI string = "c1cfc783-0850-4b75-a518-ed3c966052a4"
+)
+
+const (
+	PLAYER_ID string = "playerId"
+
+	LOGIN_SUCCESS           string = "Login Successfull"
+	LOGIN_FAILED            string = "Login Failed"
+	EMAIL_EXISTS            string = "Email is already attached to another player"
+	NOT_FOUND               string = "Record not found"
+	DATA_FETCH_SUCCESS      string = "Data Fetch Successfully"
+	UPGRADE_LEVEL           string = "Upgrade your level to unlock the car"
+	NOT_ENOUGH_REPAIR_PARTS string = "Not enough repair parts"
+	NOT_ENOUGH_COINS        string = "Not enough coins"
+	FAILED_TO_UPDATE        string = "Failed to update in database"
+	CASH_LIMIT_EXCEEDED     string = "Cash limit exceeded"
+	COINS_LIMIT_EXCEEDED    string = "Coins limit exceeded"
+	STATS_ERROR             string = "Stats error"
+	EMAIL_UPDATED_SUCCESS   string = "Email updated successfully"
+	UNAUTHORIZED            string = "Player not authorized"
+	WON                     string = "You WON"
+	LOSE                    string = "You LOST"
+
+	NO_CARS_ADDED string = "No more cars can be added"
+)
+
+const (
+	UPGRADE_POWER      uint64  = 2
+	UPGRADE_SHIFT_TIME float64 = 0.1
+	UPGRADE_GRIP       float64 = 1.0
+)
+
+// Car constants
+const (
+	CAR_ADDED_SUCCESS                string = "Car added  sucessfully"
+	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
+	CAR_ALREADY_ALLOTTED             string = "Car already alotted to others arena"
+	CAR_LIMIT_REACHED                string = "Car Limit reached upgarde the garage to increse the limit"
+	CAR_SELECETED_SUCCESS            string = "Current car selected successfully"
+	CAR_ALREADY_BOUGHT               string = "Car already bought"
+	CAR_REPLACED_SUCCESS             string = "Car replaced sucessfully"
 	CAR_SOLD_SUCCESS                 string = "Car sold sucessfully"
 	CAR_BOUGHT_SUCESS                string = "Car bought successfully"
 	UPGRADE_SUCCESS                  string = "Part upgraged successfully"
@@ -78,29 +102,29 @@ const (
 	WHEELS_CUSTOMIZED_SUCCESS        string = "Wheels updated succesfully"
 	COLOR_CUSTOMIZED_SUCCESS         string = "Color updated succesfully"
 	CAR_REPAIR_SUCCESS               string = "Car repaired successfully"
-	UNAUTHORIZED                     string = "Not authorized"
-	CAR_ADDED_SUCCESS                string = "Car added to sucessfully"
-	EQUIP_CORRECT_CAR                string = "Car need to be selected first"
-
-	CAR_ALREAY_ALLOTED    string = "Car already alotted to others arena"
-	CAR_LIMIT_REACHED     string = "Car Limit reached upgarde the garage to increse the limit"
-	CAR_SELECETED_SUCCESS string = "Current car selected successfully"
-	CAR_ALREADY_BOUGHT    string = "Car already bought"
-
-	CAR_REPLACED_SUCCESS string = "Car replaced sucessfully"
-
-	WON                       string = "You WON"
-	LOSE                      string = "You LOST"
-	UPGRADE_REACHED_MAX_LEVEL string = "Part reached to its max level"
+	UPGRADE_REACHED_MAX_LEVEL        string = "Part reached to its max level"
 )
 
+// Garage constants
 const (
-	UPGRADE_POWER      int64   = 2
-	UPGRADE_SHIFT_TIME float64 = 0.1
-	UPGRADE_GRIP       float64 = 1.0
+	GARAGE_BOUGHT_SUCESS     string = "Garage bought successfully"
+	GARAGE_LIST_FETCHED      string = "Garage list fetched successfully"
+	GARAGE_UPGRADED          string = "Garage upgrade successfully"
+	ADD_CAR_TO_GARAGE_FAILED string = "Unable to add car to garage"
 
 	GARAGE_ADD_SUCCESS     string = "Garage Added successfully"
 	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
 	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
 	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
+)
+
+// Arena constants
+const (
+	EASY_PERK   string = "@every 30m"
+	MEDIUM_PERK string = "@every 3h"
+	HARD_PERK   string = "@every 7h"
+
+	EASY_ARENA_SLOT   uint64 = 3
+	MEDIUM_ARENA_SLOT uint64 = 5
+	HARD_ARENA_SLOT   uint64 = 7
 )

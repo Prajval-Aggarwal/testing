@@ -267,13 +267,13 @@ func CalculateOVR(classOr, power, grip, weight float64) float64 {
 	return x
 }
 
-func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCarsStats, *model.PlayerCarUpgrades, string, int64, *model.RatingMulti, error) {
+func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCarsStats, *model.PlayerCarUpgrades, string, uint64, *model.RatingMulti, error) {
 	var playerDetails model.Player
 	var playerCarStats model.PlayerCarsStats
 	var carClassDetails string
 
 	var playerCarUpgrades model.PlayerCarUpgrades
-	var maxUpgradeLevel int64
+	var maxUpgradeLevel uint64
 	var classRating model.RatingMulti
 	//check if the car is owned or not
 	var exists bool
@@ -326,4 +326,13 @@ func UpgradeData(playerId string, carId string) (*model.Player, *model.PlayerCar
 func RoundFloat(val float64, precision uint) float64 {
 	ratio := math.Pow(10, float64(precision))
 	return math.Round(val*ratio) / ratio
+}
+
+func IsExisting(query string, values ...interface{}) bool {
+	var exists bool
+	err := db.QueryExecutor(query, &exists, values...)
+	if err != nil {
+		return false
+	}
+	return exists
 }

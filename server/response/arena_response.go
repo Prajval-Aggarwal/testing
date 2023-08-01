@@ -7,8 +7,8 @@ type ArenaIdRes struct {
 	Level       string `json:"arenaLevel"`
 	Longitude   string `json:"longitude"`
 	Latitude    string `json:"latitude"`
-	PlayerLevel int64  `json:"playerLevelReq"`
-	MinCarReq   int64  `json:"minCarReq"`
+	PlayerLevel uint64 `json:"playerLevelReq"`
+	MinCarReq   uint64 `json:"minCarReq"`
 }
 
 // resposne for getting list of arenas

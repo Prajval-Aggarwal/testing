@@ -82,7 +82,7 @@ func LoginHandler(ctx *gin.Context) {
 // @Router /update-email [put]
 func UpdateEmailHandler(ctx *gin.Context) {
 	var email request.UpdateEmailRequest
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id is:", playerId, exists)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)

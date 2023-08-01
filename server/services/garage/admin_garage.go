@@ -1,17 +1,19 @@
 package garage
 
 import (
+	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/request"
 	"main/server/response"
 	"main/server/utils"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
 func AddGarageService(ctx *gin.Context, addGarageReq request.AddGarageRequest) {
-	//	var newGarage model.Garage
+	// Create a new garage with the provided details.
 	newGarage := model.Garage{
 		GarageName:    addGarageReq.GarageName,
 		Latitude:      addGarageReq.Latitude,
@@ -21,8 +23,8 @@ func AddGarageService(ctx *gin.Context, addGarageReq request.AddGarageRequest) {
 		Locked:        true,
 	}
 
+	// Check if a garage already exists at the specified latitude and longitude.
 	var exists bool
-	//check that no two same garages are on same locations
 	query := "SELECT EXISTS (SELECT * FROM garages WHERE latitude=? AND longituted=?)"
 	err := db.QueryExecutor(query, &exists, addGarageReq.Latitude, addGarageReq.Longitute)
 	if err != nil {
@@ -34,12 +36,14 @@ func AddGarageService(ctx *gin.Context, addGarageReq request.AddGarageRequest) {
 		return
 	}
 
+	// Create a record for the new garage in the database.
 	err = db.CreateRecord(&newGarage)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
 
+	// Return the success response along with the new garage details.
 	response.ShowResponse(utils.GARAGE_ADD_SUCCESS, utils.HTTP_OK, utils.SUCCESS, newGarage, ctx)
 }
 
@@ -105,17 +109,31 @@ func UpdateGarageService(ctx *gin.Context, updateReq request.UpdateGarageReq) {
 func GetAllGarageListService(ctx *gin.Context) {
 	var garageList []model.Garage
 
-	query := "SELECT * FROM garages"
-	err := db.QueryExecutor(query, &garageList)
+	// Get the query parameters for skip and limit from the request
+	skipParam := ctx.DefaultQuery("skip", "0")
+	limitParam := ctx.DefaultQuery("limit", "10")
+
+	// Convert skip and limit to integers
+	skip, err := strconv.Atoi(skipParam)
+	if err != nil {
+		response.ShowResponse("Invalid skip value", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	limit, err := strconv.Atoi(limitParam)
+	if err != nil {
+		response.ShowResponse("Invalid limit value", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	// Build the SQL query with skip and limit
+	query := fmt.Sprintf("SELECT * FROM garages LIMIT %d OFFSET %d", limit, skip)
+
+	err = db.QueryExecutor(query, &garageList)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
 
 	response.ShowResponse(utils.GARAGE_LIST_FETCHED, utils.HTTP_OK, utils.SUCCESS, garageList, ctx)
-
-}
-
-func GetGarageById(ctx *gin.Context) {
-
 }

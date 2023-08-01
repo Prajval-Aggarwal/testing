@@ -16,8 +16,8 @@ type AddGarageRequest struct {
 	GarageName    string  `json:"garageName,omitempty"`
 	Latitude      float64 `json:"latitude,omitempty"`
 	Longitute     float64 `json:"longitute,omitempty"`
-	Level         int64   `json:"level,omitempty"`         //level reuired to unlock the garage
-	CoinsRequired int64   `json:"coinsRequired,omitempty"` //coins required to unlock the garage
+	Level         uint64  `json:"level,omitempty"`         //level reuired to unlock the garage
+	CoinsRequired uint64  `json:"coinsRequired,omitempty"` //coins required to unlock the garage
 }
 
 type DeletGarageReq struct {
@@ -29,8 +29,8 @@ type UpdateGarageReq struct {
 	GarageName    string  `json:"garageName,omitempty"`
 	Latitude      float64 `json:"latitude,omitempty"`
 	Longitute     float64 `json:"longitute,omitempty"`
-	Level         int64   `json:"level,omitempty"`         //level reuired to unlock the garage
-	CoinsRequired int64   `json:"coinsRequired,omitempty"` //coins required to unlock the garage
+	Level         uint64  `json:"level,omitempty"`         //level reuired to unlock the garage
+	CoinsRequired uint64  `json:"coinsRequired,omitempty"` //coins required to unlock the garage
 }
 
 func (a UpdateGarageReq) Validate() error {

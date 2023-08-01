@@ -28,27 +28,26 @@ func AddDummyDataHandler(ctx *gin.Context) {
 	addtoDb("server/dummyData/garage.json", &[]model.Garage{})
 	addtoDb("server/dummyData/garageUpgrades.json", &[]model.GarageUpgrades{})
 
-	// //car upgrades dummy data
-	// addtoDb("server/dummyData/engineUpgrades.json", &[]model.Engine{})
-	// addtoDb("server/dummyData/turboUpgrades.json", &[]model.Turbo{})
-	// addtoDb("server/dummyData/intakeUpgrades.json", &[]model.Intake{})
-	// addtoDb("server/dummyData/bodyUpgrades.json", &[]model.Body{})
-	// addtoDb("server/dummyData/tiresUpgrades.json", &[]model.Tires{})
-	// addtoDb("server/dummyData/transmissionUpgrades.json", &[]model.Transmission{})
-	// addtoDb("server/dummyData/nitrousUpgrades.json", &[]model.Nitrous{})
-
 	//car customization
 	addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
 	addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
 
 	//arena
 	addtoDb("server/dummyData/arena.json", &[]model.Arena{})
-	addtoDb("server/dummyData/arenaLevel.json", &[]model.ArenaReq{})
 
+	// //car upgrades dummy data
 	addtoDb("server/dummyData/upgrades.json", &[]model.Upgrades{})
-	addtoDb("server/dummyData/looseRewards.json", &[]model.LostRewards{})
-	addtoDb("server/dummyData/winRewards.json", &[]model.WinRewards{})
+
+	//rewards
+	addtoDb("server/dummyData/rewards.json", &[]model.Rewards{})
+
+	//race types
+	addtoDb("server/dummyData/raceTypes.json", &[]model.RaceTypes{})
+
 	addtoDb("server/dummyData/classMultiplier.json", &[]model.RatingMulti{})
+	//car custoization
+	addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
+	addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
 
 }
 
@@ -110,24 +109,20 @@ func addtoDb(filePath string, modelType interface{}) {
 			fmt.Println("arena data:", item)
 			db.CreateRecord(&item)
 		}
-	case *[]model.ArenaReq:
-		for _, item := range *slice {
-			fmt.Println("arena level data:", item)
-			db.CreateRecord(&item)
-		}
-	case *[]model.WinRewards:
+	case *[]model.Rewards:
 		for _, item := range *slice {
 			fmt.Println("win rewards data:", item)
 			db.CreateRecord(&item)
 		}
-	case *[]model.LostRewards:
-		for _, item := range *slice {
-			fmt.Println("lost rewards data:", item)
-			db.CreateRecord(&item)
-		}
+
 	case *[]model.RatingMulti:
 		for _, item := range *slice {
 			fmt.Println("rating data:", item)
+			db.CreateRecord(&item)
+		}
+	case *[]model.RaceTypes:
+		for _, item := range *slice {
+			fmt.Println("race types data:", item)
 			db.CreateRecord(&item)
 		}
 	default:

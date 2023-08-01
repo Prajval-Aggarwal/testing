@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"main/server/request"
 	"main/server/response"
 	"main/server/services/garage"
@@ -19,8 +20,20 @@ import (
 // @Success 200 {object} response.Success "Garage added successful"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /admin/garage/add [post]
+// @Router /garage/add [post]
 func AddGarageHandler(ctx *gin.Context) {
+
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var addGarageReq request.AddGarageRequest
 	err := utils.RequestDecoding(ctx, &addGarageReq)
 	if err != nil {
@@ -49,8 +62,19 @@ func AddGarageHandler(ctx *gin.Context) {
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {string} string "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /admin/garage/delete [delete]
+// @Router /garage/delete [delete]
 func DeleteGarageHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var deleteReq request.DeletGarageReq
 	err := utils.RequestDecoding(ctx, &deleteReq)
 	if err != nil {
@@ -79,8 +103,19 @@ func DeleteGarageHandler(ctx *gin.Context) {
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {string} string "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /admin/garage/update [put]
+// @Router /garage/update [put]
 func UpdateGarageHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var updateReq request.UpdateGarageReq
 	err := utils.RequestDecoding(ctx, &updateReq)
 	if err != nil {
@@ -104,6 +139,8 @@ func UpdateGarageHandler(ctx *gin.Context) {
 // @Tags Garage
 // @Accept json
 // @Produce json
+// @Param skip query integer false "Number of records to skip (default is 0)"
+// @Param limit query integer false "Maximum number of records to fetch (default is 10)"
 // @Success 200 {object} response.Success "Garage list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /garages/get-all [get]

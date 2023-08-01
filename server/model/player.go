@@ -5,15 +5,15 @@ import "time"
 type Player struct {
 	PlayerId    string `json:"playerId,omitempty"`
 	PlayerName  string `json:"playerName" gorm:"unique,omitempty"`
-	Level       int64  `json:"level,omitempty"`
+	Level       uint64 `json:"level,omitempty"`
 	Role        string `json:"role,omitempty"`
-	XP          string `json:"xp,omitempty"`
+	XP          int64  `json:"xp,omitempty"`
 	Email       string `json:"email,omitempty"`
-	Coins       int64  `json:"coins,omitempty"`
-	Cash        int64  `json:"cash,omitempty"`
-	RepairParts int64  `json:"repairParts,omitempty"`
+	Coins       uint64 `json:"coins,omitempty"`
+	Cash        uint64 `json:"cash,omitempty"`
+	RepairParts uint64 `json:"repairParts,omitempty"`
 	DeviceId    string `json:"deviceId,omitempty"`
-	OS          int64  `json:"os,omitempty"` // o for android 1 for ios
+	OS          uint64 `json:"os,omitempty"` // o for android 1 for ios
 }
 
 type OwnedCars struct {
@@ -25,36 +25,36 @@ type OwnedCars struct {
 type OwnedGarage struct {
 	PlayerId    string `json:"playerId,omitempty"`
 	GarageId    string `json:"garageId,omitempty"`
-	GarageLevel int64  `json:"garageLevel,omitempty"`
-	CarLimit    int64  `json:"carLimit,omitempty"`
+	GarageLevel uint64 `json:"garageLevel,omitempty"`
+	CarLimit    uint64 `json:"carLimit,omitempty"`
 }
 
 type PlayerRaceHistory struct {
-	PlayerId         string `json:"playerId,omitempty"`
-	DistanceTraveled int64  `json:"distanceTraveled"`
-	ShdWon           int64  `json:"showDownWon"`
-	TotalShdPlayed   int64  `json:"totalShdPlayed"`
-	TdWon            int64  `json:"takeDownWon"`
-	TotalTdPlayed    int64  `json:"totalTdPlayed"`
+	PlayerId         string  `json:"playerId,omitempty"`
+	DistanceTraveled float64 `json:"distanceTraveled"`
+	ShdWon           uint64  `json:"showDownWon"`
+	TotalShdPlayed   uint64  `json:"totalShdPlayed"`
+	TdWon            uint64  `json:"takeDownWon"`
+	TotalTdPlayed    uint64  `json:"totalTdPlayed"`
 }
 
 type OwnedBattleArenas struct {
-	PlayerId string    `json:"playerId,omitempty"`
-	ArenaId  string    `json:"arenaId,omitempty"`
-	WinTime  time.Time `json:"winTime,omitempty"`
-	TimeWon  time.Time `json:"timeWon,omitempty"`
-	CarId    string    `json:"carId,omitempty"`
-	Status   string    `json:"status,omitempty"`
+	PlayerId  string    `json:"playerId,omitempty"`
+	ArenaId   string    `json:"arenaId,omitempty"`
+	WinTime   time.Time `json:"winTime,omitempty"`
+	CreatedAt time.Time
+	CarId     string `json:"carId,omitempty"`
+	Status    string `json:"status,omitempty"`
 }
 type PlayerCarsStats struct {
 	PlayerId    string  `json:"playerId,omitempty"`
 	CarId       string  `json:"carId,omitempty"`
-	Power       int64   `json:"power,omitempty"`
-	Grip        int64   `json:"grip,omitempty"`
+	Power       uint64  `json:"power,omitempty"`
+	Grip        uint64  `json:"grip,omitempty"`
 	ShiftTime   float64 `json:"shiftTime,omitempty"`
-	Weight      int64   `json:"weight,omitempty"`
+	Weight      uint64  `json:"weight,omitempty"`
 	OVR         float64 `json:"or,omitempty"` //overall rating of the car
-	Durability  int64   `json:"Durability,omitempty"`
+	Durability  uint64  `json:"Durability,omitempty"`
 	NitrousTime float64 `json:"nitrousTime,omitempty"` //increased when nitrous is upgraded
 
 }
@@ -62,13 +62,13 @@ type PlayerCarsStats struct {
 type PlayerCarUpgrades struct {
 	PlayerId     string `json:"playerId,omitempty"`
 	CarId        string `json:"carId,omitempty"`
-	Engine       int64  `json:"engine,omitempty"`       // Affects Power
-	Turbo        int64  `json:"turbo,omitempty"`        // Affects Power
-	Intake       int64  `json:"intake,omitempty"`       // Affects Power
-	Nitrous      int64  `json:"nitrous,omitempty"`      // Affect Nitrous time
-	Body         int64  `json:"body,omitempty"`         //Affects Grip and Weight
-	Tires        int64  `json:"tires,omitempty"`        //Affects Grip
-	Transmission int64  `json:"transmission,omitempty"` //Affects Shift-Time
+	Engine       uint64 `json:"engine,omitempty"`       // Affects Power
+	Turbo        uint64 `json:"turbo,omitempty"`        // Affects Power
+	Intake       uint64 `json:"intake,omitempty"`       // Affects Power
+	Nitrous      uint64 `json:"nitrous,omitempty"`      // Affect Nitrous time
+	Body         uint64 `json:"body,omitempty"`         //Affects Grip and Weight
+	Tires        uint64 `json:"tires,omitempty"`        //Affects Grip
+	Transmission uint64 `json:"transmission,omitempty"` //Affects Shift-Time
 }
 
 type PlayerCarCustomization struct {

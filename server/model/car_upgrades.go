@@ -2,8 +2,8 @@ package model
 
 type Upgrades struct {
 	Class        string `json:"class"`
-	UpgradeLevel int64  `json:"upgradeLevel"`
-	Cost         int64  `json:"cost"`
+	UpgradeLevel uint64 `json:"upgradeLevel"`
+	Cost         uint64 `json:"cost"`
 }
 
 /*○ Engine

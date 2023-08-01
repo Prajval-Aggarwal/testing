@@ -13,11 +13,12 @@ type AdminLoginReq struct {
 type GuestLoginRequest struct {
 	PlayerName string `json:"playerName"`
 	DeviceId   string `json:"deviceId"`
-	OS         int64  `json:"os"`
+	OS         uint64 `json:"os"`
 	Token      string `json:"token"`
 }
 type LoginRequest struct {
-	Email string `json:"email"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type UpdateEmailRequest struct {
@@ -43,12 +44,6 @@ func (a ForgotPassRequest) Validate() error {
 	)
 }
 
-func (a AdminLoginReq) Validate() error {
-	return validation.ValidateStruct(&a,
-		validation.Field(&a.Email, validation.Required),
-		validation.Field(&a.Password, validation.Required),
-	)
-}
 func (a GuestLoginRequest) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.PlayerName, validation.Required),

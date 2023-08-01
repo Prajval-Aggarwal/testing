@@ -25,7 +25,7 @@ import (
 // @Failure 500 {object} response.Success
 // @Router /car/customise/color [put]
 func ColorCustomizeHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id is:", playerId)
 
 	if !exists {
@@ -63,7 +63,7 @@ func ColorCustomizeHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success
 // @Router /car/customise/wheels [put]
 func WheelsCustomizeHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id is:", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -104,7 +104,7 @@ func WheelsCustomizeHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success
 // @Router /car/customise/interior [put]
 func InteriorCustomizeHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id is:", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -144,7 +144,7 @@ func InteriorCustomizeHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success
 // @Router /car/customise/license [put]
 func LicenseCustomizeHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id is:", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)

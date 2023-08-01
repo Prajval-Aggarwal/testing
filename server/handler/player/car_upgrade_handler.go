@@ -25,7 +25,7 @@ import (
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/engine [put]
 func UpgradeEngineHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -61,7 +61,7 @@ func UpgradeEngineHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/turbo [put]
 func UpgradeTurboHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -96,7 +96,7 @@ func UpgradeTurboHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/intake [put]
 func UpgradeIntakeHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -132,7 +132,7 @@ func UpgradeIntakeHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/nitrous [put]
 func UpgradeNitrousHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -167,7 +167,7 @@ func UpgradeNitrousHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/body [put]
 func UpgradeBodyHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -203,7 +203,7 @@ func UpgradeBodyHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/tires [put]
 func UpgradeTiresHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -239,7 +239,7 @@ func UpgradeTiresHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /car/upgrade/transmission [put]
 func UpgradeTransmissionHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
@@ -261,7 +261,7 @@ func UpgradeTransmissionHandler(ctx *gin.Context) {
 }
 
 func GetCarStatsHandler(ctx *gin.Context) {
-	playerId, exists := ctx.Get("playerId")
+	playerId, exists := ctx.Get(utils.PLAYER_ID)
 	fmt.Println("player id from token is ", playerId)
 	if !exists {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)

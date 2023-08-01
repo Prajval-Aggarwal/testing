@@ -10,37 +10,37 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func UserAuthorization(ctx *gin.Context) {
+// func PlayerAuthorization(ctx *gin.Context) {
 
-	fmt.Println("inside middleware")
-	tokenString := ctx.Request.Header.Get("Authorization")
-	fmt.Println("token string is", tokenString)
-	claims, err := token.DecodeToken(tokenString)
-	fmt.Println("claims from middleware is:", claims)
-	if err != nil {
-		fmt.Println("sndnfnskdfnk")
-		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
-		ctx.Abort()
-		return
-	}
-	err = claims.Valid()
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
-		ctx.Abort()
-		return
-	}
-	if claims.Role != "player" {
-		response.ShowResponse(utils.ACCESS_DENIED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
-		ctx.Abort()
-		return
-	}
+// 	fmt.Println("inside middleware")
+// 	tokenString := ctx.Request.Header.Get("Authorization")
+// 	fmt.Println("token string is", tokenString)
+// 	claims, err := token.DecodeToken(tokenString)
+// 	fmt.Println("claims from middleware is:", claims)
+// 	if err != nil {
+// 		fmt.Println("sndnfnskdfnk")
+// 		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+// 		ctx.Abort()
+// 		return
+// 	}
+// 	err = claims.Valid()
+// 	if err != nil {
+// 		response.ShowResponse(err.Error(), utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+// 		ctx.Abort()
+// 		return
+// 	}
+// 	// if claims.Role != "player" {
+// 	// 	response.ShowResponse(utils.ACCESS_DENIED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+// 	// 	ctx.Abort()
+// 	// 	return
+// 	// }
 
-	fmt.Println("player is is", claims.Id)
-	ctx.Set("playerId", claims.Id)
-	//set the token details into context for further processing in handler function
+// 	fmt.Println("player is is", claims.Id)
+// 	ctx.Set(utils.PLAYER_ID, claims.Id)
+// 	//set the token details into context for further processing in handler function
 
-	ctx.Next()
-}
+// 	ctx.Next()
+// }
 
 func AdminAuthorization(ctx *gin.Context) {
 
@@ -59,13 +59,15 @@ func AdminAuthorization(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	if claims.Role == "admin" {
+	if claims.Role == "admin" || claims.Role == "player" {
 		ctx.Next()
 	} else {
 		response.ShowResponse(utils.ACCESS_DENIED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		ctx.Abort()
 		return
 	}
+	ctx.Set("role", claims.Role)
+	ctx.Set(utils.PLAYER_ID, claims.Id)
 	//set the token details into context for further processing in handler function
 	ctx.Next()
 
