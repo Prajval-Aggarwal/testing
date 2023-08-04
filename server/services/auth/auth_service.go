@@ -3,6 +3,7 @@ package auth
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -183,7 +184,7 @@ func AdminSignUpService(ctx *gin.Context) {
 
 }
 
-func AdminLoginService(ctx *gin.Context, adminLoginReq request.AdminLoginReq) {
+func AdminLoginService(ctx *gin.Context, adminLoginReq request.LoginRequest) {
 	var adminDetails model.Admin
 	if !db.RecordExist("admins", adminLoginReq.Email, "email") {
 		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_NOT_FOUND, utils.FAILURE, nil, ctx)
@@ -260,6 +261,7 @@ func ForgotPassService(ctx *gin.Context, forgotPassRequest request.ForgotPassReq
 		return
 	}
 
+	fmt.Println("context value is", strings.Split(ctx.Request.RemoteAddr, ":"))
 	link := "http://localhost:3014/reset-password?token=" + *tokenString
 	//Sending mail on players email address
 

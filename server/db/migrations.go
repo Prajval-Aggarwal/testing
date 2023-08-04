@@ -56,7 +56,7 @@ func AutoMigrateDatabase(db *gorm.DB) {
 		dbVersion.Version = 4
 	}
 	if dbVersion.Version < 5 {
-		err := db.AutoMigrate(&model.PlayerRaceHistory{}, &model.OwnedBattleArenas{})
+		err := db.AutoMigrate(&model.PlayerRaceHistory{}, &model.OwnedBattleArenas{}, &model.Admin{})
 		if err != nil {
 			panic(err)
 		}
@@ -66,7 +66,7 @@ func AutoMigrateDatabase(db *gorm.DB) {
 		dbVersion.Version = 5
 	}
 	if dbVersion.Version < 6 {
-		err := db.AutoMigrate(&model.ResetSession{}, &model.Admin{})
+		err := db.AutoMigrate(&model.ResetSession{})
 		if err != nil {
 			panic(err)
 		}

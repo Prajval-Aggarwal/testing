@@ -187,64 +187,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/admin/login": {
-            "post": {
-                "description": "Login for admin users",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Admin"
-                ],
-                "summary": "Admin Login",
-                "parameters": [
-                    {
-                        "description": "Admin login request payload",
-                        "name": "adminLoginReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.AdminLoginReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Login success. Access token generated.",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request. Invalid payload",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized. Invalid credentials",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "404": {
-                        "description": "Admin not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "/car/buy": {
             "post": {
                 "security": [
@@ -1971,19 +1913,8 @@ const docTemplate = `{
                     "description": "level reuired to unlock the garage",
                     "type": "integer"
                 },
-                "longitute": {
+                "longitude": {
                     "type": "number"
-                }
-            }
-        },
-        "request.AdminLoginReq": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
                 }
             }
         },
@@ -2116,6 +2047,9 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             }
         },
@@ -2147,7 +2081,7 @@ const docTemplate = `{
                     "description": "level reuired to unlock the garage",
                     "type": "integer"
                 },
-                "longitute": {
+                "longitude": {
                     "type": "number"
                 }
             }

@@ -42,36 +42,6 @@ func AdminSignUpHandler(ctx *gin.Context) {
 	auth.AdminSignUpService(ctx)
 }
 
-// AdminLoginHandler handles the login for admin users.
-// @Summary Admin Login
-// @Description Login for admin users
-// @Tags Admin
-// @Accept json
-// @Produce json
-// @Param adminLoginReq body request.AdminLoginReq true "Admin login request payload"
-// @Success 200 {object} string "Login success. Access token generated."
-// @Failure 400 {object} string "Bad request. Invalid payload"
-// @Failure 401 {object} string "Unauthorized. Invalid credentials"
-// @Failure 404 {object} string "Admin not found"
-// @Failure 500 {object} string "Internal server error"
-// @Router /admin/login [post]
-func AdminLoginHandler(ctx *gin.Context) {
-	var adminLoginReq request.AdminLoginReq
-	err := utils.RequestDecoding(ctx, &adminLoginReq)
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	err = adminLoginReq.Validate()
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	auth.AdminLoginService(ctx, adminLoginReq)
-}
-
 // @Description	Forgot password
 // @Accept			json
 // @Produce		json
@@ -138,19 +108,27 @@ func ResetPasswordHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /login [post]
 func LoginHandler(ctx *gin.Context) {
-	var loginDetails request.LoginRequest
-	err := utils.RequestDecoding(ctx, &loginDetails)
+	var loginReq request.LoginRequest
+	err := utils.RequestDecoding(ctx, &loginReq)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
-		return
-	}
-	err = loginDetails.Validate()
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	auth.LoginService(ctx, loginDetails)
+	err = loginReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if loginReq.Password != "" {
+		fmt.Println("admin login")
+		auth.AdminLoginService(ctx, loginReq)
+	} else {
+		fmt.Println("player login ")
+		auth.LoginService(ctx, loginReq)
+	}
+
 }
 
 // UpdateEmailService updates the email of a player.

@@ -26,11 +26,10 @@ func ConfigureRoutes(server *Server) {
 
 	//Admin Login Route
 
-	server.engine.POST("/admin/login", admin.AdminLoginHandler)
 	server.engine.POST("/admin/signup", admin.AdminSignUpHandler)
 	server.engine.POST("/forgot-password", admin.ForgotPasswordHandler)
 	server.engine.PATCH("/reset-password", admin.ResetPasswordHandler)
-	
+
 	//Auth routes
 	server.engine.POST("/guest-login", admin.GuestLoginHandler)
 	server.engine.POST("/login", admin.LoginHandler)
