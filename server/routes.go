@@ -58,6 +58,12 @@ func ConfigureRoutes(server *Server) {
 	server.engine.DELETE("/admin/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
 	server.engine.PUT("/admin/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
 
+	//Admin Battle Arena Routes
+	server.engine.POST("/admin/arena/add", gateway.AdminAuthorization, admin.AddArenaHandler)
+	server.engine.DELETE("/admin/arena/delete", gateway.AdminAuthorization, admin.DeleteArenaHandler)
+	server.engine.PUT("/admin/arena/update", gateway.AdminAuthorization, admin.UpdateArenaHandler)
+	server.engine.GET("/arena/get-all", admin.GetArenaListHandler)
+
 	//Car upgrade routes
 	server.engine.PUT("/car/upgrade/engine", gateway.UserAuthorization, player.UpgradeEngineHandler)
 	server.engine.PUT("/car/upgrade/turbo", gateway.UserAuthorization, player.UpgradeTurboHandler)

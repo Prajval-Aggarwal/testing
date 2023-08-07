@@ -89,4 +89,9 @@ const (
 	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
 	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
 	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
+
+	ARENA_ADD_SUCCESS     string = "Arena Added successfully"
+	ARENA_DELETE_SUCCESS  string = "Arena Deleted successfully"
+	ARENA_UPDATE_SUCCESS  string = "Arena Updated successfully"
+	ARENA_ALREADY_PRESENT string = "Arena already present at that location"
 )
