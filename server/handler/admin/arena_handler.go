@@ -19,7 +19,7 @@ import (
 // @Success 200 {object} response.Success "Arena added successful"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /admin/arena/add [post]
+// @Router /admin/arena [post]
 func AddArenaHandler(ctx *gin.Context) {
 
 	var addArenaReq request.AddArenaRequest
@@ -50,7 +50,7 @@ func AddArenaHandler(ctx *gin.Context) {
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {string} string "Arena not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /admin/arena/delete [delete]
+// @Router /admin/arena [delete]
 func DeleteArenaHandler(ctx *gin.Context) {
 	var deleteReq request.DeletArenaReq
 	err := utils.RequestDecoding(ctx, &deleteReq)
@@ -80,7 +80,7 @@ func DeleteArenaHandler(ctx *gin.Context) {
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {string} string "Arena not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /admin/arena/update [put]
+// @Router /admin/arena [put]
 func UpdateArenaHandler(ctx *gin.Context) {
 	var updateReq request.UpdateArenaReq
 	err := utils.RequestDecoding(ctx, &updateReq)
@@ -109,7 +109,7 @@ func UpdateArenaHandler(ctx *gin.Context) {
 // @Param limit query integer false "Maximum number of records to fetch (default is 10)"
 // @Success 200 {object} response.Success "Garage list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /arena/get-all [get]
+// @Router /arena/get [get]
 func GetArenaListHandler(ctx *gin.Context) {
 	arena.GetAllArenaService(ctx)
 }

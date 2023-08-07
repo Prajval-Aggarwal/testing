@@ -16,7 +16,64 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/arena/add": {
+        "/admin/arena": {
+            "put": {
+                "description": "Update a Arena by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Update a Arena",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Update request payload",
+                        "name": "updateReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateArenaReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Arena updated successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Arena not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Add a new arena to the system",
                 "consumes": [
@@ -67,9 +124,7 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/admin/arena/delete": {
+            },
             "delete": {
                 "description": "Delete a Arena by its ID",
                 "consumes": [
@@ -103,65 +158,6 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Arena deleted successful",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    },
-                    "404": {
-                        "description": "Arena not found",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal server error",
-                        "schema": {
-                            "$ref": "#/definitions/response.Success"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/arena/update": {
-            "put": {
-                "description": "Update a Arena by its ID",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Arena"
-                ],
-                "summary": "Update a Arena",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Admin Access token",
-                        "name": "Authorization",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Update request payload",
-                        "name": "updateReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.UpdateArenaReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Arena updated successful",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -358,7 +354,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/arena/get-all": {
+        "/arena/get": {
             "get": {
                 "description": "Retrieve the list of all Arenas",
                 "consumes": [
