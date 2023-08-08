@@ -95,3 +95,11 @@ const (
 	ARENA_UPDATE_SUCCESS  string = "Arena Updated successfully"
 	ARENA_ALREADY_PRESENT string = "Arena already present at that location"
 )
+
+type ARENA_LEVEL int64
+
+const (
+	EASY   ARENA_LEVEL = iota + 1 // EnumIndex = 1
+	MEDIUM                        // EnumIndex = 2
+	HARD                          // EnumIndex = 3
+)

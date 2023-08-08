@@ -3,7 +3,7 @@ definitions:
   request.AddArenaRequest:
     properties:
       arenaLevel:
-        type: string
+        type: integer
       arenaName:
         type: string
       latitude:
@@ -129,7 +129,7 @@ definitions:
       arenaId:
         type: string
       arenaLevel:
-        type: string
+        type: integer
       arenaName:
         type: string
       latitude:

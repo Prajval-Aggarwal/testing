@@ -2099,7 +2099,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "arenaLevel": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "arenaName": {
                     "type": "string"
@@ -2295,7 +2295,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "arenaLevel": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "arenaName": {
                     "type": "string"

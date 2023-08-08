@@ -2091,7 +2091,7 @@
             "type": "object",
             "properties": {
                 "arenaLevel": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "arenaName": {
                     "type": "string"
@@ -2287,7 +2287,7 @@
                     "type": "string"
                 },
                 "arenaLevel": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "arenaName": {
                     "type": "string"

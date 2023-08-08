@@ -86,7 +86,7 @@ func UpdateArenaService(ctx *gin.Context, updateReq request.UpdateArenaReq) {
 	if updateReq.Longitude != 0 {
 		ArenaDetails.Longitude = updateReq.Longitude
 	}
-	if updateReq.ArenaLevel != "" {
+	if updateReq.ArenaLevel != 0 {
 		ArenaDetails.ArenaLevel = updateReq.ArenaLevel
 	}
 
