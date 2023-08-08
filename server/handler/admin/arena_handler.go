@@ -48,7 +48,7 @@ func AddArenaHandler(ctx *gin.Context) {
 // @Param ArenaReq body request.DeletArenaReq true "Arena request payload"
 // @Success 200 {object} response.Success "Arena deleted successful"
 // @Failure 400 {object} response.Success "Bad request"
-// @Failure 404 {string} string "Arena not found"
+// @Failure 404 {string} response.Success "Arena not found"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/arena [delete]
 func DeleteArenaHandler(ctx *gin.Context) {
@@ -78,7 +78,7 @@ func DeleteArenaHandler(ctx *gin.Context) {
 // @Param updateReq body request.UpdateArenaReq true "Update request payload"
 // @Success 200 {object} response.Success "Arena updated successful"
 // @Failure 400 {object} response.Success "Bad request"
-// @Failure 404 {string} string "Arena not found"
+// @Failure 404 {string} response.Success "Arena not found"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/arena [put]
 func UpdateArenaHandler(ctx *gin.Context) {
@@ -107,9 +107,28 @@ func UpdateArenaHandler(ctx *gin.Context) {
 // @Produce json
 // @Param skip query integer false "Number of records to skip (default is 0)"
 // @Param limit query integer false "Maximum number of records to fetch (default is 10)"
-// @Success 200 {object} response.Success "Garage list fetched successfully"
+// @Success 200 {object} response.Success "Arena list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /arena/get [get]
 func GetArenaListHandler(ctx *gin.Context) {
 	arena.GetAllArenaService(ctx)
+}
+
+// just for backend not for front end so no swagger
+func AddArenaTypesHandler(ctx *gin.Context) {
+	arena.AddGargeTypes(ctx)
+}
+
+// GetArenaTypeHandler retrieves the list of all garages.
+//
+// @Summary Get All Arena type List
+// @Description Retrieve the list of all arena types
+// @Tags Arena
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.Success "Arena type list fetched successfully"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /arena/types [get]
+func GetArenaTypeHandler(ctx *gin.Context) {
+	arena.GetArenaTypes(ctx)
 }

@@ -10,3 +10,8 @@ type Arena struct {
 	Latitude   float64   `json:"latitude"`
 	CreatedAt  time.Time `json:"createdAt,omitempty"`
 }
+
+type ArenaLevels struct {
+	TypeName string `json:"label,omitempty" gorm:"unique"`
+	TypeId   int    `json:"value"`
+}

@@ -383,7 +383,36 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Garage list fetched successfully",
+                        "description": "Arena list fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/arena/types": {
+            "get": {
+                "description": "Retrieve the list of all arena types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Get All Arena type List",
+                "responses": {
+                    "200": {
+                        "description": "Arena type list fetched successfully",
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
@@ -1578,6 +1607,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/garage/types": {
+            "get": {
+                "description": "Retrieve the list of all garages",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Garage"
+                ],
+                "summary": "Get All Garage type List",
+                "responses": {
+                    "200": {
+                        "description": "Garage type list fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/garage/upgrade": {
             "put": {
                 "description": "Upgrade a player's garage to the next level",
@@ -2133,6 +2191,9 @@ const docTemplate = `{
                 "garageName": {
                     "type": "string"
                 },
+                "garageType": {
+                    "type": "string"
+                },
                 "latitude": {
                     "type": "number"
                 },
@@ -2327,6 +2388,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "garageName": {
+                    "type": "string"
+                },
+                "garageType": {
                     "type": "string"
                 },
                 "latitude": {

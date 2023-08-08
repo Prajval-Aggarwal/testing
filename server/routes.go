@@ -24,9 +24,13 @@ func ConfigureRoutes(server *Server) {
 		})
 	})
 
+	//extra routes
+	server.engine.POST("/admin/signup", admin.AdminSignUpHandler)
+	server.engine.POST("/add-garage-type", admin.AddGarageTypesHandler)
+	server.engine.POST("/add-arena-type", admin.AddArenaTypesHandler)
+
 	//Admin Login Route
 
-	server.engine.POST("/admin/signup", admin.AdminSignUpHandler)
 	server.engine.POST("/forgot-password", admin.ForgotPasswordHandler)
 	server.engine.PATCH("/reset-password", admin.ResetPasswordHandler)
 
@@ -57,12 +61,14 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/admin/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
 	server.engine.DELETE("/admin/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
 	server.engine.PUT("/admin/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
+	server.engine.GET("/garage/types", admin.GetGarageTypesHandler)
 
 	//Admin Battle Arena Routes
 	server.engine.POST("/admin/arena", gateway.AdminAuthorization, admin.AddArenaHandler)
 	server.engine.DELETE("/admin/arena", gateway.AdminAuthorization, admin.DeleteArenaHandler)
 	server.engine.PUT("/admin/arena", gateway.AdminAuthorization, admin.UpdateArenaHandler)
 	server.engine.GET("/arena/get", admin.GetArenaListHandler)
+	server.engine.GET("/arena/types", admin.GetArenaTypeHandler)
 
 	//Car upgrade routes
 	server.engine.PUT("/car/upgrade/engine", gateway.UserAuthorization, player.UpgradeEngineHandler)

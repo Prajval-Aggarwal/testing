@@ -14,17 +14,23 @@ import (
 
 func AddArenaService(ctx *gin.Context, addArenaReq request.AddArenaRequest) {
 	//	var newArena model.Arena
-	newArena := model.Arena{
-		ArenaName:  addArenaReq.ArenaName,
-		Latitude:   addArenaReq.Latitude,
-		Longitude:  addArenaReq.Longitude,
-		ArenaLevel: addArenaReq.ArenaLevel,
-	}
 
 	var exists bool
+
+	query := "SELECT EXISTS (SELECT * FROM arena_levels WHERE type_id=?)"
+	err := db.QueryExecutor(query, &exists, addArenaReq.ArenaLevel)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	if !exists {
+		response.ShowResponse(utils.NOT_FOUND, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
 	//check that no two same Arenas are on same locations
-	query := "SELECT EXISTS (SELECT * FROM arenas WHERE latitude=? AND longitude=?)"
-	err := db.QueryExecutor(query, &exists, addArenaReq.Latitude, addArenaReq.Longitude)
+	query = "SELECT EXISTS (SELECT * FROM arenas WHERE latitude=? AND longitude=?)"
+	err = db.QueryExecutor(query, &exists, addArenaReq.Latitude, addArenaReq.Longitude)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
@@ -32,6 +38,13 @@ func AddArenaService(ctx *gin.Context, addArenaReq request.AddArenaRequest) {
 	if exists {
 		response.ShowResponse(utils.ARENA_ALREADY_PRESENT, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
+	}
+
+	newArena := model.Arena{
+		ArenaName:  addArenaReq.ArenaName,
+		Latitude:   addArenaReq.Latitude,
+		Longitude:  addArenaReq.Longitude,
+		ArenaLevel: addArenaReq.ArenaLevel,
 	}
 
 	err = db.CreateRecord(&newArena)
@@ -139,4 +152,51 @@ func GetAllArenaService(ctx *gin.Context) {
 	dataresp.Data = ArenaList
 
 	response.ShowResponse(utils.DATA_FETCH_SUCCESS, utils.HTTP_OK, utils.SUCCESS, dataresp, ctx)
+}
+
+func GetArenaTypes(ctx *gin.Context) {
+	var arenaTypeList = []model.ArenaLevels{}
+	var dataresp response.DataResponse
+	// Get the query parameters for skip and limit from the request
+
+	// Build the SQL query with skip and limit
+	query := "SELECT * FROM arena_levels ORDER BY type_id "
+
+	err := db.QueryExecutor(query, &arenaTypeList)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	var totalCount int
+	countQuery := "SELECT COUNT(*) FROM arena_levels"
+	err = db.QueryExecutor(countQuery, &totalCount)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	dataresp.TotalCount = totalCount
+	dataresp.Data = arenaTypeList
+
+	response.ShowResponse(utils.DATA_FETCH_SUCCESS, utils.HTTP_OK, utils.SUCCESS, dataresp, ctx)
+}
+
+func AddGargeTypes(ctx *gin.Context) {
+	slice := []string{
+		"Easy",
+		"Medium",
+		"Hard",
+	}
+
+	for i, val := range slice {
+		newType := model.ArenaLevels{
+			TypeId:   i,
+			TypeName: val,
+		}
+		err := db.CreateRecord(&newType)
+		if err != nil {
+			break
+		}
+	}
+
 }

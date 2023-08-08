@@ -25,6 +25,8 @@ definitions:
         type: integer
       garageName:
         type: string
+      garageType:
+        type: string
       latitude:
         type: number
       level:
@@ -150,6 +152,8 @@ definitions:
       garageId:
         type: string
       garageName:
+        type: string
+      garageType:
         type: string
       latitude:
         type: number
@@ -433,7 +437,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: Garage list fetched successfully
+          description: Arena list fetched successfully
           schema:
             $ref: '#/definitions/response.Success'
         "500":
@@ -441,6 +445,25 @@ paths:
           schema:
             $ref: '#/definitions/response.Success'
       summary: Get All Arena List
+      tags:
+      - Arena
+  /arena/types:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the list of all arena types
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Arena type list fetched successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get All Arena type List
       tags:
       - Arena
   /car/buy:
@@ -1217,6 +1240,25 @@ paths:
           schema:
             $ref: '#/definitions/response.Success'
       summary: Get Player Garage List
+      tags:
+      - Garage
+  /garage/types:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the list of all garages
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Garage type list fetched successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get All Garage type List
       tags:
       - Garage
   /garage/upgrade:

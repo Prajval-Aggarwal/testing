@@ -47,7 +47,7 @@ func AddGarageHandler(ctx *gin.Context) {
 // @Param garageReq body request.DeletGarageReq true "Garage request payload"
 // @Success 200 {object} response.Success "Garage deleted successful"
 // @Failure 400 {object} response.Success "Bad request"
-// @Failure 404 {string} string "Garage not found"
+// @Failure 404 {string} response.Success "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/garage/delete [delete]
 func DeleteGarageHandler(ctx *gin.Context) {
@@ -77,7 +77,7 @@ func DeleteGarageHandler(ctx *gin.Context) {
 // @Param updateReq body request.UpdateGarageReq true "Update request payload"
 // @Success 200 {object} response.Success "Garage updated successful"
 // @Failure 400 {object} response.Success "Bad request"
-// @Failure 404 {string} string "Garage not found"
+// @Failure 404 {string} response.Success "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/garage/update [put]
 func UpdateGarageHandler(ctx *gin.Context) {
@@ -111,4 +111,23 @@ func UpdateGarageHandler(ctx *gin.Context) {
 // @Router /garages/get-all [get]
 func GetAllGarageListHandler(ctx *gin.Context) {
 	garage.GetAllGarageListService(ctx)
+}
+
+// just for backend not for front end so no swagger
+func AddGarageTypesHandler(ctx *gin.Context) {
+	garage.AddGargeTypes(ctx)
+}
+
+// GetGarageTypesHandler retrieves the list of all garages.
+//
+// @Summary Get All Garage type List
+// @Description Retrieve the list of all garages
+// @Tags Garage
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.Success "Garage type list fetched successfully"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /garage/types [get]
+func GetGarageTypesHandler(ctx *gin.Context) {
+	garage.GetGarageTypes(ctx)
 }

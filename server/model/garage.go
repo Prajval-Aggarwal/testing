@@ -3,8 +3,9 @@ package model
 import "time"
 
 type Garage struct {
-	GarageId      string    `json:"garageId"  gorm:"default:uuid_generate_v4();primaryKey,omitempty"`
+	GarageId      string    `json:"garageId"  gorm:"default:uuid_generate_v4();primaryKey"`
 	GarageName    string    `json:"garageName,omitempty"`
+	GarageType    string    `json:"garageType,omitempty"`
 	Latitude      float64   `json:"latitude,omitempty"`
 	Longitude     float64   `json:"longitude,omitempty"`
 	Level         int64     `json:"level,omitempty"`         //level reuired to unlock the garage
@@ -23,4 +24,9 @@ type GarageCarList struct {
 	PlayerId string `json:"playerId,omitempty"`
 	GarageId string `json:"garageId,omitempty"`
 	CarId    string `json:"carId,omitempty"`
+}
+
+type GarageTypes struct {
+	TypeName string `json:"label,omitempty" gorm:"unique"`
+	TypeId   int    `json:"value"`
 }
