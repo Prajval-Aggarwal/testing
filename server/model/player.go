@@ -2,7 +2,7 @@ package model
 
 type Player struct {
 	PlayerId   string `json:"playerId,omitempty"`
-	PlayerName string `json:"playerName" gorm:"unique,omitempty"`
+	PlayerName string `json:"playerName" gorm:"unique"`
 	Level      int    `json:"level,omitempty"`
 	Role       string `json:"role,omitempty"`
 	Email      string `json:"email,omitempty"`
