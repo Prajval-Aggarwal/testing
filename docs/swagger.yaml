@@ -26,7 +26,7 @@ definitions:
       garageName:
         type: string
       garageType:
-        type: string
+        type: integer
       latitude:
         type: number
       level:
@@ -154,7 +154,7 @@ definitions:
       garageName:
         type: string
       garageType:
-        type: string
+        type: integer
       latitude:
         type: number
       level:
@@ -195,6 +195,25 @@ info:
   title: Drag Racing
   version: "2.0"
 paths:
+  /admin:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the list of all admins
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Admin Details fetched successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get Admins list
+      tags:
+      - Authentication
   /admin/arena:
     delete:
       consumes:
@@ -1533,11 +1552,16 @@ paths:
       tags:
       - Player
   /reset-password:
-    post:
+    patch:
       consumes:
       - application/json
       description: Reset password
       parameters:
+      - description: Reset token
+        in: query
+        name: token
+        required: true
+        type: string
       - description: Admins new password
         in: body
         name: NewPassword
@@ -1600,4 +1624,38 @@ paths:
       summary: Update Email
       tags:
       - Player
+  /update-pass:
+    patch:
+      consumes:
+      - application/json
+      description: Updates the password of the player
+      parameters:
+      - description: Admin Access Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: New password of the player
+        in: body
+        name: newPassword
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdatePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Success'
+      tags:
+      - Authentication
 swagger: "2.0"

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"main/server/request"
 	"main/server/response"
 	"main/server/services/garage"
@@ -21,6 +22,17 @@ import (
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/garage/add [post]
 func AddGarageHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var addGarageReq request.AddGarageRequest
 	err := utils.RequestDecoding(ctx, &addGarageReq)
 	if err != nil {
@@ -51,6 +63,17 @@ func AddGarageHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/garage/delete [delete]
 func DeleteGarageHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var deleteReq request.DeletGarageReq
 	err := utils.RequestDecoding(ctx, &deleteReq)
 	if err != nil {
@@ -81,6 +104,17 @@ func DeleteGarageHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/garage/update [put]
 func UpdateGarageHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var updateReq request.UpdateGarageReq
 	err := utils.RequestDecoding(ctx, &updateReq)
 	if err != nil {

@@ -50,6 +50,8 @@ const (
 )
 
 const (
+	PLAYER_ID                        string = "playerId"
+	FORBIDDEN_REQUEST                string = "Forbidden Request"
 	LOGIN_SUCCESS                    string = "Login Successfull"
 	LOGIN_FAILED                     string = "Login Failed"
 	EMAIL_EXISTS                     string = "Email is already attached to another player"
@@ -90,10 +92,12 @@ const (
 	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
 	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
 
-	ARENA_ADD_SUCCESS     string = "Arena Added successfully"
-	ARENA_DELETE_SUCCESS  string = "Arena Deleted successfully"
-	ARENA_UPDATE_SUCCESS  string = "Arena Updated successfully"
-	ARENA_ALREADY_PRESENT string = "Arena already present at that location"
+	ARENA_ADD_SUCCESS       string = "Arena Added successfully"
+	ARENA_DELETE_SUCCESS    string = "Arena Deleted successfully"
+	ARENA_UPDATE_SUCCESS    string = "Arena Updated successfully"
+	ARENA_ALREADY_PRESENT   string = "Arena already present at that location"
+	LINK_GENERATED_SUCCESS  string = "Link generated successfully"
+	PASSWORD_UPDATE_SUCCESS string = "Password updated successfully"
 )
 
 type ARENA_LEVEL int64

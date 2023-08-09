@@ -16,7 +16,7 @@ func AddGarageService(ctx *gin.Context, addGarageReq request.AddGarageRequest) {
 
 	var exists bool
 
-	query := "SELECT EXISTS (SELECT * FROM garage_types WHERE type_name=?)"
+	query := "SELECT EXISTS (SELECT * FROM garage_types WHERE type_id=?)"
 	err := db.QueryExecutor(query, &exists, addGarageReq.GarageType)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
@@ -109,7 +109,7 @@ func UpdateGarageService(ctx *gin.Context, updateReq request.UpdateGarageReq) {
 		garageDetails.CoinsRequired = updateReq.CoinsRequired
 	}
 
-	if updateReq.GarageType != "" {
+	if updateReq.GarageType != 0 {
 		garageDetails.GarageType = updateReq.GarageType
 	}
 

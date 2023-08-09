@@ -16,6 +16,35 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin": {
+            "get": {
+                "description": "Retrieve the list of all admins",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get Admins list",
+                "responses": {
+                    "200": {
+                        "description": "Admin Details fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/arena": {
             "put": {
                 "description": "Update a Arena by its ID",
@@ -2048,7 +2077,7 @@ const docTemplate = `{
             }
         },
         "/reset-password": {
-            "post": {
+            "patch": {
                 "description": "Reset password",
                 "consumes": [
                     "application/json"
@@ -2060,6 +2089,13 @@ const docTemplate = `{
                     "Authentication"
                 ],
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Reset token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
                     {
                         "description": "Admins new password",
                         "name": "NewPassword",
@@ -2150,6 +2186,58 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/update-pass": {
+            "patch": {
+                "description": "Updates the password of the player",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "New password of the player",
+                        "name": "newPassword",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdatePasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -2192,7 +2280,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "garageType": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "latitude": {
                     "type": "number"
@@ -2391,7 +2479,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "garageType": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "latitude": {
                     "type": "number"

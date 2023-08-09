@@ -38,6 +38,8 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/guest-login", admin.GuestLoginHandler)
 	server.engine.POST("/login", admin.LoginHandler)
 	server.engine.PUT("/update-email", gateway.UserAuthorization, admin.UpdateEmailHandler)
+	server.engine.PATCH("/update-pass", gateway.AdminAuthorization, admin.UpdatePasswordHandler)
+	server.engine.GET("/admin", admin.GetAdminHandler)
 
 	//player details
 	server.engine.GET("/player-details", gateway.UserAuthorization, handler.GetPlayerDetailsHandler)

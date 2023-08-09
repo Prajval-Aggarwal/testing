@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"main/server/request"
 	"main/server/response"
 	"main/server/services/arena"
@@ -21,7 +22,17 @@ import (
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/arena [post]
 func AddArenaHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
 
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var addArenaReq request.AddArenaRequest
 	err := utils.RequestDecoding(ctx, &addArenaReq)
 	if err != nil {
@@ -52,6 +63,17 @@ func AddArenaHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/arena [delete]
 func DeleteArenaHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var deleteReq request.DeletArenaReq
 	err := utils.RequestDecoding(ctx, &deleteReq)
 	if err != nil {
@@ -82,6 +104,17 @@ func DeleteArenaHandler(ctx *gin.Context) {
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /admin/arena [put]
 func UpdateArenaHandler(ctx *gin.Context) {
+	role, exists := ctx.Get("role")
+	fmt.Println("player id is", role)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	if role != "admin" {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		return
+	}
 	var updateReq request.UpdateArenaReq
 	err := utils.RequestDecoding(ctx, &updateReq)
 	if err != nil {

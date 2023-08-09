@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"main/server/db"
 	"main/server/response"
 	"main/server/services/token"
 	"main/server/utils"
@@ -46,6 +47,20 @@ func AdminAuthorization(ctx *gin.Context) {
 
 	fmt.Println("inside middleware")
 	tokenString := ctx.Request.Header.Get("Authorization")
+	var exists bool
+	//first check if the session is valid or not
+	query := "SELECT EXISTS(SELECT 1 FROM sessions WHERE token=?)"
+	err := db.QueryExecutor(query, &exists, tokenString)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		ctx.Abort()
+		return
+	}
+	if !exists {
+		response.ShowResponse("Invalid session", utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
+		ctx.Abort()
+		return
+	}
 
 	claims, err := token.DecodeToken(tokenString)
 	if err != nil {
@@ -59,13 +74,16 @@ func AdminAuthorization(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	if claims.Role == "admin" {
+	if claims.Role == "admin" || claims.Role == "player" {
+		ctx.Set("role", claims.Role)
+		ctx.Set(utils.PLAYER_ID, claims.Id)
 		ctx.Next()
 	} else {
 		response.ShowResponse(utils.ACCESS_DENIED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		ctx.Abort()
 		return
 	}
+
 	//set the token details into context for further processing in handler function
 	ctx.Next()
 

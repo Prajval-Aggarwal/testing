@@ -75,5 +75,15 @@ func AutoMigrateDatabase(db *gorm.DB) {
 		})
 		dbVersion.Version = 6
 	}
+	if dbVersion.Version < 7 {
+		err := db.AutoMigrate(&model.Session{})
+		if err != nil {
+			panic(err)
+		}
+		db.Where("version=?", dbVersion.Version).Updates(&model.DbVersion{
+			Version: 7,
+		})
+		dbVersion.Version = 7
+	}
 
 }

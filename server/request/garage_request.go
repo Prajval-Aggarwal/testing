@@ -14,7 +14,7 @@ type AddCarRequest struct {
 
 type AddGarageRequest struct {
 	GarageName    string  `json:"garageName,omitempty"`
-	GarageType    string  `json:"garageType,omitempty"`
+	GarageType    int64   `json:"garageType,omitempty"`
 	Latitude      float64 `json:"latitude,omitempty"`
 	Longitude     float64 `json:"longitude,omitempty"`
 	Level         int64   `json:"level,omitempty"`         //level reuired to unlock the garage
@@ -28,7 +28,7 @@ type DeletGarageReq struct {
 type UpdateGarageReq struct {
 	GarageId      string  `json:"garageId"`
 	GarageName    string  `json:"garageName,omitempty"`
-	GarageType    string  `json:"garageType"`
+	GarageType    int64   `json:"garageType"`
 	Latitude      float64 `json:"latitude,omitempty"`
 	Longitude     float64 `json:"longitude,omitempty"`
 	Level         int64   `json:"level,omitempty"`         //level reuired to unlock the garage
