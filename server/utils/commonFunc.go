@@ -1,13 +1,18 @@
 package utils
 
 import (
+	"bytes"
 	"errors"
+	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/response"
 	"math"
+	"os"
+	"text/template"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-mail/mail"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -258,6 +263,39 @@ func IsEmpty(field string) error {
 
 	if field == "" {
 		return errors.New(field + " cannot be empty")
+	}
+	return nil
+}
+
+func SendEmaillService(adminDetails model.Admin, link string) error {
+	m := mail.NewMessage()
+	m.SetHeader("From", "hoodRacing@gmail.com")
+	m.SetHeader("Subject", "Reset Password!")
+
+	var body bytes.Buffer
+	tmp, err := template.ParseFiles("server/emailTemplate/forgot-password.html")
+	if err != nil {
+		fmt.Println("sajdsajdvsja", err.Error())
+	}
+
+	data := struct {
+		Username string
+		Link     string
+	}{
+		Username: adminDetails.Username,
+		Link:     link,
+	}
+
+	tmp.Execute(&body, data)
+
+	m.SetBody("text/html", body.String())
+	if err != nil {
+		fmt.Println("basdbbkjsad", err)
+	}
+	m.SetHeader("To", adminDetails.Email)
+	d := mail.NewDialer(os.Getenv("SMTP_HOST"), 587, os.Getenv("SMTP_USERNAME"), os.Getenv("SMTP_PASSWORD"))
+	if err := d.DialAndSend(m); err != nil {
+		return err
 	}
 	return nil
 }

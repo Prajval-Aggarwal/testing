@@ -4,6 +4,7 @@ package model
 
 type Admin struct {
 	Id       string `json:"id" gorm:"default:uuid_generate_v4();primaryKey"`
+	Username string `json:"username"`
 	Email    string `json:"email" gorm:"unique"`
-	Password string `json:"password"`
+	Password string `json:"-"`
 }

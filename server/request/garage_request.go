@@ -14,9 +14,10 @@ type AddCarRequest struct {
 
 type AddGarageRequest struct {
 	GarageName    string  `json:"garageName,omitempty"`
+	GarageType    int64   `json:"garageType,omitempty"`
 	Latitude      float64 `json:"latitude,omitempty"`
-	Longitute     float64 `json:"longitute,omitempty"`
-	Level         uint64  `json:"level,omitempty"`         //level reuired to unlock the garage
+	Longitude     float64 `json:"longitude,omitempty"`
+	Level         uint64  `json:"level,omitempty"`         //level required to unlock the garage
 	CoinsRequired uint64  `json:"coinsRequired,omitempty"` //coins required to unlock the garage
 }
 
@@ -27,15 +28,21 @@ type DeletGarageReq struct {
 type UpdateGarageReq struct {
 	GarageId      string  `json:"garageId"`
 	GarageName    string  `json:"garageName,omitempty"`
+	GarageType    int64   `json:"garageType"`
 	Latitude      float64 `json:"latitude,omitempty"`
-	Longitute     float64 `json:"longitute,omitempty"`
-	Level         uint64  `json:"level,omitempty"`         //level reuired to unlock the garage
+	Longitude     float64 `json:"longitude,omitempty"`
+	Level         uint64  `json:"level,omitempty"`         //level required to unlock the garage
 	CoinsRequired uint64  `json:"coinsRequired,omitempty"` //coins required to unlock the garage
 }
 
 func (a UpdateGarageReq) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.GarageId, validation.Required),
+		// Validate Latitude: must be between -90 and 90 degrees
+		validation.Field(&a.Latitude, validation.Min(-90.0), validation.Max(90.0)),
+		// Validate Longitude: must be between -180 and 180 degrees
+		validation.Field(&a.Longitude, validation.Min(-180.0), validation.Max(180.0)),
+		validation.Field(&a.Level, validation.Min(1), validation.Max(50)),
 	)
 }
 func (a DeletGarageReq) Validate() error {
@@ -46,9 +53,12 @@ func (a DeletGarageReq) Validate() error {
 func (a AddGarageRequest) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.GarageName, validation.Required),
-		validation.Field(&a.Latitude, validation.Required),
-		validation.Field(&a.Longitute, validation.Required),
-		validation.Field(&a.Level, validation.Required),
+		validation.Field(&a.GarageType, validation.Required),
+		// Validate Latitude: must be between -90 and 90 degrees
+		validation.Field(&a.Latitude, validation.Required, validation.Min(-90.0), validation.Max(90.0)),
+		// Validate Longitude: must be between -180 and 180 degrees
+		validation.Field(&a.Longitude, validation.Required, validation.Min(-180.0), validation.Max(180.0)),
+		validation.Field(&a.Level, validation.Required, validation.Min(1), validation.Max(50)),
 		validation.Field(&a.CoinsRequired, validation.Required),
 	)
 }

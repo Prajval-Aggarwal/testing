@@ -374,11 +374,11 @@ func AddCarToSlotService(ctx *gin.Context, addCarReq request.AddCarArenaRequest,
 	// Check the slot limit for the arena level and ensure it's not exceeded
 	var maxSlots uint64
 	switch arenaDetails.ArenaLevel {
-	case "easy":
+	case uint64(utils.EASY):
 		maxSlots = utils.EASY_ARENA_SLOT
-	case "medium":
+	case uint64(utils.MEDIUM):
 		maxSlots = utils.MEDIUM_ARENA_SLOT
-	case "hard":
+	case uint64(utils.HARD):
 		maxSlots = utils.HARD_ARENA_SLOT
 	default:
 		response.ShowResponse("Invalid arena level", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)

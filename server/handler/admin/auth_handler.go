@@ -23,15 +23,16 @@ import (
 // @Failure 500 {object} response.Success "Internal server error"
 // @Router /guest-login [post]
 func GuestLoginHandler(ctx *gin.Context) {
+
 	var guestLoginReq request.GuestLoginRequest
 	err := utils.RequestDecoding(ctx, &guestLoginReq)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 	err = guestLoginReq.Validate()
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 	auth.GuestLoginService(ctx, guestLoginReq)
@@ -42,35 +43,61 @@ func AdminSignUpHandler(ctx *gin.Context) {
 	auth.AdminSignUpService(ctx)
 }
 
-// AdminLoginHandler handles the login for admin users.
-// @Summary Admin Login
-// @Description Login for admin users
-// @Tags Admin
-// @Accept json
-// @Produce json
-// @Param adminLoginReq body request.AdminLoginReq true "Admin login request payload"
-// @Success 200 {object} string "Login success. Access token generated."
-// @Failure 400 {object} string "Bad request. Invalid payload"
-// @Failure 401 {object} string "Unauthorized. Invalid credentials"
-// @Failure 404 {object} string "Admin not found"
-// @Failure 500 {object} string "Internal server error"
-// @Router /admin/login [post]
-// func AdminLoginHandler(ctx *gin.Context) {
-// 	var adminLoginReq request.AdminLoginReq
-// 	err := utils.RequestDecoding(ctx, &adminLoginReq)
-// 	if err != nil {
-// 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-// 		return
-// 	}
+// @Description	Forgot password
+// @Accept			json
+// @Produce		json
+// @Success		200			{object}	response.Success
+// @Failure		400			{object}	response.Success
+// @Param			adminEmail	body		request.ForgotPassRequest	true	"Admin registered email"
+// @Tags			Authentication
+// @Router			/forgot-password [post]
+func ForgotPasswordHandler(ctx *gin.Context) {
+	var forgotRequest request.ForgotPassRequest
+	fmt.Println("origin is ", ctx.Request.Header.Get("Origin"))
+	err := utils.RequestDecoding(ctx, &forgotRequest)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
-// 	err = adminLoginReq.Validate()
-// 	if err != nil {
-// 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-// 		return
-// 	}
+	err = forgotRequest.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 
-// 	auth.AdminLoginService(ctx, adminLoginReq)
-// }
+		return
+	}
+
+	auth.ForgotPassService(ctx, forgotRequest)
+}
+
+// @Description	Reset password
+// @Accept			json
+// @Produce		json
+// @Success		200			{object}	response.Success
+// @Failure		400			{object}	response.Success
+// @Param token query string true "Reset token"
+// @Param			NewPassword	body		request.UpdatePasswordRequest	true	"Admins new password"
+// @Tags			Authentication
+// @Router			/reset-password [patch]
+func ResetPasswordHandler(ctx *gin.Context) {
+	tokenString := ctx.Request.URL.Query().Get("token")
+	fmt.Println("token string is ", tokenString)
+	var password request.ResetPasswordRequest
+
+	err := utils.RequestDecoding(ctx, &password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = password.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	auth.ResetPasswordService(ctx, tokenString, password)
+
+}
 
 // LoginService handles user login and token generation.
 //
@@ -108,59 +135,6 @@ func LoginHandler(ctx *gin.Context) {
 
 }
 
-// @Description	Forgot password
-// @Accept			json
-// @Produce		json
-// @Success		200			{object}	response.Success
-// @Failure		400			{object}	response.Success
-// @Param			adminEmail	body		request.ForgotPassRequest	true	"Admin registered email"
-// @Tags			Authentication
-// @Router			/forgot-password [post]
-func ForgotPasswordHandler(ctx *gin.Context) {
-	var forgotRequest request.ForgotPassRequest
-	err := utils.RequestDecoding(ctx, &forgotRequest)
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	err = forgotRequest.Validate()
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-
-		return
-	}
-
-	auth.ForgotPassService(ctx, forgotRequest)
-}
-
-// @Description	Reset password
-// @Accept			json
-// @Produce		json
-// @Success		200			{object}	response.Success
-// @Failure		400			{object}	response.Success
-// @Param			NewPassword	body		request.UpdatePasswordRequest	true	"Admins new password"
-// @Tags			Authentication
-// @Router			/reset-password [post]
-func ResetPasswordHandler(ctx *gin.Context) {
-	tokenString := ctx.Request.URL.Query().Get("token")
-	var password request.UpdatePasswordRequest
-
-	err := utils.RequestDecoding(ctx, &password)
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
-
-	err = password.Validate()
-	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-		return
-	}
-	auth.ResetPasswordService(ctx, tokenString, password)
-
-}
-
 // UpdateEmailService updates the email of a player.
 //
 // @Summary Update Email
@@ -186,13 +160,61 @@ func UpdateEmailHandler(ctx *gin.Context) {
 	}
 	err := utils.RequestDecoding(ctx, &email)
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 	err = email.Validate()
 	if err != nil {
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, "Failure", nil, ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 	auth.UpdateEmailService(ctx, email, playerId.(string))
+}
+
+// @Description	Updates the password of the player
+// @Accept		json
+// @Produce		json
+// @Success		200			{object}	response.Success
+// @Failure		400			{object}	response.Success
+// @Failure		401			{object}	response.Success
+// @Param Authorization header string true "Admin Access Token"
+// @Param			newPassword	body		request.UpdatePasswordRequest	true	"New password of the player"
+// @Tags			Authentication
+// @Router			/update-pass [patch]
+func UpdatePasswordHandler(ctx *gin.Context) {
+
+	//get player id from the context that is passed from middleware
+	playerID, exists := ctx.Get(utils.PLAYER_ID)
+	fmt.Println("player id is :", playerID)
+	if !exists {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+	var password request.UpdatePasswordRequest
+	err := utils.RequestDecoding(ctx, &password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = password.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	auth.UpdatePasswordService(ctx, password, playerID.(string))
+}
+
+// GetAdminHandler retrieves the admin.
+//
+// @Summary Get Admins list
+// @Description Retrieve the list of all admins
+// @Tags			Authentication
+// @Accept json
+// @Produce json
+// @Success 200 {object} response.Success "Admin Details fetched successfully"
+// @Failure 500 {object} response.Success "Internal server error"
+// @Router /admin [get]
+func GetAdminHandler(ctx *gin.Context) {
+	auth.GetAdminService(ctx)
 }

@@ -2,6 +2,7 @@ package auth
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -161,8 +162,9 @@ func UpdateEmailService(ctx *gin.Context, email request.UpdateEmailRequest, play
 }
 
 func AdminSignUpService(ctx *gin.Context) {
-	password := "admin@$2023"
-	email := "admin@gmail.com"
+	username := "Davinder"
+	password := "hood@123"
+	email := "davinder@yopmail.com"
 	var adminDetails model.Admin
 	adminDetails.Email = email
 	hashedPass, err := utils.HashPassword(password)
@@ -171,7 +173,7 @@ func AdminSignUpService(ctx *gin.Context) {
 		return
 	}
 	adminDetails.Password = *hashedPass
-
+	adminDetails.Username = username
 	err = db.CreateRecord(&adminDetails)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
@@ -227,7 +229,15 @@ func AdminLoginService(ctx *gin.Context, adminLoginReq request.LoginRequest) {
 		return
 	}
 
-	// Respond with a success message and the generated access token.
+	//create a record in session table for the admin
+	session := model.Session{
+		Token: *accessToken,
+	}
+	err = db.CreateRecord(&session)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, ctx, nil)
+		return
+	}
 	response.ShowResponse(utils.LOGIN_SUCCESS, utils.HTTP_OK, utils.SUCCESS, *accessToken, ctx)
 }
 
@@ -269,57 +279,108 @@ func ForgotPassService(ctx *gin.Context, forgotPassRequest request.ForgotPassReq
 		Token: *tokenString,
 	}
 	err = db.CreateRecord(&resetSession)
+	if errors.Is(err, gorm.ErrDuplicatedKey) {
+		query := "UPDATE reset_sessions SET token = ? WHERE id=?"
+		err = db.RawExecutor(query, *tokenString, adminDetails.Id)
+		if err != nil {
+			response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+			return
+		}
+	}
 	if err != nil {
 		// If there is an error in creating the reset session, return an error response.
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, ctx, nil)
 		return
 	}
 
-	// Create the reset password link to be sent to the admin's email address.
-	link := "http://localhost:3014/reset-password?token=" + *tokenString
+	//creating link
+	link := ctx.Request.Header.Get("Origin") + "/reset-password?token=" + *tokenString
 
-	// Sending the reset password link in the response.
-	response.ShowResponse("Reset password link generated successfully", utils.HTTP_OK, utils.SUCCESS, link, ctx)
+	//Sending mail on admin's email address
+	err = utils.SendEmaillService(adminDetails, link)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+	}
+	response.ShowResponse("Link generated succesfully", utils.HTTP_OK, utils.SUCCESS, link, ctx)
+
 }
-
-// ResetPasswordService handles reset password requests.
-func ResetPasswordService(ctx *gin.Context, tokenString string, password request.UpdatePasswordRequest) {
-	// Create a variable to hold the reset session details.
+func ResetPasswordService(ctx *gin.Context, tokenString string, password request.ResetPasswordRequest) {
 	var resetSession model.ResetSession
-
-	// Decode the token and extract the required data.
+	//Decoding the token and extracting require data
 	claims, err := token.DecodeToken(tokenString)
+	if errors.Is(err, fmt.Errorf("invalid token")) {
+
+		//delete session in resset session
+		err = db.DeleteRecord(&resetSession, claims.Id, "id")
+		if err != nil {
+			response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, err.Error(), ctx)
+			return
+		}
+	}
 	if err != nil {
-		// If there is an error in decoding the token, return an error response.
-		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, err.Error(), ctx)
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	// Find the reset session using the extracted admin ID from the token.
 	err = db.FindById(&resetSession, claims.Id, "id")
-	if err != nil {
-		// If there is an error in fetching the reset session, return an error response.
-		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, err.Error(), ctx)
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		response.ShowResponse("Invalid session", utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	} else if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	// Check if the token in the reset session matches the provided token.
 	if resetSession.Token != tokenString {
-		// If the tokens do not match, return a forbidden request response.
-		response.ShowResponse("Forbidden request", utils.HTTP_FORBIDDEN, utils.FAILURE, err.Error(), ctx)
+		response.ShowResponse(utils.FORBIDDEN_REQUEST, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	// Call the UpdatePasswordService to update the admin's password.
-	UpdatePasswordService(ctx, password, claims.Id)
+	var adminDetails model.Admin
+	//Finding the admin
+	err = db.FindById(&adminDetails, claims.Id, "id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
-	// After successfully resetting the password, delete the reset session.
+	// Password validity check
+	err = utils.IsPassValid(password.Password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	//Hashing the new password
+	hashedPass, err := utils.HashPassword(password.Password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	adminDetails.Password = *hashedPass
+
+	//Updating players new password
+	err = db.UpdateRecord(&adminDetails, claims.Id, "id").Error
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	//After sucessfully reseting the password deleteing reset session of the player
 	err = db.DeleteRecord(&resetSession, claims.Id, "id")
 	if err != nil {
-		// If there is an error in deleting the reset session, return an error response.
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, err.Error(), ctx)
 		return
 	}
+
+	//truncate the sessions table
+	query := "TRUNCATE TABLE sessions"
+	err = db.RawExecutor(query)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, err.Error(), ctx)
+		return
+	}
+
 }
 
 // UpdatePasswordService handles updating the admin's password.
@@ -341,14 +402,20 @@ func UpdatePasswordService(ctx *gin.Context, password request.UpdatePasswordRequ
 		return
 	}
 
+	//check if the user with old password is valid or not
+	err = bcrypt.CompareHashAndPassword([]byte(adminDetails.Password), []byte(password.OldPassword))
+	if err != nil {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
+		return
+	}
+
 	//Hashing the new password
-	// hashedPass, err := utils.HashPassword(password.Password)
-	// if err != nil {
-	// 	response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-	// 	return
-	// }
-	// Update the admin's password with the new one.
-	adminDetails.Password = password.Password
+	hashedPass, err := utils.HashPassword(password.Password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	adminDetails.Password = *hashedPass
 
 	// Update the admin's password in the database.
 	err = db.UpdateRecord(&adminDetails, adminID, "id").Error
@@ -357,7 +424,29 @@ func UpdatePasswordService(ctx *gin.Context, password request.UpdatePasswordRequ
 		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 		return
 	}
-
-	// Respond with a success message.
 	response.ShowResponse("Password updated successfully", utils.HTTP_OK, utils.SUCCESS, nil, ctx)
+
+}
+
+func GetAdminService(ctx *gin.Context) {
+	var admins = []model.Admin{}
+	var dataresp response.DataResponse
+	query := "SELECT * FROM admins"
+
+	err := db.QueryExecutor(query, &admins)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	var totalCount int
+	countQuery := "SELECT COUNT(*) FROM admins"
+	err = db.QueryExecutor(countQuery, &totalCount)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
+	dataresp.TotalCount = totalCount
+	dataresp.Data = admins
+
+	response.ShowResponse(utils.DATA_FETCH_SUCCESS, utils.HTTP_OK, utils.SUCCESS, dataresp, ctx)
 }

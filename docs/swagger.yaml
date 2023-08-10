@@ -1,11 +1,24 @@
 basePath: /
 definitions:
+<<<<<<< HEAD
   request.AddCarArenaRequest:
     properties:
       arenaId:
         type: string
       carId:
         type: string
+=======
+  request.AddArenaRequest:
+    properties:
+      arenaLevel:
+        type: integer
+      arenaName:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
     type: object
   request.AddCarRequest:
     properties:
@@ -21,14 +34,17 @@ definitions:
         type: integer
       garageName:
         type: string
+      garageType:
+        type: integer
       latitude:
         type: number
       level:
         description: level reuired to unlock the garage
         type: integer
-      longitute:
+      longitude:
         type: number
     type: object
+<<<<<<< HEAD
 <<<<<<< HEAD
   request.AdminLoginReq:
     properties:
@@ -39,6 +55,8 @@ definitions:
     type: object
 =======
 >>>>>>> 43ea51cb16ea49a0369579929718436edab5da04
+=======
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
   request.CarRequest:
     properties:
       carId:
@@ -60,6 +78,11 @@ definitions:
       colorName:
         type: string
       colorType:
+        type: string
+    type: object
+  request.DeletArenaReq:
+    properties:
+      arenaId:
         type: string
     type: object
   request.DeletGarageReq:
@@ -134,12 +157,27 @@ definitions:
       password:
         type: string
     type: object
+<<<<<<< HEAD
   request.ReplaceReq:
     properties:
       arenaId:
         type: string
       carId:
         type: string
+=======
+  request.UpdateArenaReq:
+    properties:
+      arenaId:
+        type: string
+      arenaLevel:
+        type: integer
+      arenaName:
+        type: string
+      latitude:
+        type: number
+      longitude:
+        type: number
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
     type: object
   request.UpdateEmailRequest:
     properties:
@@ -155,16 +193,20 @@ definitions:
         type: string
       garageName:
         type: string
+      garageType:
+        type: integer
       latitude:
         type: number
       level:
         description: level reuired to unlock the garage
         type: integer
-      longitute:
+      longitude:
         type: number
     type: object
   request.UpdatePasswordRequest:
     properties:
+      oldPassword:
+        type: string
       password:
         type: string
     type: object
@@ -196,6 +238,139 @@ info:
   version: "2.0"
 paths:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+  /admin:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the list of all admins
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Admin Details fetched successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Get Admins list
+      tags:
+      - Authentication
+  /admin/arena:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Arena by its ID
+      parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Arena request payload
+        in: body
+        name: ArenaReq
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeletArenaReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Arena deleted successful
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "404":
+          description: Arena not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Delete a Arena
+      tags:
+      - Arena
+    post:
+      consumes:
+      - application/json
+      description: Add a new arena to the system
+      parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Arena request payload
+        in: body
+        name: garageReq
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddArenaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Arena added successful
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Add a new arena
+      tags:
+      - Arena
+    put:
+      consumes:
+      - application/json
+      description: Update a Arena by its ID
+      parameters:
+      - description: Admin Access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Update request payload
+        in: body
+        name: updateReq
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateArenaReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Arena updated successful
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "404":
+          description: Arena not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.Success'
+      summary: Update a Arena
+      tags:
+      - Arena
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
   /admin/garage/add:
     post:
       consumes:
@@ -309,43 +484,34 @@ paths:
       summary: Update a garage
       tags:
       - Garage
-  /admin/login:
-    post:
+  /arena/get:
+    get:
       consumes:
       - application/json
-      description: Login for admin users
+      description: Retrieve the list of all Arenas
       parameters:
-      - description: Admin login request payload
-        in: body
-        name: adminLoginReq
-        required: true
-        schema:
-          $ref: '#/definitions/request.AdminLoginReq'
+      - description: Number of records to skip (default is 0)
+        in: query
+        name: skip
+        type: integer
+      - description: Maximum number of records to fetch (default is 10)
+        in: query
+        name: limit
+        type: integer
       produces:
       - application/json
       responses:
         "200":
-          description: Login success. Access token generated.
+          description: Arena list fetched successfully
           schema:
-            type: string
-        "400":
-          description: Bad request. Invalid payload
-          schema:
-            type: string
-        "401":
-          description: Unauthorized. Invalid credentials
-          schema:
-            type: string
-        "404":
-          description: Admin not found
-          schema:
-            type: string
+            $ref: '#/definitions/response.Success'
         "500":
           description: Internal server error
           schema:
-            type: string
-      summary: Admin Login
+            $ref: '#/definitions/response.Success'
+      summary: Get All Arena List
       tags:
+<<<<<<< HEAD
       - Admin
   /arena/challenge:
 =======
@@ -433,10 +599,19 @@ paths:
       consumes:
       - application/json
       description: Gets the list of all the arenas
+=======
+      - Arena
+  /arena/types:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the list of all arena types
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
       produces:
       - application/json
       responses:
         "200":
+<<<<<<< HEAD
           description: Success
           schema:
             $ref: '#/definitions/response.Success'
@@ -477,13 +652,20 @@ paths:
             $ref: '#/definitions/response.Success'
         "401":
           description: Unauthorised
+=======
+          description: Arena type list fetched successfully
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
           schema:
             $ref: '#/definitions/response.Success'
         "500":
           description: Internal server error
           schema:
             $ref: '#/definitions/response.Success'
+<<<<<<< HEAD
       summary: Replace Car
+=======
+      summary: Get All Arena type List
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
       tags:
       - Arena
   /car/buy:
@@ -1339,6 +1521,7 @@ paths:
       summary: Get Player Garage List
       tags:
       - Garage
+<<<<<<< HEAD
   /garage/update:
     put:
       consumes:
@@ -1356,10 +1539,18 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/request.UpdateGarageReq'
+=======
+  /garage/types:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve the list of all garages
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
       produces:
       - application/json
       responses:
         "200":
+<<<<<<< HEAD
           description: Garage updated successful
           schema:
             $ref: '#/definitions/response.Success'
@@ -1371,11 +1562,20 @@ paths:
           description: Garage not found
           schema:
             type: string
+=======
+          description: Garage type list fetched successfully
+          schema:
+            $ref: '#/definitions/response.Success'
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
         "500":
           description: Internal server error
           schema:
             $ref: '#/definitions/response.Success'
+<<<<<<< HEAD
       summary: Update a garage
+=======
+      summary: Get All Garage type List
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
       tags:
       - Garage
   /garage/upgrade:
@@ -1650,11 +1850,16 @@ paths:
       tags:
       - Player
   /reset-password:
-    post:
+    patch:
       consumes:
       - application/json
       description: Reset password
       parameters:
+      - description: Reset token
+        in: query
+        name: token
+        required: true
+        type: string
       - description: Admins new password
         in: body
         name: NewPassword
@@ -1717,4 +1922,38 @@ paths:
       summary: Update Email
       tags:
       - Player
+  /update-pass:
+    patch:
+      consumes:
+      - application/json
+      description: Updates the password of the player
+      parameters:
+      - description: Admin Access Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: New password of the player
+        in: body
+        name: newPassword
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdatePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.Success'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.Success'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.Success'
+      tags:
+      - Authentication
 swagger: "2.0"

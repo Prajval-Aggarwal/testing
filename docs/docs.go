@@ -17,6 +17,205 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        "/admin": {
+            "get": {
+                "description": "Retrieve the list of all admins",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Get Admins list",
+                "responses": {
+                    "200": {
+                        "description": "Admin Details fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/arena": {
+            "put": {
+                "description": "Update a Arena by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Update a Arena",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Update request payload",
+                        "name": "updateReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateArenaReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Arena updated successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Arena not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new arena to the system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Add a new arena",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Arena request payload",
+                        "name": "garageReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddArenaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Arena added successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a Arena by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Delete a Arena",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Arena request payload",
+                        "name": "ArenaReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeletArenaReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Arena deleted successful",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "404": {
+                        "description": "Arena not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
         "/admin/garage/add": {
             "post": {
                 "description": "Add a new garage to the system",
@@ -188,9 +387,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/admin/login": {
-            "post": {
-                "description": "Login for admin users",
+        "/arena/get": {
+            "get": {
+                "description": "Retrieve the list of all Arenas",
                 "consumes": [
                     "application/json"
                 ],
@@ -198,49 +397,63 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Admin"
+                    "Arena"
                 ],
-                "summary": "Admin Login",
+                "summary": "Get All Arena List",
                 "parameters": [
                     {
-                        "description": "Admin login request payload",
-                        "name": "adminLoginReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.AdminLoginReq"
-                        }
+                        "type": "integer",
+                        "description": "Number of records to skip (default is 0)",
+                        "name": "skip",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Maximum number of records to fetch (default is 10)",
+                        "name": "limit",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Login success. Access token generated.",
+                        "description": "Arena list fetched successfully",
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad request. Invalid payload",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized. Invalid credentials",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "404": {
-                        "description": "Admin not found",
-                        "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/response.Success"
                         }
                     },
                     "500": {
                         "description": "Internal server error",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
+        },
+        "/arena/types": {
+            "get": {
+                "description": "Retrieve the list of all arena types",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Arena"
+                ],
+                "summary": "Get All Arena type List",
+                "responses": {
+                    "200": {
+                        "description": "Arena type list fetched successfully",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
                         }
                     }
                 }
@@ -1751,9 +1964,15 @@ const docTemplate = `{
                 }
             }
         },
+<<<<<<< HEAD
         "/garage/update": {
             "put": {
                 "description": "Update a garage by its ID",
+=======
+        "/garage/types": {
+            "get": {
+                "description": "Retrieve the list of all garages",
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
                 "consumes": [
                     "application/json"
                 ],
@@ -1763,6 +1982,7 @@ const docTemplate = `{
                 "tags": [
                     "Garage"
                 ],
+<<<<<<< HEAD
                 "summary": "Update a garage",
                 "parameters": [
                     {
@@ -1785,10 +2005,17 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Garage updated successful",
+=======
+                "summary": "Get All Garage type List",
+                "responses": {
+                    "200": {
+                        "description": "Garage type list fetched successfully",
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
                         "schema": {
                             "$ref": "#/definitions/response.Success"
                         }
                     },
+<<<<<<< HEAD
                     "400": {
                         "description": "Bad request",
                         "schema": {
@@ -1801,6 +2028,8 @@ const docTemplate = `{
                             "type": "string"
                         }
                     },
+=======
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
                     "500": {
                         "description": "Internal server error",
                         "schema": {
@@ -2222,7 +2451,7 @@ const docTemplate = `{
             }
         },
         "/reset-password": {
-            "post": {
+            "patch": {
                 "description": "Reset password",
                 "consumes": [
                     "application/json"
@@ -2234,6 +2463,13 @@ const docTemplate = `{
                     "Authentication"
                 ],
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Reset token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    },
                     {
                         "description": "Admins new password",
                         "name": "NewPassword",
@@ -2324,9 +2560,62 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/update-pass": {
+            "patch": {
+                "description": "Updates the password of the player",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Admin Access Token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "New password of the player",
+                        "name": "newPassword",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdatePasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/response.Success"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+<<<<<<< HEAD
         "request.AddCarArenaRequest": {
             "type": "object",
             "properties": {
@@ -2335,6 +2624,22 @@ const docTemplate = `{
                 },
                 "carId": {
                     "type": "string"
+=======
+        "request.AddArenaRequest": {
+            "type": "object",
+            "properties": {
+                "arenaLevel": {
+                    "type": "integer"
+                },
+                "arenaName": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
                 }
             }
         },
@@ -2359,6 +2664,9 @@ const docTemplate = `{
                 "garageName": {
                     "type": "string"
                 },
+                "garageType": {
+                    "type": "integer"
+                },
                 "latitude": {
                     "type": "number"
                 },
@@ -2366,11 +2674,12 @@ const docTemplate = `{
                     "description": "level reuired to unlock the garage",
                     "type": "integer"
                 },
-                "longitute": {
+                "longitude": {
                     "type": "number"
                 }
             }
         },
+<<<<<<< HEAD
 <<<<<<< HEAD
         "request.AdminLoginReq": {
             "type": "object",
@@ -2385,6 +2694,8 @@ const docTemplate = `{
         },
 =======
 >>>>>>> 43ea51cb16ea49a0369579929718436edab5da04
+=======
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
         "request.CarRequest": {
             "type": "object",
             "properties": {
@@ -2417,6 +2728,14 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "colorType": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.DeletArenaReq": {
+            "type": "object",
+            "properties": {
+                "arenaId": {
                     "type": "string"
                 }
             }
@@ -2534,14 +2853,32 @@ const docTemplate = `{
                 }
             }
         },
+<<<<<<< HEAD
         "request.ReplaceReq": {
+=======
+        "request.UpdateArenaReq": {
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
             "type": "object",
             "properties": {
                 "arenaId": {
                     "type": "string"
                 },
+<<<<<<< HEAD
                 "carId": {
                     "type": "string"
+=======
+                "arenaLevel": {
+                    "type": "integer"
+                },
+                "arenaName": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "number"
+                },
+                "longitude": {
+                    "type": "number"
+>>>>>>> 2034a26eea4388cd51007000d145da98cb67a56d
                 }
             }
         },
@@ -2566,6 +2903,9 @@ const docTemplate = `{
                 "garageName": {
                     "type": "string"
                 },
+                "garageType": {
+                    "type": "integer"
+                },
                 "latitude": {
                     "type": "number"
                 },
@@ -2573,7 +2913,7 @@ const docTemplate = `{
                     "description": "level reuired to unlock the garage",
                     "type": "integer"
                 },
-                "longitute": {
+                "longitude": {
                     "type": "number"
                 }
             }
@@ -2581,6 +2921,9 @@ const docTemplate = `{
         "request.UpdatePasswordRequest": {
             "type": "object",
             "properties": {
+                "oldPassword": {
+                    "type": "string"
+                },
                 "password": {
                     "type": "string"
                 }

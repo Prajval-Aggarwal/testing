@@ -57,8 +57,8 @@ const (
 )
 
 const (
-	PLAYER_ID string = "playerId"
-
+	PLAYER_ID               string = "playerId"
+	FORBIDDEN_REQUEST       string = "Forbidden Request"
 	LOGIN_SUCCESS           string = "Login Successfull"
 	LOGIN_FAILED            string = "Login Failed"
 	EMAIL_EXISTS            string = "Email is already attached to another player"
@@ -77,12 +77,6 @@ const (
 	LOSE                    string = "You LOST"
 
 	NO_CARS_ADDED string = "No more cars can be added"
-)
-
-const (
-	UPGRADE_POWER      uint64  = 2
-	UPGRADE_SHIFT_TIME float64 = 0.1
-	UPGRADE_GRIP       float64 = 1.0
 )
 
 // Car constants
@@ -116,6 +110,21 @@ const (
 	GARAGE_DELETE_SUCCESS  string = "Garage Deleted successfully"
 	GARAGE_UPDATE_SUCCESS  string = "Garage Updated successfully"
 	GARAGE_ALREADY_PRESENT string = "Garage already present at that location"
+
+	ARENA_ADD_SUCCESS       string = "Arena Added successfully"
+	ARENA_DELETE_SUCCESS    string = "Arena Deleted successfully"
+	ARENA_UPDATE_SUCCESS    string = "Arena Updated successfully"
+	ARENA_ALREADY_PRESENT   string = "Arena already present at that location"
+	LINK_GENERATED_SUCCESS  string = "Link generated successfully"
+	PASSWORD_UPDATE_SUCCESS string = "Password updated successfully"
+)
+
+type ARENA_LEVEL int64
+
+const (
+	EASY   ARENA_LEVEL = iota + 1 // EnumIndex = 1
+	MEDIUM                        // EnumIndex = 2
+	HARD                          // EnumIndex = 3
 )
 
 // Arena constants
@@ -127,4 +136,10 @@ const (
 	EASY_ARENA_SLOT   uint64 = 3
 	MEDIUM_ARENA_SLOT uint64 = 5
 	HARD_ARENA_SLOT   uint64 = 7
+)
+
+const (
+	UPGRADE_POWER      uint64  = 2
+	UPGRADE_SHIFT_TIME float64 = 0.1
+	UPGRADE_GRIP       float64 = 1.0
 )

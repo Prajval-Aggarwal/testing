@@ -4,24 +4,24 @@ import (
 	"fmt"
 	"main/server/request"
 	"main/server/response"
-	"main/server/services/garage"
+	"main/server/services/arena"
 	"main/server/utils"
 
 	"github.com/gin-gonic/gin"
 )
 
-// @Summary Add a new garage
-// @Description Add a new garage to the system
-// @Tags Garage
+// @Summary Add a new arena
+// @Description Add a new arena to the system
+// @Tags Arena
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Admin Access token"
-// @Param garageReq body request.AddGarageRequest true "Garage request payload"
-// @Success 200 {object} response.Success "Garage added successful"
+// @Param garageReq body request.AddArenaRequest true "Arena request payload"
+// @Success 200 {object} response.Success "Arena added successful"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/add [post]
-func AddGarageHandler(ctx *gin.Context) {
+// @Router /admin/arena [post]
+func AddArenaHandler(ctx *gin.Context) {
 	role, exists := ctx.Get("role")
 	fmt.Println("player id is", role)
 	if !exists {
@@ -33,36 +33,36 @@ func AddGarageHandler(ctx *gin.Context) {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		return
 	}
-	var addGarageReq request.AddGarageRequest
-	err := utils.RequestDecoding(ctx, &addGarageReq)
+	var addArenaReq request.AddArenaRequest
+	err := utils.RequestDecoding(ctx, &addArenaReq)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	err = addGarageReq.Validate()
+	err = addArenaReq.Validate()
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 		return
 	}
 
-	garage.AddGarageService(ctx, addGarageReq)
+	arena.AddArenaService(ctx, addArenaReq)
 }
 
-// DeleteGarageHandler deletes a garage with the given ID.
-// @Summary Delete a garage
-// @Description Delete a garage by its ID
-// @Tags Garage
+// DeleteArenaHandler deletes a arena with the given ID.
+// @Summary Delete a Arena
+// @Description Delete a Arena by its ID
+// @Tags Arena
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Admin Access token"
-// @Param garageReq body request.DeletGarageReq true "Garage request payload"
-// @Success 200 {object} response.Success "Garage deleted successful"
+// @Param ArenaReq body request.DeletArenaReq true "Arena request payload"
+// @Success 200 {object} response.Success "Arena deleted successful"
 // @Failure 400 {object} response.Success "Bad request"
-// @Failure 404 {string} response.Success "Garage not found"
+// @Failure 404 {string} response.Success "Arena not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/delete [delete]
-func DeleteGarageHandler(ctx *gin.Context) {
+// @Router /admin/arena [delete]
+func DeleteArenaHandler(ctx *gin.Context) {
 	role, exists := ctx.Get("role")
 	fmt.Println("player id is", role)
 	if !exists {
@@ -74,7 +74,7 @@ func DeleteGarageHandler(ctx *gin.Context) {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		return
 	}
-	var deleteReq request.DeletGarageReq
+	var deleteReq request.DeletArenaReq
 	err := utils.RequestDecoding(ctx, &deleteReq)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -87,23 +87,23 @@ func DeleteGarageHandler(ctx *gin.Context) {
 		return
 	}
 
-	garage.DeleteGarageService(ctx, deleteReq)
+	arena.DeleteArenaService(ctx, deleteReq)
 }
 
-// UpdateGarageHandler updates a garage with the given ID.
-// @Summary Update a garage
-// @Description Update a garage by its ID
-// @Tags Garage
+// UpdateArenaHandler updates a Arena with the given ID.
+// @Summary Update a Arena
+// @Description Update a Arena by its ID
+// @Tags Arena
 // @Accept json
 // @Produce json
 // @Param Authorization header string true "Admin Access token"
-// @Param updateReq body request.UpdateGarageReq true "Update request payload"
-// @Success 200 {object} response.Success "Garage updated successful"
+// @Param updateReq body request.UpdateArenaReq true "Update request payload"
+// @Success 200 {object} response.Success "Arena updated successful"
 // @Failure 400 {object} response.Success "Bad request"
-// @Failure 404 {string} response.Success "Garage not found"
+// @Failure 404 {string} response.Success "Arena not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/update [put]
-func UpdateGarageHandler(ctx *gin.Context) {
+// @Router /admin/arena [put]
+func UpdateArenaHandler(ctx *gin.Context) {
 	role, exists := ctx.Get("role")
 	fmt.Println("player id is", role)
 	if !exists {
@@ -115,7 +115,7 @@ func UpdateGarageHandler(ctx *gin.Context) {
 		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		return
 	}
-	var updateReq request.UpdateGarageReq
+	var updateReq request.UpdateArenaReq
 	err := utils.RequestDecoding(ctx, &updateReq)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -128,40 +128,40 @@ func UpdateGarageHandler(ctx *gin.Context) {
 		return
 	}
 
-	garage.UpdateGarageService(ctx, updateReq)
+	arena.UpdateArenaService(ctx, updateReq)
 }
 
-// GetAllGarageListService retrieves the list of all garages.
+// GetArenaListHandler retrieves the list of all Arenas.
 //
-// @Summary Get All Garage List
-// @Description Retrieve the list of all garages
-// @Tags Garage
+// @Summary Get All Arena List
+// @Description Retrieve the list of all Arenas
+// @Tags Arena
 // @Accept json
 // @Produce json
 // @Param skip query integer false "Number of records to skip (default is 0)"
 // @Param limit query integer false "Maximum number of records to fetch (default is 10)"
-// @Success 200 {object} response.Success "Garage list fetched successfully"
+// @Success 200 {object} response.Success "Arena list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garages/get-all [get]
-func GetAllGarageListHandler(ctx *gin.Context) {
-	garage.GetAllGarageListService(ctx)
+// @Router /arena/get [get]
+func GetArenaListHandler(ctx *gin.Context) {
+	arena.GetAllArenaService(ctx)
 }
 
 // just for backend not for front end so no swagger
-func AddGarageTypesHandler(ctx *gin.Context) {
-	garage.AddGargeTypes(ctx)
+func AddArenaTypesHandler(ctx *gin.Context) {
+	arena.AddGargeTypes(ctx)
 }
 
-// GetGarageTypesHandler retrieves the list of all garages.
+// GetArenaTypeHandler retrieves the list of all garages.
 //
-// @Summary Get All Garage type List
-// @Description Retrieve the list of all garages
-// @Tags Garage
+// @Summary Get All Arena type List
+// @Description Retrieve the list of all arena types
+// @Tags Arena
 // @Accept json
 // @Produce json
-// @Success 200 {object} response.Success "Garage type list fetched successfully"
+// @Success 200 {object} response.Success "Arena type list fetched successfully"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/types [get]
-func GetGarageTypesHandler(ctx *gin.Context) {
-	garage.GetGarageTypes(ctx)
+// @Router /arena/types [get]
+func GetArenaTypeHandler(ctx *gin.Context) {
+	arena.GetArenaTypes(ctx)
 }

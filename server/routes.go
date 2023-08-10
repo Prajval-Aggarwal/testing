@@ -24,16 +24,22 @@ func ConfigureRoutes(server *Server) {
 		})
 	})
 
+	//extra routes
+	server.engine.POST("/admin/signup", admin.AdminSignUpHandler)
+	server.engine.POST("/add-garage-type", admin.AddGarageTypesHandler)
+	server.engine.POST("/add-arena-type", admin.AddArenaTypesHandler)
+
 	//Admin Login Route
 
-	server.engine.POST("/admin/signup", admin.AdminSignUpHandler)
 	server.engine.POST("/forgot-password", admin.ForgotPasswordHandler)
 	server.engine.PATCH("/reset-password", admin.ResetPasswordHandler)
 
 	//Auth routes
 	server.engine.POST("/guest-login", admin.GuestLoginHandler)
 	server.engine.POST("/login", admin.LoginHandler)
-	server.engine.PUT("/update-email", admin.UpdateEmailHandler)
+	server.engine.PUT("/update-email", gateway.AdminAuthorization, admin.UpdateEmailHandler)
+	server.engine.PATCH("/update-pass", gateway.AdminAuthorization, admin.UpdatePasswordHandler)
+	server.engine.GET("/admin", admin.GetAdminHandler)
 
 	//player details
 	server.engine.GET("/player-details", handler.GetPlayerDetailsHandler)
@@ -57,6 +63,17 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
 	server.engine.DELETE("/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
 	server.engine.PUT("/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
+	server.engine.POST("/admin/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
+	server.engine.DELETE("/admin/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
+	server.engine.PUT("/admin/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
+	server.engine.GET("/garage/types", admin.GetGarageTypesHandler)
+
+	//Admin Battle Arena Routes
+	server.engine.POST("/admin/arena", gateway.AdminAuthorization, admin.AddArenaHandler)
+	server.engine.DELETE("/admin/arena", gateway.AdminAuthorization, admin.DeleteArenaHandler)
+	server.engine.PUT("/admin/arena", gateway.AdminAuthorization, admin.UpdateArenaHandler)
+	server.engine.GET("/arena/get", admin.GetArenaListHandler)
+	server.engine.GET("/arena/types", admin.GetArenaTypeHandler)
 
 	//Car upgrade routes
 	server.engine.PUT("/car/upgrade/engine", player.UpgradeEngineHandler)
