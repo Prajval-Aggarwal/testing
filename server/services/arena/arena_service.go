@@ -1,6 +1,7 @@
 package arena
 
 import (
+	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/request"
@@ -15,22 +16,37 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 
 	//playerId is the first player who challenged
 	//endChallReq.playerId is the second player who is being challenged
+	//winTime, _ := time.Parse("15:04:05.99999999", endChallReq.WinTime)
+
+	winTime := utils.TimeConversion(endChallReq.WinTime)
+
+	var raceType model.RaceTypes
+	query := "SELECT * FROM race_types WHERE race_id=?"
+	err := db.QueryExecutor(query, &raceType, endChallReq.RaceId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
 
 	if endChallReq.ArenaId == "" {
-
-		var opponentTime time.Time
-		query := "SELECT time_win FROM race_rewards WHERE player_id=? AND arena_id=?"
-		err := db.QueryExecutor(query, &opponentTime, endChallReq.PlayerId, endChallReq.ArenaId)
+		fmt.Println("Not in arena")
+		var oppTimeStringFormat string
+		query := "SELECT time_win FROM arena_race_rewards WHERE player_id=? AND arena_id=?"
+		err := db.QueryExecutor(query, &oppTimeStringFormat, endChallReq.PlayerId, endChallReq.ArenaId)
 		if err != nil {
 			response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 			return
 		}
+
+		opponentTime := utils.TimeConversion(oppTimeStringFormat)
 		var rewards model.Rewards
 		win := false
 
 		query = "SELECT * FROM rewards WHERE id=? AND status=?"
-		if endChallReq.WinTime.Compare(opponentTime) == -1 {
 
+		if winTime.Before(*opponentTime) {
+
+			fmt.Println("Wins the challenge outside the arena")
 			win = true
 			//check the type off the race and allot the rewards to the player
 
@@ -39,53 +55,85 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 				return
 			}
-			err = EarnedRewards(playerId, ctx, rewards)
+
+			var totalRewards = []response.RewardResponse{}
+			playerLevel, err := EarnedRewards(playerId, ctx, rewards)
 			if err != nil {
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 				return
 			}
 
-			//pending
+			if playerLevel != nil {
 
-			// playerRaceRecord := model.ArenaRaceRecord{
-			// 	PlayerId: playerId,
-			// 	ArenaId:  endChallReq.ArenaId,
-			// 	Time:     endChallReq.WinTime,
-			// 	Result:   "",
-			// }
+				totalRewards = append(totalRewards, response.RewardResponse{
+					RewardName: "level",
+					RewardData: response.RewardData{
+						Coins:      playerLevel.Coins,
+						Level:      playerLevel.Level,
+						XPRequired: playerLevel.XPRequired,
+					},
+				})
+			}
 
-			response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, rewards, ctx)
+			totalRewards = append(totalRewards, response.RewardResponse{
+				RewardName: raceType.RaceName,
+				RewardData: response.RewardData{
+					Coins:       rewards.Coins,
+					Cash:        rewards.Cash,
+					RepairParts: rewards.RepairParts,
+					XPGained:    rewards.XPGained,
+					Status:      rewards.Status,
+				},
+			})
+
+			response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, totalRewards, ctx)
 			//player wins
 		} else {
+
+			fmt.Println("player lost the challenge outside the arena")
 			//player looses
 			win = false
-			err = db.QueryExecutor(query, endChallReq.RaceId, "lost")
+			err = db.QueryExecutor(query, rewards, endChallReq.RaceId, "lost")
 			if err != nil {
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 				return
 			}
 
 			//get player details
-			var playerDetails model.Player
-			err = db.FindById(&playerDetails, playerId, "player_id")
+
+			var totalRewards = []response.RewardResponse{}
+
+			totalRewards = append(totalRewards, response.RewardResponse{
+				RewardName: raceType.RaceName,
+				RewardData: response.RewardData{
+					Coins:       rewards.Coins,
+					Cash:        rewards.Cash,
+					RepairParts: rewards.RepairParts,
+					XPGained:    rewards.XPGained,
+					Status:      rewards.Status,
+				},
+			})
+
+			//player wins
+			//give rewards to player
+			playerLevel, err := EarnedRewards(playerId, ctx, rewards)
 			if err != nil {
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 				return
 			}
-			var carCount uint64
-			query := "select count(*) from owned_cars where player_id=?"
-			err = db.QueryExecutor(query, &carCount, playerId)
-			if err != nil {
-				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-				return
+
+			if playerLevel != nil {
+
+				totalRewards = append(totalRewards, response.RewardResponse{
+					RewardName: "level",
+					RewardData: response.RewardData{
+						Coins:      playerLevel.Coins,
+						Level:      playerLevel.Level,
+						XPRequired: playerLevel.XPRequired,
+					},
+				})
 			}
-			//give rewrads to player
-			err = EarnedRewards(playerId, ctx, rewards)
-			if err != nil {
-				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-				return
-			}
-			response.ShowResponse(utils.LOSE, utils.HTTP_OK, utils.SUCCESS, rewards, ctx)
+			response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, totalRewards, ctx)
 		}
 
 		//update player race history
@@ -97,20 +145,21 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 		}
 
 	} else {
+		fmt.Println("Taking challenge in arena")
 		//player is taking challenge in arena
-		var opponentTime time.Time
-		query := "SELECT time_win FROM race_rewards WHERE player_id=? AND arena_id=?"
-		err := db.QueryExecutor(query, &opponentTime, endChallReq.PlayerId, endChallReq.ArenaId)
+		var oppTimeStringFormat string
+		query := "SELECT time_win FROM arena_race_rewards WHERE player_id=? AND arena_id=?"
+		err := db.QueryExecutor(query, &oppTimeStringFormat, endChallReq.PlayerId, endChallReq.ArenaId)
 		if err != nil {
 			response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
 			return
 		}
-
-		if endChallReq.WinTime.Compare(opponentTime) == -1 {
+		opponentTime := utils.TimeConversion(oppTimeStringFormat)
+		if winTime.Before(*opponentTime) {
 			//player wins the a series in arena
 			//add the count to arenaRaceWins
 			var exists bool
-			query := "SELECT EXISTS (SELECT * FROM arena_seriess WHERE arena_id=? AND player_id=?)"
+			query := "SELECT EXISTS (SELECT * FROM arena_series WHERE arena_id=? AND player_id=?)"
 			err := db.QueryExecutor(query, &exists, endChallReq.ArenaId, playerId)
 			if err != nil {
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -118,7 +167,7 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 			}
 			if exists {
 				//increment the number of wins
-				query := "UPDATE arena_seriess SET win_streak=win_streak+1 WHERE  arena_id=? AND player_id=?"
+				query := "UPDATE arena_series SET win_streak=win_streak+1 WHERE  arena_id=? AND player_id=?"
 				err := db.RawExecutor(query, endChallReq.ArenaId, playerId)
 				if err != nil {
 					response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
@@ -156,7 +205,7 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 					playerArena := model.OwnedBattleArenas{
 						PlayerId: playerId,
 						ArenaId:  endChallReq.ArenaId,
-						WinTime:  endChallReq.WinTime,
+						WinTime:  *winTime,
 					}
 					err := db.CreateRecord(&playerArena)
 					if err != nil {
@@ -171,7 +220,7 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 						response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 						return
 					}
-					err = EarnedRewards(playerId, ctx, reward1)
+					_, err = EarnedRewards(playerId, ctx, reward1)
 					if err != nil {
 						response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 						return
@@ -182,19 +231,47 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 						response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 						return
 					}
-					err = EarnedRewards(playerId, ctx, reward2)
+					playerLevel, err := EarnedRewards(playerId, ctx, reward2)
 					if err != nil {
 						response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 						return
 					}
+					var totalRewards = []response.RewardResponse{}
 
-					totalRewards := struct {
-						Reward1 model.Rewards
-						Reward2 model.Rewards
-					}{
-						Reward1: reward1,
-						Reward2: reward2,
+					if playerLevel != nil {
+
+						totalRewards = append(totalRewards, response.RewardResponse{
+							RewardName: "level",
+							RewardData: response.RewardData{
+								Coins:      playerLevel.Coins,
+								Level:      playerLevel.Level,
+								XPRequired: playerLevel.XPRequired,
+							},
+						})
 					}
+
+					totalRewards = append(totalRewards, response.RewardResponse{
+						RewardName: "arena",
+						RewardData: response.RewardData{
+							Coins:       reward1.Coins,
+							Cash:        reward1.Cash,
+							RepairParts: reward1.RepairParts,
+							XPGained:    reward1.XPGained,
+							Status:      reward1.Status,
+						},
+					})
+
+					totalRewards = append(totalRewards, response.RewardResponse{
+						RewardName: "race",
+						RewardData: response.RewardData{
+							Coins:       reward2.Coins,
+							Cash:        reward2.Cash,
+							RepairParts: reward2.RepairParts,
+							XPGained:    reward2.XPGained,
+							Status:      reward2.Status,
+						},
+					})
+
 					//give both rewards arena and takedown
 					response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, totalRewards, ctx)
 
@@ -202,7 +279,7 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 					///if after the 24 hour there is no entery in carSlots table then the arebna will be given back to the AI
 					time.AfterFunc(24*time.Hour, func() {
 						count := 0
-						query := "SELECT count(*) FROM car_slots WHERE player_id=? AND arena_id=?"
+						query := "SELECT COUNT(*) FROM car_slots WHERE player_id=? AND arena_id=?"
 						err = db.QueryExecutor(query, &count, playerId, endChallReq.ArenaId)
 						if err != nil {
 							response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
@@ -223,19 +300,44 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 
 					//player won the challnege but not the arena
 					var reward model.Rewards
+					var totalRewards = []response.RewardResponse{}
 					query = "SELECT * FROM rewards WHERE id=? AND status=?"
 					err = db.QueryExecutor(query, endChallReq.RaceId, "win")
 					if err != nil {
 						response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 						return
 					}
-					err = EarnedRewards(playerId, ctx, reward)
+					playerLevel, err := EarnedRewards(playerId, ctx, reward)
 					if err != nil {
 						response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 						return
 					}
-					response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, reward, ctx)
 
+					if playerLevel != nil {
+
+						totalRewards = append(totalRewards, response.RewardResponse{
+							RewardName: "level",
+							RewardData: response.RewardData{
+								Coins:      playerLevel.Coins,
+								Level:      playerLevel.Level,
+								XPRequired: playerLevel.XPRequired,
+							},
+						})
+					}
+
+					totalRewards = append(totalRewards, response.RewardResponse{
+						RewardName: raceType.RaceName,
+						RewardData: response.RewardData{
+							Coins:       reward.Coins,
+							Cash:        reward.Cash,
+							RepairParts: reward.RepairParts,
+							XPGained:    reward.XPGained,
+							Status:      reward.Status,
+						},
+					})
+
+					//give both rewards arena and takedown
+					response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, totalRewards, ctx)
 				}
 
 			} else {
@@ -255,18 +357,44 @@ func EndChallengeService(ctx *gin.Context, endChallReq request.EndChallengeReq, 
 		} else {
 			//player Lost
 			var reward model.Rewards
+			var totalRewards = []response.RewardResponse{}
 			query = "SELECT * FROM rewards WHERE id=? AND status=?"
 			err = db.QueryExecutor(query, endChallReq.RaceId, "lost")
 			if err != nil {
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 				return
 			}
-			err = EarnedRewards(playerId, ctx, reward)
+
+			playerLevel, err := EarnedRewards(playerId, ctx, reward)
 			if err != nil {
 				response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
 				return
 			}
-			response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, reward, ctx)
+
+			if playerLevel != nil {
+
+				totalRewards = append(totalRewards, response.RewardResponse{
+					RewardName: "level",
+					RewardData: response.RewardData{
+						Coins:      playerLevel.Coins,
+						Level:      playerLevel.Level,
+						XPRequired: playerLevel.XPRequired,
+					},
+				})
+			}
+
+			totalRewards = append(totalRewards, response.RewardResponse{
+				RewardName: raceType.RaceName,
+				RewardData: response.RewardData{
+					Coins:       reward.Coins,
+					Cash:        reward.Cash,
+					RepairParts: reward.RepairParts,
+					XPGained:    reward.XPGained,
+					Status:      reward.Status,
+				},
+			})
+
+			response.ShowResponse(utils.WON, utils.HTTP_OK, utils.SUCCESS, totalRewards, ctx)
 		}
 
 	}
@@ -310,18 +438,18 @@ func UpdatePlayerRaceHistory(playerId string, ctx *gin.Context, endChallReq requ
 	return nil
 }
 
-func EarnedRewards(playerId string, ctx *gin.Context, rewards model.Rewards) error {
+func EarnedRewards(playerId string, ctx *gin.Context, rewards model.Rewards) (*model.PlayerLevel, error) {
 
 	//get player details
 	var playerDetails model.Player
 	err := db.FindById(&playerDetails, playerId, "player_id")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	//begin transaction
 	tx := db.BeginTransaction()
 	if tx.Error != nil {
-		return err
+		return nil, err
 	}
 
 	playerDetails.Coins += rewards.Coins
@@ -329,15 +457,47 @@ func EarnedRewards(playerId string, ctx *gin.Context, rewards model.Rewards) err
 	playerDetails.RepairParts += rewards.RepairParts
 	playerDetails.XP += rewards.XPGained
 
+	playerLevel, isUpgraded, err := UpgradePlayerLevel(playerDetails.XP, &playerDetails)
+	if err != nil {
+		tx.Rollback()
+		return nil, err
+	}
+	//fmt.Println("player levele is ", playerLevel)
+	if isUpgraded {
+		// Handle player level upgrade logic, if needed
+		return playerLevel, nil
+
+	}
+
 	err = db.UpdateRecord(&playerDetails, playerId, "player_id").Error
 	if err != nil {
 		tx.Rollback()
-		return err
+		return nil, err
 	}
 	if err = tx.Commit().Error; err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return nil, nil
+}
+
+func UpgradePlayerLevel(newXp uint64, playerDetails *model.Player) (*model.PlayerLevel, bool, error) {
+	currentLevel := playerDetails.Level
+	var playerLevel model.PlayerLevel
+	query := "SELECT * FROM player_levels WHERE level=?"
+	err := db.QueryExecutor(query, &playerLevel, currentLevel+1)
+	if err != nil {
+		return nil, false, err
+	}
+
+	if newXp > playerLevel.XPRequired {
+		// Update player level
+		playerDetails.Level++
+		playerDetails.Coins += playerLevel.Coins
+
+		return &playerLevel, true, nil
+	}
+
+	return nil, false, nil
 }
 
 func AddCarToSlotService(ctx *gin.Context, addCarReq request.AddCarArenaRequest, playerId string) {

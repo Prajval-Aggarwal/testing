@@ -59,24 +59,30 @@ func ConfigureRoutes(server *Server) {
 	server.engine.PUT("/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
 
 	//Car upgrade routes
-	server.engine.PUT("/car/upgrade/engine", player.UpgradeEngineHandler)
-	server.engine.PUT("/car/upgrade/turbo", player.UpgradeTurboHandler)
-	server.engine.PUT("/car/upgrade/intake", player.UpgradeIntakeHandler)
-	server.engine.PUT("/car/upgrade/nitrous", player.UpgradeNitrousHandler)
-	server.engine.PUT("/car/upgrade/body", player.UpgradeBodyHandler)
-	server.engine.PUT("/car/upgrade/tires", player.UpgradeTiresHandler)
-	server.engine.PUT("/car/upgrade/transmission", player.UpgradeTransmissionHandler)
+	server.engine.PUT("/car/upgrade/engine", gateway.AdminAuthorization, player.UpgradeEngineHandler)
+	server.engine.PUT("/car/upgrade/turbo", gateway.AdminAuthorization, player.UpgradeTurboHandler)
+	server.engine.PUT("/car/upgrade/intake", gateway.AdminAuthorization, player.UpgradeIntakeHandler)
+	server.engine.PUT("/car/upgrade/nitrous", gateway.AdminAuthorization, player.UpgradeNitrousHandler)
+	server.engine.PUT("/car/upgrade/body", gateway.AdminAuthorization, player.UpgradeBodyHandler)
+	server.engine.PUT("/car/upgrade/tires", gateway.AdminAuthorization, player.UpgradeTiresHandler)
+	server.engine.PUT("/car/upgrade/transmission", gateway.AdminAuthorization, player.UpgradeTransmissionHandler)
 
 	//car Customiztion routes
-	server.engine.PUT("/car/customise/color", player.ColorCustomizeHandler)
-	server.engine.PUT("/car/customise/wheels", player.WheelsCustomizeHandler)
-	server.engine.PUT("/car/customise/interior", player.InteriorCustomizeHandler)
-	server.engine.PUT("/car/customise/license", player.LicenseCustomizeHandler)
+	server.engine.PUT("/car/customise/color", gateway.AdminAuthorization, player.ColorCustomizeHandler)
+	server.engine.PUT("/car/customise/wheels", gateway.AdminAuthorization, player.WheelsCustomizeHandler)
+	server.engine.PUT("/car/customise/interior", gateway.AdminAuthorization, player.InteriorCustomizeHandler)
+	server.engine.PUT("/car/customise/license", gateway.AdminAuthorization, player.LicenseCustomizeHandler)
 
 	server.engine.GET("/get-customization", player.GetCarCustomiseHandler)
 	server.engine.GET("/get-color-category", player.GetCarColorCategoriesHandler)
 	server.engine.GET("/get-color-type", player.GetCarColorTypesHandler)
 	server.engine.GET("/get-colors", player.GetCarColorsHandler)
+
+	//Arena Routes
+	server.engine.POST("/arena/end", gateway.AdminAuthorization, handler.EndChallengeHandler)
+	server.engine.POST("/arena/add-car", gateway.AdminAuthorization, handler.AddCarToSlotHandler)
+	server.engine.POST("/arena/replace-car", gateway.AdminAuthorization, handler.ReplaceCarHandler)
+	server.engine.GET("/arena/get", handler.GetArenaHandler)
 
 	//add dummy data in db
 	server.engine.GET("/add-dummy-data", handler.AddDummyDataHandler)

@@ -6,5 +6,5 @@ type Rewards struct {
 	Cash        uint64 `json:"cash"`
 	RepairParts uint64 `json:"repairParts"`
 	Status      string `json:"status"`
-	XPGained    int64  `json:"xpGained"`
+	XPGained    uint64 `json:"xpGained"`
 }

@@ -127,4 +127,9 @@ const (
 	EASY_ARENA_SLOT   uint64 = 3
 	MEDIUM_ARENA_SLOT uint64 = 5
 	HARD_ARENA_SLOT   uint64 = 7
+
+	ARENA_ADD_SUCCESS     string = "Arena Added successfully"
+	ARENA_DELETE_SUCCESS  string = "Arena Deleted successfully"
+	ARENA_UPDATE_SUCCESS  string = "Arena Updated successfully"
+	ARENA_ALREADY_PRESENT string = "Arena already present at that location"
 )

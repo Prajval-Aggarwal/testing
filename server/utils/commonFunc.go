@@ -2,10 +2,12 @@ package utils
 
 import (
 	"errors"
+	"fmt"
 	"main/server/db"
 	"main/server/model"
 	"main/server/response"
 	"math"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
@@ -67,99 +69,6 @@ func AlreadyAtMax(val int) bool {
 	return val == 5
 
 }
-
-// func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats, ctx *gin.Context) {
-
-// 	//list of points where car level upgrades automatically
-// 	var car model.OwnedCars
-// 	query := "select * from owned_cars where player_id=? and car_id=?;"
-
-// 	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
-
-// 	upgradePoints := [...]float64{20, 40, 60, 80, 100} //car will get upgraded to higher level whenever Or reaches these points
-
-// 	for i := 0; i < len(upgradePoints); i++ {
-
-// 		if playerCarStats.OR == upgradePoints[i] {
-
-// 			// upgrade the car level
-// 			car.Level++
-// 			err := db.UpdateRecord(&car, car.Level, "level").Error
-// 			if err != nil {
-// 				fmt.Println("error in updation")
-// 				// response.ShowResponse(STATS_ERROR, utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
-// 				response.ShowResponse("server error", HTTP_INTERNAL_SERVER_ERROR, err.Error(), "", ctx)
-// 			}
-// 			fmt.Println("car level is Upgraded successfully!!")
-
-// 			break
-// 		}
-// 	}
-// }
-
-// func UpgradeCarLevel(playerCarStats *model.PlayerCarsStats) {
-
-// 	//list of points where car level upgrades automatically
-// 	var car model.OwnedCars
-// 	query := "select * from owned_cars where player_id=? and car_id=?;"
-
-// 	db.QueryExecutor(query, &car, playerCarStats.PlayerId, playerCarStats.CarId)
-
-// 	if playerCarStats.OVR >= 20 && playerCarStats.OVR < 40 {
-
-// 		if car.Level == 1 {
-// 			//upgrade the level
-// 			car.Level = 2
-// 			//increase 30% repasir cost
-// 			car.RepairCost += (0.3 * car.RepairCost)
-// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
-// 			if err != nil {
-// 				fmt.Println("error in level upgrade")
-// 			}
-// 			fmt.Println("CAR LEVEL UPGRADED!!")
-
-// 		}
-// 	} else if playerCarStats.OVR >= 40 && playerCarStats.OVR < 60 {
-
-// 		if car.Level == 2 {
-// 			//upgrade the level
-// 			car.Level = 3
-// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
-
-// 			if err != nil {
-// 				fmt.Println("error in level upgrade")
-// 			}
-// 			fmt.Println("CAR LEVEL UPGRADED!!")
-
-// 		}
-// 	} else if playerCarStats.OVR >= 60 && playerCarStats.OVR < 80 {
-
-// 		if car.Level == 3 {
-// 			//upgrade the level
-// 			car.Level = 4
-// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
-
-// 			if err != nil {
-// 				fmt.Println("error in level upgrade")
-// 			}
-// 			fmt.Println("CAR LEVEL UPGRADED!!")
-
-// 		}
-// 	} else if playerCarStats.OVR >= 80 && playerCarStats.OVR <= 100 {
-
-// 		if car.Level == 4 {
-// 			//upgrade the level
-// 			car.Level = 5
-// 			err := db.UpdateRecord(&car, playerCarStats.CarId, "car_id").Error
-
-// 			if err != nil {
-// 				fmt.Println("error in level upgrade")
-// 			}
-// 			fmt.Println("CAR LEVEL UPGRADED!!")
-// 		}
-// 	}
-
-// }
 
 func SetPlayerCarDefaults(playerId string, carId string) error {
 
@@ -335,4 +244,13 @@ func IsExisting(query string, values ...interface{}) bool {
 		return false
 	}
 	return exists
+}
+
+func TimeConversion(stringFormat string) *time.Time {
+	timeFormat, err := time.Parse("15:04:05.9999999", stringFormat)
+	if err != nil {
+		fmt.Println("error in parsing the string format of time")
+		return nil
+	}
+	return &timeFormat
 }

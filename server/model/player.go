@@ -7,7 +7,7 @@ type Player struct {
 	PlayerName  string `json:"playerName" gorm:"unique,omitempty"`
 	Level       uint64 `json:"level,omitempty"`
 	Role        string `json:"role,omitempty"`
-	XP          int64  `json:"xp,omitempty"`
+	XP          uint64 `json:"xp,omitempty"`
 	Email       string `json:"email,omitempty"`
 	Coins       uint64 `json:"coins,omitempty"`
 	Cash        uint64 `json:"cash,omitempty"`

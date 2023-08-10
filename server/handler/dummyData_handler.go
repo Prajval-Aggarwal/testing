@@ -18,37 +18,39 @@ func ReadJSONFile(filePath string) ([]byte, error) {
 	}
 	return data, nil
 }
+
+func IsEmpty(tablename string) bool {
+	var exists bool
+	query := "SELECT EXTSTS(SELECT 1 FROM " + tablename + ");"
+	db.QueryExecutor(query, &exists)
+
+	return exists
+}
 func AddDummyDataHandler(ctx *gin.Context) {
-	fmt.Println("jhj")
-	//car  dummy data
-	addtoDb("server/dummyData/car.json", &[]model.Car{})
-	addtoDb("server/dummyData/carStats.json", &[]model.CarStats{})
+	dataFiles := []struct {
+		tableName string
+		filePath  string
+		dataPtr   interface{}
+	}{
+		{"cars", "server/dummyData/car.json", &[]model.Car{}},
+		{"car_stats", "server/dummyData/carStats.json", &[]model.CarStats{}},
+		{"garages", "server/dummyData/garage.json", &[]model.Garage{}},
+		{"garage_upgrades", "server/dummyData/garageUpgrades.json", &[]model.GarageUpgrades{}},
+		{"car_customizations", "server/dummyData/customization.json", &[]model.CarCustomization{}},
+		{"default_customizations", "server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{}},
+		{"arenas", "server/dummyData/arena.json", &[]model.Arena{}},
+		{"upgrades", "server/dummyData/upgrades.json", &[]model.Upgrades{}},
+		{"rewards", "server/dummyData/rewards.json", &[]model.Rewards{}},
+		{"race_types", "server/dummyData/raceTypes.json", &[]model.RaceTypes{}},
+		{"rating_multis", "server/dummyData/classMultiplier.json", &[]model.RatingMulti{}},
+		{"player_levels", "server/dummyData/playerLevel.json", &[]model.PlayerLevel{}},
+	}
 
-	// //garage dummy data
-	addtoDb("server/dummyData/garage.json", &[]model.Garage{})
-	addtoDb("server/dummyData/garageUpgrades.json", &[]model.GarageUpgrades{})
-
-	//car customization
-	addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
-	addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
-
-	//arena
-	addtoDb("server/dummyData/arena.json", &[]model.Arena{})
-
-	// //car upgrades dummy data
-	addtoDb("server/dummyData/upgrades.json", &[]model.Upgrades{})
-
-	//rewards
-	addtoDb("server/dummyData/rewards.json", &[]model.Rewards{})
-
-	//race types
-	addtoDb("server/dummyData/raceTypes.json", &[]model.RaceTypes{})
-
-	addtoDb("server/dummyData/classMultiplier.json", &[]model.RatingMulti{})
-	//car custoization
-	addtoDb("server/dummyData/customization.json", &[]model.CarCustomization{})
-	addtoDb("server/dummyData/defaultCustomization.json", &[]model.DefaultCustomization{})
-
+	for _, dataFile := range dataFiles {
+		if !IsEmpty(dataFile.tableName) {
+			addtoDb(dataFile.filePath, dataFile.dataPtr)
+		}
+	}
 }
 
 func addtoDb(filePath string, modelType interface{}) {
