@@ -23,12 +23,18 @@ type ForgotPassRequest struct {
 }
 
 type UpdatePasswordRequest struct {
+	OldPassword string `json:"oldPassword"`
+	Password    string `json:"password" `
+}
+
+type ResetPasswordRequest struct {
 	Password string `json:"password" `
 }
 
 // Validation
 func (a UpdatePasswordRequest) Validate() error {
 	return validation.ValidateStruct(&a,
+		validation.Field(&a.OldPassword, validation.Required),
 		validation.Field(&a.Password, validation.Required),
 	)
 }
@@ -54,5 +60,11 @@ func (a LoginRequest) Validate() error {
 func (a UpdateEmailRequest) Validate() error {
 	return validation.ValidateStruct(&a,
 		validation.Field(&a.Email, validation.Required, is.Email),
+	)
+}
+
+func (a ResetPasswordRequest) Validate() error {
+	return validation.ValidateStruct(&a,
+		validation.Field(&a.Password, validation.Required),
 	)
 }

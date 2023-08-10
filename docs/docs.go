@@ -2496,6 +2496,9 @@ const docTemplate = `{
         "request.UpdatePasswordRequest": {
             "type": "object",
             "properties": {
+                "oldPassword": {
+                    "type": "string"
+                },
                 "password": {
                     "type": "string"
                 }

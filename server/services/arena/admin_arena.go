@@ -190,7 +190,7 @@ func AddGargeTypes(ctx *gin.Context) {
 
 	for i, val := range slice {
 		newType := model.ArenaLevels{
-			TypeId:   i,
+			TypeId:   i + 1,
 			TypeName: val,
 		}
 		err := db.CreateRecord(&newType)

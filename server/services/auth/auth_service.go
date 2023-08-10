@@ -291,7 +291,7 @@ func ForgotPassService(ctx *gin.Context, forgotPassRequest request.ForgotPassReq
 	response.ShowResponse(utils.LINK_GENERATED_SUCCESS, utils.HTTP_OK, utils.SUCCESS, link, ctx)
 
 }
-func ResetPasswordService(ctx *gin.Context, tokenString string, password request.UpdatePasswordRequest) {
+func ResetPasswordService(ctx *gin.Context, tokenString string, password request.ResetPasswordRequest) {
 	var resetSession model.ResetSession
 	//Decoding the token and extracting require data
 	claims, err := token.DecodeToken(tokenString)
@@ -322,8 +322,36 @@ func ResetPasswordService(ctx *gin.Context, tokenString string, password request
 		response.ShowResponse(utils.FORBIDDEN_REQUEST, utils.HTTP_FORBIDDEN, utils.FAILURE, nil, ctx)
 		return
 	}
-	// Reusing he updatepasswordservice
-	UpdatePasswordService(ctx, password, claims.Id)
+
+	var adminDetails model.Admin
+	//Finding the admin
+	err = db.FindById(&adminDetails, claims.Id, "id")
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	// Password validity check
+	err = utils.IsPassValid(password.Password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	//Hashing the new password
+	hashedPass, err := utils.HashPassword(password.Password)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	adminDetails.Password = *hashedPass
+
+	//Updating players new password
+	err = db.UpdateRecord(&adminDetails, claims.Id, "id").Error
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_INTERNAL_SERVER_ERROR, utils.FAILURE, nil, ctx)
+		return
+	}
 
 	//After sucessfully reseting the password deleteing reset session of the player
 	err = db.DeleteRecord(&resetSession, claims.Id, "id")
@@ -356,6 +384,13 @@ func UpdatePasswordService(ctx *gin.Context, password request.UpdatePasswordRequ
 	err = utils.IsPassValid(password.Password)
 	if err != nil {
 		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	//check if the user with old password is valid or not
+	err = bcrypt.CompareHashAndPassword([]byte(adminDetails.Password), []byte(password.OldPassword))
+	if err != nil {
+		response.ShowResponse(utils.UNAUTHORIZED, utils.HTTP_UNAUTHORIZED, utils.FAILURE, nil, ctx)
 		return
 	}
 

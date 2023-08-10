@@ -82,7 +82,7 @@ func ForgotPasswordHandler(ctx *gin.Context) {
 func ResetPasswordHandler(ctx *gin.Context) {
 	tokenString := ctx.Request.URL.Query().Get("token")
 	fmt.Println("token string is ", tokenString)
-	var password request.UpdatePasswordRequest
+	var password request.ResetPasswordRequest
 
 	err := utils.RequestDecoding(ctx, &password)
 	if err != nil {
