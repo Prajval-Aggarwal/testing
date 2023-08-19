@@ -6,6 +6,11 @@ type GarageRequest struct {
 	GarageId string `json:"carId"`
 }
 
+type GetOwnerDetailsReq struct {
+	GarageId string `json:"garageId"`
+	PlayerID string `json:"playerId"`
+}
+
 // add car to garage request model
 type AddCarRequest struct {
 	GarageId string `json:"garageId"`
@@ -33,6 +38,14 @@ type UpdateGarageReq struct {
 	Longitude     float64 `json:"longitude,omitempty"`
 	Level         uint64  `json:"level,omitempty"`         //level required to unlock the garage
 	CoinsRequired uint64  `json:"coinsRequired,omitempty"` //coins required to unlock the garage
+}
+
+func (a GetOwnerDetailsReq) Validate() error {
+	return validation.ValidateStruct(&a,
+
+		validation.Field(&a.GarageId, validation.Required),
+		validation.Field(&a.PlayerID, validation.Required),
+	)
 }
 
 func (a UpdateGarageReq) Validate() error {

@@ -58,11 +58,9 @@ func ConfigureRoutes(server *Server) {
 	server.engine.POST("/garage/add-car", gateway.AdminAuthorization, player.AddCarToGarageHandler)
 	server.engine.PUT("/garage/upgrade", gateway.AdminAuthorization, player.UpgradeGarageHandler)
 	server.engine.GET("/garage/get", gateway.AdminAuthorization, player.GetPlayerGarageListHandler)
+	server.engine.GET("/garage/get-owners", player.GetGarageOwnersListHandler)
 
 	//Admin garage routes
-	server.engine.POST("/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
-	server.engine.DELETE("/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
-	server.engine.PUT("/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)
 	server.engine.POST("/admin/garage/add", gateway.AdminAuthorization, admin.AddGarageHandler)
 	server.engine.DELETE("/admin/garage/delete", gateway.AdminAuthorization, admin.DeleteGarageHandler)
 	server.engine.PUT("/admin/garage/update", gateway.AdminAuthorization, admin.UpdateGarageHandler)

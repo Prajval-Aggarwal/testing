@@ -147,3 +147,36 @@ func GetPlayerGarageListHandler(ctx *gin.Context) {
 	}
 	garage.GetPlayerGarageListService(ctx, playerId.(string))
 }
+
+func GetGarageOwnerDetails(ctx *gin.Context) {
+	var getReq request.GetOwnerDetailsReq
+	err := utils.RequestDecoding(ctx, &getReq)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = getReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+	garage.GetGarageOwnerDetailsService(ctx, getReq)
+}
+
+func GetGarageOwnersListHandler(ctx *gin.Context) {
+	var getReq request.GarageRequest
+	err := utils.RequestDecoding(ctx, &getReq)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	err = getReq.Validate()
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	garage.GetGarageOwnersService(ctx, getReq)
+}

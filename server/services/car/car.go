@@ -285,7 +285,8 @@ func RepairCarService(ctx *gin.Context, repairCarRequest request.CarRequest, pla
 }
 
 func GetAllCarsService(ctx *gin.Context) {
-	var carDetails []model.Car
+
+	var carDetails = []model.Car{}
 	query := "SELECT * FROM cars"
 	err := db.QueryExecutor(query, &carDetails)
 	if err != nil {

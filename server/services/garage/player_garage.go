@@ -239,3 +239,36 @@ func AddCarToGarageService(ctx *gin.Context, addCarRequest request.AddCarRequest
 
 	response.ShowResponse(utils.CAR_ADDED_SUCCESS, utils.HTTP_OK, utils.SUCCESS, nil, ctx)
 }
+
+func GetGarageOwnersService(ctx *gin.Context, getReq request.GarageRequest) {
+	var resp []struct {
+		PlayerId   string  `json:"playerId"`
+		PlayerName string  `json:"playerName"`
+		OVR        float64 `json:"ovr"`
+	}
+	query := `SELECT
+    p.player_id,
+    p.player_name,
+    SUM(cs.OVR) AS TotalCarOVR
+	FROM
+		players p
+	JOIN
+		owned_garages og ON p.player_id = og.player_id
+	JOIN
+		owned_cars oc ON p.player_id = oc.player_id
+	JOIN
+		player_car_stats cs ON oc.car_id = cs.car_id
+	WHERE
+		og.garage_id = ?
+	GROUP BY
+		p.player_id, p.player_name;`
+
+	err := db.QueryExecutor(query, &resp, getReq.GarageId)
+	if err != nil {
+		response.ShowResponse(err.Error(), utils.HTTP_BAD_REQUEST, utils.FAILURE, nil, ctx)
+		return
+	}
+
+	response.ShowResponse(utils.DATA_FETCH_SUCCESS, utils.HTTP_OK, utils.SUCCESS, resp, ctx)
+
+}

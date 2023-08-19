@@ -20,7 +20,7 @@ import (
 // @Success 200 {object} response.Success "Garage added successful"
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/add [post]
+// @Router /admin/garage/add [post]
 func AddGarageHandler(ctx *gin.Context) {
 	role, exists := ctx.Get("role")
 	fmt.Println("player id is", role)
@@ -61,7 +61,7 @@ func AddGarageHandler(ctx *gin.Context) {
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {string} response.Success "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/delete [delete]
+// @Router /admin/garage/delete [delete]
 func DeleteGarageHandler(ctx *gin.Context) {
 	role, exists := ctx.Get("role")
 	fmt.Println("player id is", role)
@@ -102,7 +102,7 @@ func DeleteGarageHandler(ctx *gin.Context) {
 // @Failure 400 {object} response.Success "Bad request"
 // @Failure 404 {string} response.Success "Garage not found"
 // @Failure 500 {object} response.Success "Internal server error"
-// @Router /garage/update [put]
+// @Router /admin/garage/update [put]
 func UpdateGarageHandler(ctx *gin.Context) {
 	role, exists := ctx.Get("role")
 	fmt.Println("player id is", role)
